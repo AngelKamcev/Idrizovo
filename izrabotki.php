@@ -5,25 +5,34 @@
 
 
 
-    <section
-        class="relative w-full min-h-screen bg-cover bg-center bg-no-repeat bg-gray-100"
-        style="background-image: url('sliki/ChatGPT\ Image\ Apr\ 28\,\ 2026\,\ 10_45_13\ PM.png')">
+<section
+    class=" hidden md:block items-center relative w-full min-h-screen bg-gray-100 md:bg-cover md:bg-center md:bg-no-repeat"
+    style="background-image: url('sliki/ChatGPT Image Apr 28, 2026, 10_45_13 PM.png')">
 
-        <div class="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
+    <!-- Overlay only for desktop -->
+    <div class="hidden md:block absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
 
-        <div class="absolute top-12 left-4 md:top-24 md:left-10 z-10">
-            <h1 class="text-white text-6xl md:text-8xl lg:text-9xl font-extrabold tracking-wide leading-[1.1] drop-shadow-lg font-sans">
-                Рачни<br>
-                Изработки
-            </h1>
-        </div>
+    <!-- Content wrapper -->
+    <div class="relative z-10 flex items-center justify-between w-full px-4 md:block">
 
-    
-    </section>
+        <!-- TEXT -->
+        <h1 class="text-black md:text-white text-3xl md:text-8xl lg:text-9xl font-extrabold leading-[1.1] font-sans">
+            Рачни<br>
+            Изработки
+        </h1>
+
+        <!-- BUTTON (visible on mobile, optional on desktop) -->
+        <button class="ml-4 md:hidden bg-black text-white px-4 py-2 rounded-lg">
+            Shop
+        </button>
+
+    </div>
+
+</section>
 
 
 
-<section class="max-w-6xl mx-auto px-4 py-16">
+<section class="hidden md:block max-w-6xl mx-auto px-4 py-16">
 
     <!-- TOP BOX -->
     <div class="border rounded-2xl p-8 md:p-10 bg-white shadow-sm  border-black">
@@ -85,7 +94,7 @@
     </div>
 
 </section>
-<section class="py-16">
+<section class="py-16 hidden md:block">
     <div class=" py-16">
         <div class="max-w-7xl mx-auto flex items-center gap-12 px-6">
 
@@ -164,7 +173,7 @@
         </div>
     </div>
 </section>
-<section class=" py-16">
+<section class=" py-16 hidden md:block">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
 
         <!-- TEXT LEFT -->
@@ -248,7 +257,7 @@
 
     </div>
 </section>
-<section class=" py-16">
+<section class=" py-16 hidden md:block">
     <div class=" py-16">
         <div class="max-w-7xl mx-auto flex items-center gap-12 px-6">
 
@@ -332,7 +341,7 @@
         </div>
     </div>
 </section>
-<section class=" py-16">
+<section class=" py-16 hidden md:block">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
 
         <!-- TEXT LEFT -->
@@ -410,6 +419,45 @@
         </div>
 
     </div>
+</section>
+<section class="md:hidden px-6 py-6 space-y-8 bg-gray-100">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between">
+        <h2 class="text-4xl font-bold">
+            Рачни<br>изработки
+        </h2>
+
+        <a href="racniizrabotkiU1.php" class="bg-[#2E589E] text-white text-sm px-8 py-4 rounded-lg">
+            Прегледај повеќе
+        </a>
+    </div>
+
+    <!-- CARD -->
+    <div class="hover:scale-110 hover:-translate-y-2 relative max-w-[300px] mx-auto rounded-2xl overflow-hidden shadow-md">
+        <img src="https://picsum.photos/500/400?1" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
+    <div class="hover:scale-110 hover:-translate-y-2 relative max-w-[300px] mx-auto rounded-2xl overflow-hidden shadow-md">
+        <img src="https://picsum.photos/500/400?2" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
+    <div class="hover:scale-110 hover:-translate-y-2 relative max-w-[300px] mx-auto rounded-2xl overflow-hidden shadow-md">
+        <img src="https://picsum.photos/500/400?3" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
 </section>
 
 
