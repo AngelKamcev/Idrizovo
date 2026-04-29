@@ -6,7 +6,7 @@
 
 
 <section
-    class="hidden relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-start justify-start"
+    class="hidden md:block relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-start justify-start"
     style="background-image: url('sliki/ChatGPT Image Apr 28, 2026, 10_45_13 PM.png')">
 
     <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"></div>
