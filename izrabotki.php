@@ -6,28 +6,23 @@
 
 
 <section
-    class=" hidden md:block items-center relative w-full min-h-screen bg-gray-100 md:bg-cover md:bg-center md:bg-no-repeat"
+    class="hidden relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-start justify-start"
     style="background-image: url('sliki/ChatGPT Image Apr 28, 2026, 10_45_13 PM.png')">
 
-    <!-- Overlay only for desktop -->
-    <div class="hidden md:block absolute inset-0 bg-gradient-to-r from-black/30 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"></div>
 
-    <!-- Content wrapper -->
-    <div class="relative z-10 flex items-center justify-between w-full px-4 md:block">
+    <div class="relative z-10 p-8 md:pt-40 md:pl-64 lg:pl-80">
 
-        <!-- TEXT -->
-        <h1 class="text-black md:text-white text-3xl md:text-8xl lg:text-9xl font-extrabold leading-[1.1] font-sans">
+        <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight font-sans">
             Рачни<br>
             Изработки
         </h1>
 
-        <!-- BUTTON (visible on mobile, optional on desktop) -->
-        <button class="ml-4 md:hidden bg-black text-white px-4 py-2 rounded-lg">
-            Shop
+        <button class="mt-6 md:hidden bg-white text-black font-bold px-6 py-3 rounded-full shadow-lg">
+            Shop Now
         </button>
 
     </div>
-
 </section>
 
 
