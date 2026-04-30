@@ -27,7 +27,7 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.35) !important;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-radius: 4px;
+            border-radius: 15px;
         }
 
         .btn-more {
