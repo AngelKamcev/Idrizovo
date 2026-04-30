@@ -85,7 +85,11 @@
                     </a>
                 </li>
                 <li>
+<<<<<<< HEAD
                     <a href="aboutus.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
+=======
+                    <a href="zanas.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
+>>>>>>> izabela
                         <?php echo (basename($_SERVER['PHP_SELF']) === 'aboutus.php') ? 'border-blue-300' : ''; ?>">
                         За нас
                     </a>
@@ -101,7 +105,11 @@
                         <div class="py-2">
                             <a href="novosti.php" class="block px-4 py-2 hover:bg-gray-100">Најнови вести</a>
                             <a href="soopstenija.php" class="block px-4 py-2 hover:bg-gray-100">Соопштенија</a>
+<<<<<<< HEAD
                             <a href="Activities.php" class="block px-4 py-2 hover:bg-gray-100">Активности</a>
+=======
+                            <a href="galerija.php" class="block px-4 py-2 hover:bg-gray-100">Галерија</a>
+>>>>>>> izabela
                         </div>
                     </div>
                 </li>
@@ -112,8 +120,13 @@
                     </a>
                 </li>
                 <li>
+<<<<<<< HEAD
                     <a href="Contact.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
                         <?php echo (basename($_SERVER['PHP_SELF']) === 'Contact.php') ? 'border-blue-300' : ''; ?>">
+=======
+                    <a href="kontakt.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
+                        <?php echo (basename($_SERVER['PHP_SELF']) === 'kontakt.php') ? 'border-blue-300' : ''; ?>">
+>>>>>>> izabela
                         Контакт
                     </a>
                 </li>
@@ -168,14 +181,22 @@
                     <div id="mob-sub" class="mob-sub bg-[#1c3a6a] rounded-b-md">
                         <a href="novosti.php" class="block py-2 px-6 hover:text-blue-200 transition border-b border-blue-400/10">Најнови вести</a>
                         <a href="sooshtuvanja.php" class="block py-2 px-6 hover:text-blue-200 transition border-b border-blue-400/10">Соопштенија</a>
+<<<<<<< HEAD
                         <a href="Activities.php" class="block py-2 px-6 hover:text-blue-200 transition">Активности</a>
+=======
+                        <a href="galerija.php" class="block py-2 px-6 hover:text-blue-200 transition">Галерија</a>
+>>>>>>> izabela
                     </div>
                 </li>
                 <li>
                     <a href="izrabotki.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Изработки</a>
                 </li>
                 <li>
+<<<<<<< HEAD
                     <a href="k.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Контакт</a>
+=======
+                    <a href="kontakt.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Контакт</a>
+>>>>>>> izabela
                 </li>
                 <li class="pt-3 pb-2">
                     <button class="w-full bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md">
