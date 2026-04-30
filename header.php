@@ -112,8 +112,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="Contact.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
-                        <?php echo (basename($_SERVER['PHP_SELF']) === 'Contact.php') ? 'border-blue-300' : ''; ?>">
+                    <a href="kontakt.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
+                        <?php echo (basename($_SERVER['PHP_SELF']) === 'kontakt.php') ? 'border-blue-300' : ''; ?>">
                         Контакт
                     </a>
                 </li>
@@ -175,7 +175,7 @@
                     <a href="izrabotki.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Изработки</a>
                 </li>
                 <li>
-                    <a href="kontakt.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Контакт</a>
+                    <a href="k.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Контакт</a>
                 </li>
                 <li class="pt-3 pb-2">
                     <button class="w-full bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md">
