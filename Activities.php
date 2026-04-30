@@ -43,11 +43,7 @@
         </div>
     </section>
 
-    <button class="fixed bottom-8 right-8 bg-[#2E589E] hover:bg-blue-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-2xl transition-all duration-300 z-50">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
+    
 
 
     <section class="md:hidden max-w-md mx-auto py-12">

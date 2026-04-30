@@ -101,7 +101,7 @@
                         <div class="py-2">
                             <a href="novosti.php" class="block px-4 py-2 hover:bg-gray-100">Најнови вести</a>
                             <a href="soopstenija.php" class="block px-4 py-2 hover:bg-gray-100">Соопштенија</a>
-                            <a href="galerija.php" class="block px-4 py-2 hover:bg-gray-100">Галерија</a>
+                            <a href="Activities.php" class="block px-4 py-2 hover:bg-gray-100">Активности</a>
                         </div>
                     </div>
                 </li>
