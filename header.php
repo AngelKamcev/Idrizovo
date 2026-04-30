@@ -86,7 +86,7 @@
                 </li>
                 <li>
                     <a href="zanas.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
-                        <?php echo (basename($_SERVER['PHP_SELF']) === 'zanas.php') ? 'border-blue-300' : ''; ?>">
+                        <?php echo (basename($_SERVER['PHP_SELF']) === 'aboutus.php') ? 'border-blue-300' : ''; ?>">
                         За нас
                     </a>
                 </li>
@@ -156,7 +156,7 @@
                     <a href="index.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Дома</a>
                 </li>
                 <li>
-                    <a href="zanas.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">За нас</a>
+                    <a href="aboutus.php" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">За нас</a>
                 </li>
                 <li>
                     <button id="mob-dropdown-btn" class="w-full flex items-center justify-between py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">
