@@ -112,8 +112,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="kontakt.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
-                        <?php echo (basename($_SERVER['PHP_SELF']) === 'kontakt.php') ? 'border-blue-300' : ''; ?>">
+                    <a href="Contact.php" class="border-b-2 border-transparent hover:border-blue-300 pb-1 transition-all
+                        <?php echo (basename($_SERVER['PHP_SELF']) === 'Contact.php') ? 'border-blue-300' : ''; ?>">
                         Контакт
                     </a>
                 </li>
