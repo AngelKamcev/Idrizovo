@@ -168,7 +168,7 @@
                     <div id="mob-sub" class="mob-sub bg-[#1c3a6a] rounded-b-md">
                         <a href="novosti.php" class="block py-2 px-6 hover:text-blue-200 transition border-b border-blue-400/10">Најнови вести</a>
                         <a href="sooshtuvanja.php" class="block py-2 px-6 hover:text-blue-200 transition border-b border-blue-400/10">Соопштенија</a>
-                        <a href="galerija.php" class="block py-2 px-6 hover:text-blue-200 transition">Галерија</a>
+                        <a href="Activities.php" class="block py-2 px-6 hover:text-blue-200 transition">Активности</a>
                     </div>
                 </li>
                 <li>
