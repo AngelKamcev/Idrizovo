@@ -49,7 +49,7 @@ require_once __DIR__ . '/header.php'; ?>
     <!-- ================= HERO ================= -->
     <div class="relative w-full overflow-hidden bg-[#1a3a6b] h-[520px] md:h-[820px]">
         <img class="absolute inset-0 w-full h-full object-cover object-center"
-            src="./1777292658-SlikiZatvor/Messenger_creation_1ADAC9BC-9BF5-494E-B7B5-AC6B7B26CBF1.jpeg" alt="За Нас">
+            src="sliki/hero_main.jpeg" alt="За Нас">
         <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,30,70,0.3) 0%, rgba(10,30,70,0.6) 100%);"></div>
 
         <div class="absolute top-20 left-6 md:left-28 text-black text-4xl md:text-7xl font-bold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.4);">
@@ -100,9 +100,9 @@ require_once __DIR__ . '/header.php'; ?>
                 title="Кликни за да превртиш страница">
 
                 <div id="pages" class="relative w-full h-full">
-                    <img src="1777292658-SlikiZatvor/vesnik.png"
+                    <img src="assets/images/vesnik.png"
                         class="page absolute w-full h-full object-contain rounded-xl shadow-2xl">
-                    <img src="1777292658-SlikiZatvor/vesnik2.png"
+                    <img src="assets/images/vesnik2.png"
                         class="page absolute w-full h-full object-contain rounded-xl shadow-2xl">
                 </div>
 
@@ -234,7 +234,7 @@ require_once __DIR__ . '/header.php'; ?>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
                         <h3 class="text-[16px] font-bold underline mb-4">Lorem Ipsum</h3>
                         <p class="text-[11px] leading-[20px] text-white">
@@ -245,7 +245,7 @@ require_once __DIR__ . '/header.php'; ?>
                 </div>
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
                         <h3 class="text-[16px] font-bold underline mb-4">Lorem Ipsum</h3>
                         <p class="text-[11px] leading-[20px] text-white">
@@ -256,7 +256,7 @@ require_once __DIR__ . '/header.php'; ?>
                 </div>
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
                         <h3 class="text-[16px] font-bold underline mb-4">Lorem Ipsum</h3>
                         <p class="text-[11px] leading-[20px] text-white">
@@ -278,28 +278,28 @@ require_once __DIR__ . '/header.php'; ?>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-14 md:mb-16">
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
                         РАЧНИ ИЗРАБОТКИ
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
                         АКТИВНОСТИ
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
                         НАСТАНИ
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
                         УСТАНОВА
                     </div>
@@ -310,23 +310,23 @@ require_once __DIR__ . '/header.php'; ?>
             <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
 
                 <div class="col-span-2 h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                 </div>
 
                 <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                 </div>
 
                 <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                 </div>
 
                 <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                 </div>
 
                 <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
                 </div>
 
             </div>
@@ -345,7 +345,7 @@ require_once __DIR__ . '/header.php'; ?>
 
                 <div class="flex flex-col items-center">
                     <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="./1777542313-Gemini_Generated_Image_mncbfamncbfamncb_(1)_1/Gemini_Generated_Image_mncbfamncbfamncb (1) 1.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                        <img src="sliki/dokumenti.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
                     </div>
 
                     <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
@@ -363,7 +363,7 @@ require_once __DIR__ . '/header.php'; ?>
 
                 <div class="flex flex-col items-center">
                     <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="./1777542313-Gemini_Generated_Image_mncbfamncbfamncb_(1)_1/Gemini_Generated_Image_2wsngo2wsngo2wsn (2) 1.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                        <img src="sliki/dokumenti.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
                     </div>
 
                     <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
@@ -381,7 +381,7 @@ require_once __DIR__ . '/header.php'; ?>
 
                 <div class="flex flex-col items-center">
                     <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="./1777542313-Gemini_Generated_Image_mncbfamncbfamncb_(1)_1/Gemini_Generated_Image_g8opq7g8opq7g8op (1) 1.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                        <img src="sliki/dokumenti.png" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
                     </div>
 
                     <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
@@ -415,7 +415,7 @@ require_once __DIR__ . '/header.php'; ?>
 
     </div>
 
-   <?php require_once __DIR__ . './footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 
     <script>
         // ================= ACTIVITIES LOGIC =================
@@ -436,7 +436,7 @@ require_once __DIR__ . '/header.php'; ?>
             card.style.transition = "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease";
             card.style.cursor = "pointer";
             card.innerHTML = `
-        <img src="1777292658-SlikiZatvor/bla.jpeg" class="w-full h-full object-cover">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
         <div class="absolute bottom-0 bg-black/60 text-white p-4 w-full">
             <h3 class="font-semibold">${name}</h3>
             <p class="text-xs mt-1">Опис на активност...</p>

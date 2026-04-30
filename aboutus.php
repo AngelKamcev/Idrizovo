@@ -36,7 +36,7 @@
 
     <div class="relative w-full overflow-hidden bg-[#1a3a6b] h-[400px] md:h-[640px]">
         <img class="absolute inset-0 w-full h-full object-cover object-center"
-             src="sliki/Messenger_creation_2D8D7027-2212-4923-A82D-8CD441E87881.jpeg" alt="За Нас">
+             src="sliki/about_hero.jpeg" alt="За Нас">
         <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,30,70,0.3) 0%, rgba(10,30,70,0.6) 100%);"></div>
 
         <div class="absolute top-20 left-6 md:left-28 text-black text-4xl md:text-7xl font-bold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.4);">
@@ -52,7 +52,7 @@
 
     <div id="istorija" class="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-16 flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <div class="flex-shrink-0 w-full md:w-[420px]">
-            <img src="sliki/Messenger_creation_2D8D7027-2212-4923-A82D-8CD441E87881.jpeg" alt="Историја"
+            <img src="sliki/about_hero.jpeg" alt="Историја"
                  class="w-full h-[300px] md:h-[410px] object-cover rounded-2xl block shadow-md">
         </div>
         <div class="flex-1 text-center md:text-left">
@@ -81,8 +81,8 @@
         <div class="flex flex-col md:flex-row flex-wrap justify-center items-center md:items-start gap-12 md:gap-32">
             <?php
             $uprava_members = array(
-                array('image' => 'sliki/Messenger_creation_2D8D7027-2212-4923-A82D-8CD441E87881.jpeg', 'name' => 'М-р. Зоран Јовановски', 'title' => 'ДИРЕКТОР'),
-                array('image' => 'sliki/Messenger_creation_2D8D7027-2212-4923-A82D-8CD441E87881.jpeg', 'name' => 'Наим Љамалари', 'title' => 'ЗАМЕНИК ДИРЕКТОР'),
+                array('image' => 'sliki/about_hero.jpeg', 'name' => 'М-р. Зоран Јовановски', 'title' => 'ДИРЕКТОР'),
+                array('image' => 'sliki/about_hero.jpeg', 'name' => 'Наим Љамалари', 'title' => 'ЗАМЕНИК ДИРЕКТОР'),
             );
             foreach ($uprava_members as $member) : ?>
                 <div class="flex flex-col items-center">
@@ -146,12 +146,12 @@
         <div class="relative z-[2] max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 md:gap-x-8">
             <?php
             $sektori = array(
-                array('img' => 'sliki/1.png', 'name' => 'СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'sub' => array('1. Одделение за прием', '2. Одделение за третман', '3. Одделение за стручно инструкторски работи')),
-                array('img' => 'sliki/1.png', 'name' => 'СЕКТОР ЗА ОПШТИ-ПРАВНИ РАБОТИ', 'sub' => array('1. Одделение за општи-правни работи', '2. Одделение за јавни набавки')),
-                array('img' => 'sliki/1.png', 'name' => 'СЕКТОР ЗА ФИНАНСИСКИ ПРАШАЊА', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
-                array('img' => 'sliki/1.png', 'name' => 'ОДДЕЛЕНИЕ ЗА ЧОВЕЧКИ РЕСУРСИ', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
-                array('img' => 'sliki/1.png', 'name' => 'ОТВОРЕНО ОДДЕЛЕНИЕ ВЕЛЕС', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
-                array('img' => 'sliki/1.png', 'name' => 'СЕКТОР НА ЗАТВОРСКА ПОЛИЦИЈА', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'sub' => array('1. Одделение за прием', '2. Одделение за третман', '3. Одделение за стручно инструкторски работи')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'СЕКТОР ЗА ОПШТИ-ПРАВНИ РАБОТИ', 'sub' => array('1. Одделение за општи-правни работи', '2. Одделение за јавни набавки')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'СЕКТОР ЗА ФИНАНСИСКИ ПРАШАЊА', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'ОДДЕЛЕНИЕ ЗА ЧОВЕЧКИ РЕСУРСИ', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'ОТВОРЕНО ОДДЕЛЕНИЕ ВЕЛЕС', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
+                array('img' => 'sliki/dokumenti.png', 'name' => 'СЕКТОР НА ЗАТВОРСКА ПОЛИЦИЈА', 'sub' => array('1. Буџетска координација', '2. Сметководство')),
             );
             foreach ($sektori as $sektor) : ?>
                 <div class="flex flex-col items-center">
