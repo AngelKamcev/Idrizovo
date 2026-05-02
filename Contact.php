@@ -101,7 +101,7 @@
                 <p class="text-[13px] leading-relaxed mb-12 px-2 font-medium">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
                 </p>
-                <button class="bg-[#0E1B2F] w-full py-3 rounded-xl font-bold text-sm tracking-wide">Кликни за календар</button>
+                <button class="bg-[#0E1B2F] w-full py-3 rounded-xl font-bold text-sm mt-12 tracking-wide">Кликни за календар</button>
             </div>
 
             <div class="bg-[#6A92D4] p-10 rounded-[40px] text-white text-center shadow-xl transform transition hover:scale-105">
