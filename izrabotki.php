@@ -84,7 +84,32 @@
             <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
                 „Во секој бод и секој засек има дел од мојата тишина...“
             </div>
+            <!-- Duplicated cards for seamless looping -->
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
 
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
         </div>
     </div>
 
