@@ -63,7 +63,7 @@ require_once __DIR__ . '/header.php'; ?>
         </div>
 
         <div class="zanas-tabs absolute top-72 -left-11 px-4 md:px-40 flex flex-wrap justify-center md:justify-between items-center gap-2 md:gap-0 z-10">
-            <a href="#istorija" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105"
+            <a href="aboutus.php" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105"
                 style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">
                 Повеќе за нас
             </a>
@@ -306,30 +306,34 @@ require_once __DIR__ . '/header.php'; ?>
                 </div>
 
             </div>
+<div class="flex flex-wrap md:flex-nowrap gap-4 w-full h-auto md:h-[250px] p-4">
+    
+    <!-- Картичка 1 -->
+    <div class="flex-[1_1_100%] md:flex-1 md:hover:flex-[2.5] h-[230px] transition-all duration-500 ease-in-out rounded-[14px] overflow-hidden shadow-md cursor-pointer">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
+    </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
+    <!-- Картичка 2 -->
+    <div class="flex-[1_1_100%] md:flex-1 md:hover:flex-[2.5] h-[230px] transition-all duration-500 ease-in-out rounded-[14px] overflow-hidden shadow-md cursor-pointer">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
+    </div>
 
-                <div class="col-span-2 h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
-                </div>
+    <!-- Картичка 3 -->
+    <div class="flex-[1_1_100%] md:flex-1 md:hover:flex-[2.5] h-[230px] transition-all duration-500 ease-in-out rounded-[14px] overflow-hidden shadow-md cursor-pointer">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
+    </div>
 
-                <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
-                </div>
+    <!-- Картичка 4 -->
+    <div class="flex-[1_1_100%] md:flex-1 md:hover:flex-[2.5] h-[230px] transition-all duration-500 ease-in-out rounded-[14px] overflow-hidden shadow-md cursor-pointer">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
+    </div>
 
-                <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
-                </div>
+    <!-- Картичка 5 -->
+    <div class="flex-[1_1_100%] md:flex-1 md:hover:flex-[2.5] h-[230px] transition-all duration-500 ease-in-out rounded-[14px] overflow-hidden shadow-md cursor-pointer">
+        <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
+    </div>
 
-                <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
-                </div>
-
-                <div class="h-[180px] md:h-[230px] rounded-[14px] overflow-hidden shadow-md">
-                    <img src="assets/images/bla.jpeg" class="w-full h-full object-cover">
-                </div>
-
-            </div>
+</div>
 
         </div>
 
