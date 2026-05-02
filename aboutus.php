@@ -81,8 +81,8 @@
         <div class="flex flex-col md:flex-row flex-wrap justify-center items-center md:items-start gap-12 md:gap-32">
             <?php
             $uprava_members = array(
-                array('image' => 'sliki/about_hero.jpeg', 'name' => 'М-р. Зоран Јовановски', 'title' => 'ДИРЕКТОР'),
-                array('image' => 'sliki/about_hero.jpeg', 'name' => 'Наим Љамалари', 'title' => 'ЗАМЕНИК ДИРЕКТОР'),
+                array('image' => 'sliki/direktor.png', 'name' => 'М-р. Зоран Јовановски', 'title' => 'ДИРЕКТОР'),
+                array('image' => 'sliki/direktor.png', 'name' => 'Наим Љамалари', 'title' => 'ЗАМЕНИК ДИРЕКТОР'),
             );
             foreach ($uprava_members as $member) : ?>
                 <div class="flex flex-col items-center">

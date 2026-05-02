@@ -59,7 +59,7 @@ require_once __DIR__ . '/header.php'; ?>
             ИДРИЗОВО
         </div>
         <div class="absolute top-[18rem] md:top-[22rem] left-6 md:left-28 text-white text-sm md:text-xl font-semibold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.6);">
-            со отворено оделение Велес
+            со отворено одделение Велес
         </div>
 
         <div class="zanas-tabs absolute top-72 -left-11 px-4 md:px-40 flex flex-wrap justify-center md:justify-between items-center gap-2 md:gap-0 z-10">
