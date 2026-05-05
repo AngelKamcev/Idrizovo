@@ -7,7 +7,7 @@
 
 <section
     class="hidden md:block relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-start justify-start"
-    style="background-image: url('sliki/ChatGPT Image Apr 28, 2026, 10_45_13 PM.png')">
+    style="background-image: url('sliki/hero_main.jpeg')">
 
     <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"></div>
 
@@ -84,7 +84,32 @@
             <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
                 „Во секој бод и секој засек има дел од мојата тишина...“
             </div>
+            <!-- Duplicated cards for seamless looping -->
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
 
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
+            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                „Во секој бод и секој засек има дел од мојата тишина..."
+            </div>
         </div>
     </div>
 
@@ -403,7 +428,6 @@
                    group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
             </div>
 
-
             <!-- MAIN IMAGE -->
             <div class="overflow-hidden rounded-2xl shadow-xl w-[320px] h-[420px]">
                 <img
@@ -446,6 +470,56 @@
     </div>
 
     <div class="hover:scale-110 hover:-translate-y-2 relative max-w-[300px] mx-auto rounded-2xl overflow-hidden shadow-md">
+        <img src="https://picsum.photos/500/400?3" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
+</section>
+
+
+<section class="md:hidden px-6 py-6 space-y-8 bg-gray-100">
+
+    <!-- HEADER -->
+    <div class="flex items-center justify-between">
+        <h2 class="text-4xl font-bold">
+            Рачни<br>изработки
+        </h2>
+
+        <a href="racniizrabotkiU1.php"
+           class="bg-[#2E589E] text-white text-sm px-8 py-4 rounded-lg">
+            Прегледај повеќе
+        </a>
+    </div>
+
+    <!-- CARD 1 -->
+    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
+                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
+        <img src="https://picsum.photos/500/400?1" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
+                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
+        <img src="https://picsum.photos/500/400?2" class="w-full h-[380px] object-cover">
+        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+            <h3 class="font-semibold">Lorem Ipsum</h3>
+            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+        </div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
+                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
+                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
         <img src="https://picsum.photos/500/400?3" class="w-full h-[380px] object-cover">
         <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
             <h3 class="font-semibold">Lorem Ipsum</h3>
