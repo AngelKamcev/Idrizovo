@@ -45,7 +45,7 @@ return new class extends Migration
             $table->string('qr_code_token', 150)->unique();
             $table->text('pdf_url')->nullable();
             $table->timestamp('issued_at')->useCurrent();
-            $table->timestamp('valid_until');
+            $table->timestamp('valid_until')->nullable();
         });
 
         Schema::create('visit_cancellations', function (Blueprint $table) {
