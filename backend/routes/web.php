@@ -23,3 +23,41 @@ Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki
 
 // Gallery page
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
+
+// ADMIN PANEL ROUTES
+Route::prefix('admin')->group(function () {
+    // Admin Dashboard
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+
+    // Admin Activities (Index)
+    Route::get('/activities', function () {
+        return view('admin.index_activities');
+    })->name('admin.activities');
+
+    // Admin Soopstenija
+    Route::get('/soopstenija', function () {
+        return view('admin.soopstenija');
+    })->name('admin.soopstenija');
+
+    // Admin Izrabotki
+    Route::get('/izrabotki', function () {
+        return view('admin.izrabotki');
+    })->name('admin.izrabotki');
+
+    // Admin Gallery
+    Route::get('/gallery', function () {
+        return view('admin.gallery');
+    })->name('admin.gallery');
+
+    // Admin About Us
+    Route::get('/aboutus', function () {
+        return view('admin.aboutus');
+    })->name('admin.aboutus');
+
+    // Admin Activities (Main)
+    Route::get('/main-activities', function () {
+        return view('admin.activities');
+    })->name('admin.main-activities');
+});
