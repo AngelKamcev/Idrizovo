@@ -132,9 +132,7 @@
                 <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
                     <i class="fas fa-calendar"></i><span>Активности</span>
                 </a>
-                <a href="/" class="sidebar-link">
-                    <i class="fas fa-sign-out-alt"></i><span>Одјава</span>
-                </a>
+
             </nav>
         </div>
 
@@ -193,10 +191,6 @@
 
                     <a href="/" class="sidebar-link">
                         <i class="fas fa-cog"></i><span>Поставки</span>
-                    </a>
-
-                    <a href="/" class="sidebar-link">
-                        <i class="fas fa-sign-out-alt"></i><span>Одјава</span>
                     </a>
                 </nav>
 

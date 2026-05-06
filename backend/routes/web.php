@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ProfileController;
 
 // Home page
 Route::get('/', [PagesController::class, 'index'])->name('index');
@@ -24,8 +26,18 @@ Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki
 // Gallery page
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 
+// Authentication routes
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/account', [ProfileController::class, 'edit'])->name('account.edit');
+    Route::post('/account', [ProfileController::class, 'update'])->name('account.update');
+});
+
 // ADMIN PANEL ROUTES
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     // Admin Dashboard
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
