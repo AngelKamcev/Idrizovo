@@ -81,6 +81,9 @@
                 <a href="{{ route('admin.visit-schedules') }}" class="w-full btn-primary text-left inline-flex items-center">
                     <i class="fas fa-clock mr-2"></i> Распоред на посети
                 </a>
+                <a href="{{ route('admin.visit-requests') }}" class="w-full btn-primary text-left inline-flex items-center">
+                    <i class="fas fa-calendar-check mr-2"></i> Барања за посета
+                </a>
                 <a href="{{ route('admin.complaints') }}" class="w-full btn-primary text-left inline-flex items-center">
                     <i class="fas fa-comments mr-2"></i> Пофалби / Жалби
                 </a>

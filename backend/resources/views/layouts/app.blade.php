@@ -117,9 +117,9 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <button class="bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md whitespace-nowrap">
+                <a href="{{ route('zakazi-poseta') }}" class="inline-flex items-center bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md whitespace-nowrap">
                     Закажи посета
-                </button>
+                </a>
             </div>
 
             <div class="flex md:hidden items-center space-x-4">
@@ -165,9 +165,9 @@
                     <a href="{{ route('contact') }}" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">Контакт</a>
                 </li>
                 <li>
-                    <button class="w-full text-left py-3 px-2 bg-[#0e1b2f] text-white rounded font-semibold hover:bg-black transition mt-2">
+                    <a href="{{ route('zakazi-poseta') }}" class="block w-full text-left py-3 px-2 bg-[#0e1b2f] text-white rounded font-semibold hover:bg-black transition mt-2">
                         Закажи посета
-                    </button>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -242,9 +242,9 @@
             </div>
 
             <div class="flex-shrink-0 mt-10 md:mt-0">
-                <button class="bg-[#111827] text-white px-10 mb-12 py-3 rounded-[4px] text-[15px] font-semibold hover:bg-black transition-all shadow-md">
+                <a href="{{ route('zakazi-poseta') }}" class="inline-block bg-[#111827] text-white px-10 mb-12 py-3 rounded-[4px] text-[15px] font-semibold hover:bg-black transition-all shadow-md">
                     Закажи посета
-                </button>
+                </a>
             </div>
         </div>
     </footer>

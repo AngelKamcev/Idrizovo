@@ -16,7 +16,7 @@ class VisitScheduleSeeder extends Seeder
 
         VisitSchedule::updateOrCreate(
             ['group_name' => '2 Група'],
-            ['days_label' => 'Понеделник - Четврток', 'time_range' => '10:30-11:30', 'sort_order' => 2, 'is_active' => true]
+            ['days_label' => 'Понеделник - Петок', 'time_range' => '10:30-11:30', 'sort_order' => 2, 'is_active' => true]
         );
 
         VisitSchedule::updateOrCreate(

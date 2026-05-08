@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Admin Panel') - Идризово</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        [x-cloak] {
+            display: none !important;
+        }
+
+        [x-cloak=""] {
+            display: none !important;
+        }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
@@ -132,6 +140,9 @@
                 <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
                     <i class="fas fa-clock"></i><span>Распоред на посети</span>
                 </a>
+                <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                    <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
+                </a>
                 <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
                     <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
                 </a>
@@ -191,6 +202,10 @@
 
                     <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
                         <i class="fas fa-clock"></i><span>Распоред на посети</span>
+                    </a>
+
+                    <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
                     </a>
 
                     <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">

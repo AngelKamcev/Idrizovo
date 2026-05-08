@@ -1,5 +1,4 @@
 @extends('admin.layouts.app')
-
 @section('title', 'Пофалби / Жалби')
 @section('page-title', 'Пофалби / Жалби')
 @section('page-subtitle', 'Пораки што пристигнуваат преку контакт формата')
@@ -7,115 +6,139 @@
 @section('content')
 
 @if(session('success'))
-    <div class="mb-6 rounded-2xl border border-green-200 bg-green-50 px-5 py-4 text-green-800">
+    <div class="mb-6 flex items-center gap-3 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         {{ session('success') }}
     </div>
 @endif
 
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-6">
-    <div class="card">
-        <p class="text-sm text-gray-500">Вкупно пораки</p>
-        <div class="mt-2 flex items-end justify-between">
-            <h3 class="text-3xl font-bold text-gray-900">{{ $totalComplaints }}</h3>
-            <i class="fas fa-inbox text-2xl text-blue-600"></i>
+{{-- СТАТИСТИКИ --}}
+<div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+    @php
+        $stats = [
+            ['label' => 'Вкупно', 'value' => $totalComplaints, 'icon' => 'M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0H4', 'color' => 'text-blue-500'],
+            ['label' => 'Нови', 'value' => $newComplaints, 'icon' => 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9', 'color' => 'text-amber-500'],
+            ['label' => 'Прегледани', 'value' => $seenComplaints, 'icon' => 'M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z', 'color' => 'text-sky-500'],
+            ['label' => 'Затворени', 'value' => $closedComplaints, 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'text-emerald-500'],
+        ];
+    @endphp
+
+    @foreach($stats as $s)
+        <div class="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">{{ $s['label'] }}</span>
+                <svg class="w-4 h-4 {{ $s['color'] }}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="{{ $s['icon'] }}"/>
+                </svg>
+            </div>
+            <span class="text-3xl font-medium text-gray-900 leading-none">{{ $s['value'] }}</span>
         </div>
-    </div>
-    <div class="card">
-        <p class="text-sm text-gray-500">Нови</p>
-        <div class="mt-2 flex items-end justify-between">
-            <h3 class="text-3xl font-bold text-gray-900">{{ $newComplaints }}</h3>
-            <i class="fas fa-bell text-2xl text-amber-500"></i>
-        </div>
-    </div>
-    <div class="card">
-        <p class="text-sm text-gray-500">Прегледани</p>
-        <div class="mt-2 flex items-end justify-between">
-            <h3 class="text-3xl font-bold text-gray-900">{{ $seenComplaints }}</h3>
-            <i class="fas fa-eye text-2xl text-sky-600"></i>
-        </div>
-    </div>
-    <div class="card">
-        <p class="text-sm text-gray-500">Затворени</p>
-        <div class="mt-2 flex items-end justify-between">
-            <h3 class="text-3xl font-bold text-gray-900">{{ $closedComplaints }}</h3>
-            <i class="fas fa-check-circle text-2xl text-emerald-600"></i>
-        </div>
-    </div>
+    @endforeach
 </div>
 
-<div class="card overflow-hidden">
-    <div class="flex items-center justify-between mb-5">
-        <div>
-            <h3 class="text-lg font-bold text-gray-800">Пораки од контакт формата</h3>
-            <p class="text-sm text-gray-500">Тука стигнуваат пофалбите, жалбите и останатите пораки од јавниот контакт формулар.</p>
-        </div>
+{{-- ТАБЕЛА --}}
+<div class="bg-white border border-gray-100 rounded-2xl overflow-hidden">
+    <div class="px-6 py-5 border-b border-gray-100">
+        <h3 class="text-sm font-semibold text-gray-900">Пораки од контакт формата</h3>
+        <p class="text-xs text-gray-400 mt-0.5">Пофалби, жалби и прашања од јавниот формулар</p>
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full min-w-[980px]">
-            <thead class="bg-gray-50 border-b border-gray-200">
-                <tr>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Испраќач</th>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Тип / Наслов</th>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Контакт</th>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Порака</th>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Статус</th>
-                    <th class="px-5 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Дејства</th>
+        <table class="w-full min-w-[900px]">
+            <thead>
+                <tr class="border-b border-gray-100 bg-gray-50/60">
+                    <th class="px-5 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Испраќач</th>
+                    <th class="px-4 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Тип / Наслов</th>
+                    <th class="px-4 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Контакт</th>
+                    <th class="px-4 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Порака</th>
+                    <th class="px-4 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Статус</th>
+                    <th class="px-4 py-3 text-left text-[10px] font-medium text-gray-400 uppercase tracking-widest">Дејства</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200">
+            <tbody class="divide-y divide-gray-50">
                 @forelse($complaints as $complaint)
                     @php
-                        $statusClasses = [
-                            'new' => 'bg-amber-100 text-amber-800',
-                            'seen' => 'bg-sky-100 text-sky-800',
-                            'in_progress' => 'bg-violet-100 text-violet-800',
-                            'closed' => 'bg-emerald-100 text-emerald-800',
+                        $chips = [
+                            'new'         => ['bg-amber-50 text-amber-700', 'bg-amber-400', 'Ново'],
+                            'seen'        => ['bg-sky-50 text-sky-700', 'bg-sky-400', 'Прегледано'],
+                            'in_progress' => ['bg-violet-50 text-violet-700', 'bg-violet-400', 'Во работа'],
+                            'closed'      => ['bg-emerald-50 text-emerald-700', 'bg-emerald-400', 'Затворено'],
                         ];
-                        $statusLabels = [
-                            'new' => 'Ново',
-                            'seen' => 'Прегледано',
-                            'in_progress' => 'Во работа',
-                            'closed' => 'Затворено',
-                        ];
+                        [$chipClass, $dotClass, $chipLabel] = $chips[$complaint->status] ?? ['bg-gray-100 text-gray-500', 'bg-gray-300', $complaint->status];
                     @endphp
-                    <tr class="table-row align-top">
+                    <tr class="hover:bg-gray-50/50 transition-colors align-top">
+
+                        {{-- Испраќач --}}
                         <td class="px-5 py-4">
-                            <p class="font-semibold text-gray-900">{{ $complaint->submitted_by_name }}</p>
-                            <p class="text-xs text-gray-500">{{ $complaint->created_at?->format('d.m.Y H:i') }}</p>
+                            <p class="text-sm font-medium text-gray-900">{{ $complaint->submitted_by_name }}</p>
+                            <p class="text-[11px] text-gray-400 mt-0.5 tabular-nums">{{ $complaint->created_at?->format('d.m.Y H:i') }}</p>
                         </td>
-                        <td class="px-5 py-4">
-                            <p class="font-semibold text-gray-800">{{ $complaint->subject }}</p>
+
+                        {{-- Тип / Наслов --}}
+                        <td class="px-4 py-4">
+                            <p class="text-sm font-medium text-gray-900">{{ $complaint->subject }}</p>
                         </td>
-                        <td class="px-5 py-4 text-sm text-gray-600 space-y-1">
-                            <p>{{ $complaint->submitted_by_email ?: 'Нема email' }}</p>
-                            <p>{{ $complaint->submitted_by_phone ?: 'Нема телефон' }}</p>
+
+                        {{-- Контакт --}}
+                        <td class="px-4 py-4">
+                            <p class="text-xs text-gray-600">{{ $complaint->submitted_by_email ?: '—' }}</p>
+                            <p class="text-xs text-gray-400 mt-0.5">{{ $complaint->submitted_by_phone ?: '—' }}</p>
                         </td>
-                        <td class="px-5 py-4">
-                            <p class="text-sm text-gray-600 leading-6">{{ \Illuminate\Support\Str::limit($complaint->message, 140) }}</p>
+
+                        {{-- Порака --}}
+                        <td class="px-4 py-4 max-w-[260px]">
+                            <p class="text-xs text-gray-500 leading-relaxed">{{ \Illuminate\Support\Str::limit($complaint->message, 130) }}</p>
                         </td>
-                        <td class="px-5 py-4">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold {{ $statusClasses[$complaint->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                {{ $statusLabels[$complaint->status] ?? $complaint->status }}
+
+                        {{-- Статус --}}
+                        <td class="px-4 py-4">
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full {{ $chipClass }}">
+                                <span class="w-1.5 h-1.5 rounded-full {{ $dotClass }}"></span>
+                                {{ $chipLabel }}
                             </span>
                         </td>
-                        <td class="px-5 py-4">
-                            <form action="{{ route('admin.complaints.update', $complaint) }}" method="POST" class="flex flex-col gap-2">
-                                @csrf
-                                @method('PATCH')
-                                <select name="status" class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-500">
-                                    <option value="new" @selected($complaint->status === 'new')>Ново</option>
-                                    <option value="seen" @selected($complaint->status === 'seen')>Прегледано</option>
-                                    <option value="in_progress" @selected($complaint->status === 'in_progress')>Во работа</option>
-                                    <option value="closed" @selected($complaint->status === 'closed')>Затворено</option>
-                                </select>
-                                <button class="btn-primary text-sm w-fit">Зачувај</button>
-                            </form>
+
+                        {{-- Дејства --}}
+                        <td class="px-4 py-4">
+                            <div class="flex flex-col gap-2 min-w-[140px]">
+                                {{-- Брзо означување како прочитано --}}
+                                @if($complaint->status === 'new')
+                                    <form action="{{ route('admin.complaints.update', $complaint) }}" method="POST" class="contents">
+                                        @csrf @method('PATCH')
+                                        <input type="hidden" name="status" value="seen">
+                                        <button type="submit"
+                                            class="w-full py-1.5 bg-sky-50 text-sky-700 text-xs font-medium border border-sky-200 rounded-lg hover:bg-sky-100 active:scale-[0.98] transition-all flex items-center justify-center gap-1.5">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                            Прочитај
+                                        </button>
+                                    </form>
+                                @endif
+
+                                {{-- Dropdown за менување статус --}}
+                                <form action="{{ route('admin.complaints.update', $complaint) }}" method="POST" class="flex items-center gap-2">
+                                    @csrf @method('PATCH')
+                                    <div class="relative flex-1">
+                                        <select name="status"
+                                            class="w-full px-3 py-1.5 pr-8 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700
+                                                   appearance-none focus:outline-none focus:border-gray-400 transition-colors cursor-pointer">
+                                            <option value="new"         @selected($complaint->status === 'new')>Ново</option>
+                                            <option value="seen"        @selected($complaint->status === 'seen')>Прегледано</option>
+                                            <option value="in_progress" @selected($complaint->status === 'in_progress')>Во работа</option>
+                                            <option value="closed"      @selected($complaint->status === 'closed')>Затворено</option>
+                                        </select>
+                                        <svg class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                                    </div>
+                                    <button type="submit"
+                                        class="px-3 py-1.5 bg-gray-900 text-white text-xs font-medium rounded-lg hover:bg-gray-700 active:scale-[0.98] transition-all flex-shrink-0">
+                                        ✓
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="px-5 py-10 text-center text-gray-500">
+                        <td colspan="6" class="px-5 py-14 text-center text-sm text-gray-300">
                             Нема пристигнати пораки.
                         </td>
                     </tr>
@@ -124,9 +147,11 @@
         </table>
     </div>
 
-    <div class="mt-6">
-        {{ $complaints->links() }}
-    </div>
+    @if($complaints->hasPages())
+        <div class="px-6 py-4 border-t border-gray-100">
+            {{ $complaints->links() }}
+        </div>
+    @endif
 </div>
 
 @endsection

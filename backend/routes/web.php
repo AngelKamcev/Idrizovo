@@ -5,6 +5,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\VisitRequestController;
 use App\Http\Controllers\Admin\VisitScheduleController;
 
 // Home page
@@ -29,6 +30,10 @@ Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki
 // Gallery page
 Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 
+// Book visit page
+Route::get('/zakazi-poseta', [PagesController::class, 'zakaziPoseta'])->name('zakazi-poseta');
+Route::post('/zakazi-poseta', [PagesController::class, 'storeVisitRequest'])->name('zakazi-poseta.submit');
+
 // Authentication routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
@@ -50,6 +55,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/visit-schedules', [VisitScheduleController::class, 'store'])->name('admin.visit-schedules.store');
     Route::patch('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'update'])->name('admin.visit-schedules.update');
     Route::delete('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'destroy'])->name('admin.visit-schedules.destroy');
+
+    Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('admin.visit-requests');
+    Route::patch('/visit-requests/{visitRequest}', [VisitRequestController::class, 'update'])->name('admin.visit-requests.update');
 
     // Admin Activities (Index)
     Route::get('/activities', function () {
