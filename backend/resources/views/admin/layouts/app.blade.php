@@ -129,6 +129,12 @@
                 <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
                     <i class="fas fa-info-circle"></i><span>За Нас</span>
                 </a>
+                <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                    <i class="fas fa-clock"></i><span>Распоред на посети</span>
+                </a>
+                <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                    <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
+                </a>
                 <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
                     <i class="fas fa-calendar"></i><span>Активности</span>
                 </a>
@@ -181,6 +187,14 @@
 
                     <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
                         <i class="fas fa-info-circle"></i><span>За Нас</span>
+                    </a>
+
+                    <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                        <i class="fas fa-clock"></i><span>Распоред на посети</span>
+                    </a>
+
+                    <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                        <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
                     </a>
 
                     <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">

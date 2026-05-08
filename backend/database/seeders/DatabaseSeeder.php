@@ -70,5 +70,8 @@ class DatabaseSeeder extends Seeder
                 ]
             );
         }
+        $this->call([
+            VisitScheduleSeeder::class,
+        ]);
     }
 }

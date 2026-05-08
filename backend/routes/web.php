@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\VisitScheduleController;
 
 // Home page
 Route::get('/', [PagesController::class, 'index'])->name('index');
@@ -16,6 +18,7 @@ Route::get('/activities', [PagesController::class, 'activities'])->name('activit
 
 // Contact page
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+Route::post('/contact', [PagesController::class, 'storeContact'])->name('contact.submit');
 
 // Soopstenija (announcements) page
 Route::get('/soopstenija', [PagesController::class, 'soopstenija'])->name('soopstenija');
@@ -43,6 +46,11 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
 
+    Route::get('/visit-schedules', [VisitScheduleController::class, 'index'])->name('admin.visit-schedules');
+    Route::post('/visit-schedules', [VisitScheduleController::class, 'store'])->name('admin.visit-schedules.store');
+    Route::patch('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'update'])->name('admin.visit-schedules.update');
+    Route::delete('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'destroy'])->name('admin.visit-schedules.destroy');
+
     // Admin Activities (Index)
     Route::get('/activities', function () {
         return view('admin.index_activities');
@@ -67,6 +75,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/aboutus', function () {
         return view('admin.aboutus');
     })->name('admin.aboutus');
+
+    // Admin Complaints / Praise messages
+    Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
+    Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
 
     // Admin Activities (Main)
     Route::get('/main-activities', function () {

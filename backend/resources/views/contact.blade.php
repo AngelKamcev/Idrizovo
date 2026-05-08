@@ -55,12 +55,25 @@
 
             <div class="w-full lg:w-[500px] bg-white p-8 md:p-12 rounded-[40px] shadow-2xl self-start">
                 <h3 class="text-2xl font-black text-center mb-8 text-[#0a192f]">Испрати порака</h3>
-                <form class="space-y-4">
-                    <input type="text" placeholder="Име и презиме" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
-                    <input type="text" placeholder="Телефонски број" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
-                    <input type="email" placeholder="Email" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
-                    <input type="text" placeholder="Семејна врска" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
-                    <textarea rows="5" placeholder="Остави порака" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none resize-none"></textarea>
+                @if(session('success'))
+                    <div class="mb-4 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                <form class="space-y-4" method="POST" action="{{ route('contact.submit') }}">
+                    @csrf
+                    <select name="type" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
+                        <option value="">Избери тип на порака</option>
+                        <option value="Пофалба" @selected(old('type') === 'Пофалба')>Пофалба</option>
+                        <option value="Жалба" @selected(old('type') === 'Жалба')>Жалба</option>
+                        <option value="Прашање" @selected(old('type') === 'Прашање')>Прашање</option>
+                    </select>
+                    <input type="text" name="submitted_by_name" value="{{ old('submitted_by_name') }}" placeholder="Име и презиме" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
+                    <input type="text" name="submitted_by_phone" value="{{ old('submitted_by_phone') }}" placeholder="Телефонски број" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
+                    <input type="email" name="submitted_by_email" value="{{ old('submitted_by_email') }}" placeholder="Email" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
+                    <input type="text" name="subject" value="{{ old('subject') }}" placeholder="Наслов / краток опис" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
+                    <textarea name="message" rows="5" placeholder="Остави порака" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none resize-none" required>{{ old('message') }}</textarea>
                     <div class="flex justify-center pt-4">
                         <button class="bg-[#0b1b36] hover:bg-[#2E589E] text-white w-full py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95">Испрати</button>
                     </div>
@@ -97,14 +110,22 @@
 
         <div class="bg-[#6A92D4] p-10 rounded-[40px] text-white text-center shadow-xl transform transition hover:scale-105">
             <h3 class="text-2xl font-black mb-8">Преку портирница</h3>
-            <p class="text-[13px] font-medium mb-2">Понеделник - Четврток</p>
-            <p class="text-[11px] font-bold opacity-80 mb-8 italic">13:00-14:00 часот</p>
-            <p class="text-[13px] font-medium mb-6">Сабота и недела</p>
-            <div class="space-y-2 text-[11px] font-bold opacity-80 mb-10 text-center">
-                <p>1 Група: 08:30-09:30</p>
-                <p>2 Група: 10:30-11:30</p>
-                <p>3 Група: 12:30-13:30</p>
-            </div>
+            @forelse($visitSchedules ?? [] as $visitSchedule)
+                <p class="text-[13px] font-medium mb-2">{{ $visitSchedule->days_label }}</p>
+                <p class="text-[11px] font-bold opacity-80 mb-4 italic">{{ $visitSchedule->time_range }}</p>
+                <div class="space-y-2 text-[11px] font-bold opacity-80 mb-6 text-center">
+                    <p>{{ $visitSchedule->group_name }}: {{ $visitSchedule->time_range }}</p>
+                </div>
+            @empty
+                <p class="text-[13px] font-medium mb-2">Понеделник - Четврток</p>
+                <p class="text-[11px] font-bold opacity-80 mb-8 italic">13:00-14:00 часот</p>
+                <p class="text-[13px] font-medium mb-6">Сабота и недела</p>
+                <div class="space-y-2 text-[11px] font-bold opacity-80 mb-10 text-center">
+                    <p>1 Група: 08:30-09:30</p>
+                    <p>2 Група: 10:30-11:30</p>
+                    <p>3 Група: 12:30-13:30</p>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>

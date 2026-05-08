@@ -78,6 +78,12 @@
                 <button class="w-full btn-primary text-left">
                     <i class="fas fa-file-plus mr-2"></i> Ново соопштение
                 </button>
+                <a href="{{ route('admin.visit-schedules') }}" class="w-full btn-primary text-left inline-flex items-center">
+                    <i class="fas fa-clock mr-2"></i> Распоред на посети
+                </a>
+                <a href="{{ route('admin.complaints') }}" class="w-full btn-primary text-left inline-flex items-center">
+                    <i class="fas fa-comments mr-2"></i> Пофалби / Жалби
+                </a>
                 <button class="w-full btn-primary text-left">
                     <i class="fas fa-image mr-2"></i> Нова слика
                 </button>
