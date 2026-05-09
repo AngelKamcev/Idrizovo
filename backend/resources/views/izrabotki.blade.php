@@ -15,12 +15,11 @@
     <div class="relative z-10 p-8 md:pt-40 md:pl-64 lg:pl-80">
 
         <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight font-sans">
-            Рачни<br>
-            Изработки
+            {{ __('handmade_heading') }}
         </h1>
 
         <button class="mt-6 md:hidden bg-white text-black font-bold px-6 py-3 rounded-full shadow-lg">
-            Shop Now
+            {{ __('read_more') }}
         </button>
 
     </div>
@@ -33,7 +32,7 @@
     <!-- TOP BOX -->
     <div class="border rounded-2xl p-8 md:p-10 bg-white shadow-sm  border-black">
         <h2 class="text-2xl md:text-3xl font-bold mb-4">
-            Рачни изработки во КПУ Идризово
+            {{ __('handmade_intro') }}
         </h2>
 
         <p class="text-gray-700 leading-relaxed">
@@ -48,7 +47,7 @@
     <!-- QUOTE -->
     <div class="text-center my-14">
         <h3 class="text-xl md:text-2xl font-semibold italic">
-            „Секој производ носи своја приказна и допринесува за ресоцијализација.“
+            {{ __('handmade_quote') }}
         </h3>
     </div>
 
@@ -177,7 +176,7 @@
             <!-- RIGHT SIDE -->
             <div class="max-w-lg">
                 <h2 class="text-2xl font-bold mb-4">
-                    Уметност со игла и конец
+                    {{ __('needle_art') }}
                 </h2>
 
                 <p class="text-gray-700 leading-relaxed mb-6">
@@ -187,7 +186,7 @@
                 </p>
 
                 <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                    Види повеќе
+                    {{ __('view_more') }}
                 </button>
             </div>
 
@@ -200,7 +199,7 @@
         <!-- TEXT LEFT -->
         <div>
             <h2 class="text-2xl font-bold mb-4">
-                Резби од дрво
+                {{ __('wood_carving') }}
             </h2>
 
             <p class="text-gray-700 leading-relaxed mb-6">
@@ -220,7 +219,7 @@
             </p>
 
             <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                Види повеќе
+                {{ __('view_more') }}
             </button>
         </div>
 
@@ -355,8 +354,8 @@
                 </p>
 
                 <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                    Види повеќе
-                </button>
+                {{ __('view_more') }}
+            </button>
             </div>
 
         </div>
@@ -367,8 +366,8 @@
 
         <!-- TEXT LEFT -->
         <div>
-            <h2 class="text-2xl font-bold mb-4">
-                Боја и перспектива: слики од работилницата
+                <h2 class="text-2xl font-bold mb-4">
+                {{ __('activity_painting_title') }}
             </h2>
 
             <p class="text-gray-700 leading-relaxed mb-6">
@@ -382,9 +381,9 @@
                 уникатен производ – тие стануваат дел од приказна за надеж, достоинство и втори шанси.
             </p>
 
-            <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                Види повеќе
-            </button>
+                <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
+                    {{ __('view_more') }}
+                </button>
         </div>
 
         <!-- IMAGES RIGHT -->
@@ -447,12 +446,12 @@
     <!-- HEADER -->
     <div class="flex items-center justify-between">
         <h2 class="text-4xl font-bold">
-            Рачни<br>изработки
+            {{ __('handmade_items') }}
         </h2>
 
         <a href="{{ route('izrabotki') }}"
            class="bg-[#2E589E] text-white text-sm px-8 py-4 rounded-lg">
-            Прегледај повеќе
+            {{ __('read_more') }}
         </a>
     </div>
 
@@ -462,8 +461,8 @@
                 hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
         <img src="https://picsum.photos/500/400?1" class="w-full h-[380px] object-cover">
         <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold">Lorem Ipsum</h3>
-            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+            <h3 class="font-semibold">{{ __('handmade_card_1_title') }}</h3>
+            <p class="text-sm opacity-80">{{ __('handmade_card_1_body') }}</p>
         </div>
     </div>
 
@@ -473,8 +472,8 @@
                 hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
         <img src="https://picsum.photos/500/400?2" class="w-full h-[380px] object-cover">
         <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold">Lorem Ipsum</h3>
-            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+            <h3 class="font-semibold">{{ __('handmade_card_2_title') }}</h3>
+            <p class="text-sm opacity-80">{{ __('handmade_card_2_body') }}</p>
         </div>
     </div>
 
@@ -484,8 +483,8 @@
                 hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
         <img src="https://picsum.photos/500/400?3" class="w-full h-[380px] object-cover">
         <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold">Lorem Ipsum</h3>
-            <p class="text-sm opacity-80">Lorem Ipsum is simply dummy text</p>
+            <h3 class="font-semibold">{{ __('handmade_card_3_title') }}</h3>
+            <p class="text-sm opacity-80">{{ __('handmade_card_3_body') }}</p>
         </div>
     </div>
 

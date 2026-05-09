@@ -5,91 +5,110 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
 use App\Http\Controllers\Admin\VisitScheduleController;
 
-// Home page
-Route::get('/', [PagesController::class, 'index'])->name('index');
+// Closure to define shared public routes
+$publicRoutes = function () {
+    // Home page
+    Route::get('/', [PagesController::class, 'index'])->name('index');
 
-// About us page
-Route::get('/about', [PagesController::class, 'aboutus'])->name('aboutus');
+    // About us page
+    Route::get('/about', [PagesController::class, 'aboutus'])->name('aboutus');
 
-// Activities page
-Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
+    // Activities page
+    Route::get('/activities', [PagesController::class, 'activities'])->name('activities');
 
-// Contact page
-Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
-Route::post('/contact', [PagesController::class, 'storeContact'])->name('contact.submit');
+    // Contact page
+    Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
+    Route::post('/contact', [PagesController::class, 'storeContact'])->name('contact.submit');
 
-// Soopstenija (announcements) page
-Route::get('/soopstenija', [PagesController::class, 'soopstenija'])->name('soopstenija');
+    // Soopstenija (announcements) page
+    Route::get('/soopstenija', [PagesController::class, 'soopstenija'])->name('soopstenija');
 
-// Izrabotki (crafts) page
-Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki');
+    // Izrabotki (crafts) page
+    Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki');
 
-// Gallery page
-Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
+    // Gallery page
+    Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
 
-// Book visit page
-Route::get('/zakazi-poseta', [PagesController::class, 'zakaziPoseta'])->name('zakazi-poseta');
-Route::post('/zakazi-poseta', [PagesController::class, 'storeVisitRequest'])->name('zakazi-poseta.submit');
+    // Book visit page
+    Route::get('/zakazi-poseta', [PagesController::class, 'zakaziPoseta'])->name('zakazi-poseta');
+    Route::post('/zakazi-poseta', [PagesController::class, 'storeVisitRequest'])->name('zakazi-poseta.submit');
 
-// Authentication routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
-Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
+    // Authentication routes
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth')->name('logout');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/account', [ProfileController::class, 'edit'])->name('account.edit');
-    Route::post('/account', [ProfileController::class, 'update'])->name('account.update');
-});
+    Route::middleware('auth')->group(function () {
+        Route::get('/account', [ProfileController::class, 'edit'])->name('account.edit');
+        Route::post('/account', [ProfileController::class, 'update'])->name('account.update');
+    });
+};
+
+// PUBLIC ROUTES WITH LANGUAGE PREFIXES
+// Macedonian routes (mk)
+Route::prefix('mk')->middleware('setLocale')->group($publicRoutes);
+
+// English routes (en)
+Route::prefix('en')->middleware('setLocale')->group($publicRoutes);
+
+// Albanian routes (sq)
+Route::prefix('sq')->middleware('setLocale')->group($publicRoutes);
+
+// Root routes (default to Macedonian)
+$publicRoutes();
 
 // ADMIN PANEL ROUTES
 Route::prefix('admin')->middleware('auth')->group(function () {
-    // Admin Dashboard
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
+    Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('admin.settings.password');
 
-    Route::get('/visit-schedules', [VisitScheduleController::class, 'index'])->name('admin.visit-schedules');
-    Route::post('/visit-schedules', [VisitScheduleController::class, 'store'])->name('admin.visit-schedules.store');
-    Route::patch('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'update'])->name('admin.visit-schedules.update');
-    Route::delete('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'destroy'])->name('admin.visit-schedules.destroy');
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/settings/users', [SettingsController::class, 'storeUser'])->name('admin.settings.users');
+        Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('admin.visit-requests');
+        Route::patch('/visit-requests/{visitRequest}', [VisitRequestController::class, 'update'])->name('admin.visit-requests.update');
+    });
 
-    Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('admin.visit-requests');
-    Route::patch('/visit-requests/{visitRequest}', [VisitRequestController::class, 'update'])->name('admin.visit-requests.update');
+    Route::middleware('role:admin,vospituvac')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
 
-    // Admin Activities (Index)
-    Route::get('/activities', function () {
-        return view('admin.index_activities');
-    })->name('admin.activities');
+        Route::get('/visit-schedules', [VisitScheduleController::class, 'index'])->name('admin.visit-schedules');
+        Route::post('/visit-schedules', [VisitScheduleController::class, 'store'])->name('admin.visit-schedules.store');
+        Route::patch('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'update'])->name('admin.visit-schedules.update');
+        Route::delete('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'destroy'])->name('admin.visit-schedules.destroy');
 
-    // Admin Soopstenija
-    Route::get('/soopstenija', function () {
-        return view('admin.soopstenija');
-    })->name('admin.soopstenija');
+        Route::get('/activities', function () {
+            return view('admin.index_activities');
+        })->name('admin.activities');
 
-    // Admin Izrabotki
-    Route::get('/izrabotki', function () {
-        return view('admin.izrabotki');
-    })->name('admin.izrabotki');
+        Route::get('/soopstenija', function () {
+            return view('admin.soopstenija');
+        })->name('admin.soopstenija');
 
-    // Admin Gallery
-    Route::get('/gallery', function () {
-        return view('admin.gallery');
-    })->name('admin.gallery');
+        Route::get('/izrabotki', function () {
+            return view('admin.izrabotki');
+        })->name('admin.izrabotki');
 
-    // Admin About Us
-    Route::get('/aboutus', function () {
-        return view('admin.aboutus');
-    })->name('admin.aboutus');
+        Route::get('/gallery', function () {
+            return view('admin.gallery');
+        })->name('admin.gallery');
 
-    // Admin Complaints / Praise messages
-    Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
-    Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+        Route::get('/aboutus', function () {
+            return view('admin.aboutus');
+        })->name('admin.aboutus');
 
-    // Admin Activities (Main)
-    Route::get('/main-activities', function () {
-        return view('admin.activities');
-    })->name('admin.main-activities');
+        Route::get('/main-activities', function () {
+            return view('admin.activities');
+        })->name('admin.main-activities');
+    });
+
+    Route::middleware('role:admin,reviewer')->group(function () {
+        Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
+        Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+    });
 });

@@ -44,13 +44,13 @@
         <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,30,70,0.3) 0%, rgba(10,30,70,0.6) 100%);"></div>
 
         <div class="absolute top-20 left-6 md:left-28 text-black text-4xl md:text-7xl font-bold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.4);">
-            ЗА НАС
+            {{ __('about_title') }}
         </div>
 
         <div class="zanas-tabs absolute bottom-6 left-0 right-0 px-4 md:px-40 flex flex-wrap justify-center md:justify-between items-center gap-2 md:gap-0 z-10">
-            <a href="#istorija" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">ИСТОРИЈА</a>
-            <a href="#misija"   class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">МИСИЈА</a>
-            <a href="#vizija"   class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">ВИЗИЈА</a>
+            <a href="#istorija" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">{{ __('history') }}</a>
+            <a href="#misija"   class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">{{ __('mission') }}</a>
+            <a href="#vizija"   class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105" style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">{{ __('vision') }}</a>
         </div>
     </div>
 
@@ -60,30 +60,21 @@
                  class="w-full h-[300px] md:h-[410px] object-cover rounded-2xl block shadow-md">
         </div>
         <div class="flex-1 text-center md:text-left">
-            <h2 class="text-[1.6rem] md:text-[1.9rem] font-bold text-[#1a1a1a] mb-5 mt-0">Историја</h2>
+            <h2 class="text-[1.6rem] md:text-[1.9rem] font-bold text-[#1a1a1a] mb-5 mt-0">{{ __('history') }}</h2>
             <p class="text-[0.95rem] leading-7 text-[#333] mb-4">
-                Казнено-Поправниот Дом Идризово е најголемата затворска установа
-                во Република С. Македонија. Таа се наоѓа около 10 километри
-                југоисточно од Скопје и претставува централна установа за
-                издржување затворски казни.
+                {{ __('about_history_p1') }}
             </p>
             <p class="text-[0.95rem] leading-7 text-[#333] mb-6">
-                Историјата на КПД Идризово започнува во текот на Втората светска
-                војна, кога е изграден воен камп од страна на бугарската окупаторска
-                војска. Веднаш по завршувањето на Втората светска војна продолжува
-                да функционира како затвор – работна колонија, каде што
-                затворениците биле ангажирани во земјоделски и градежни работи. Со
-                текот на времето, установата се проширила и станала најголемиот
-                затвор во државата.
+                {{ __('about_history_p2') }}
             </p>
-            <a href="#" class="inline-block text-[#1a1a1a] text-[0.95rem] font-bold underline underline-offset-4 mt-1 hover:text-[#2E589E] transition-colors">Прочитај повеќе</a>
+            <a href="#" class="inline-block text-[#1a1a1a] text-[0.95rem] font-bold underline underline-offset-4 mt-1 hover:text-[#2E589E] transition-colors">{{ __('read_more') }}</a>
         </div>
     </div>
 
     
 
     <div id="uprava" class="max-w-[1200px] mx-auto px-6 md:px-10 pt-4 pb-12 mt-10 md:mt-20">
-        <h2 class="text-[1.4rem] font-bold text-[#1a2a4a] mb-10 text-center md:text-left">Управа</h2>
+        <h2 class="text-[1.4rem] font-bold text-[#1a2a4a] mb-10 text-center md:text-left">{{ __('management') }}</h2>
         <div class="flex flex-col md:flex-row flex-wrap justify-center items-center md:items-start gap-12 md:gap-32">
             @php
                 $uprava_members = [
@@ -103,7 +94,7 @@
     </div>
 
     <div id="odgovorni" class="max-w-[1100px] mx-auto px-6 pb-20 mt-10 md:mt-20">
-        <h2 class="text-[1.4rem] md:text-[1.6rem] font-bold text-black mb-12 text-center">Одговорни службени лица</h2>
+        <h2 class="text-[1.4rem] md:text-[1.6rem] font-bold text-black mb-12 text-center">{{ __('responsible_officers') }}</h2>
         <div class="flex flex-wrap gap-6 justify-center">
             @php
                 $odgovorni = [
@@ -132,25 +123,19 @@
     </div>
 
     <div id="pravilnik" class="max-w-[1100px] mx-auto px-6 py-12 md:py-20 text-center">
-        <h2 class="text-[1.5rem] md:text-[1.8rem] font-bold text-black mb-4 tracking-tight uppercase">Правилник</h2>
+        <h2 class="text-[1.5rem] md:text-[1.8rem] font-bold text-black mb-4 tracking-tight uppercase">{{ __('regulation') }}</h2>
         <h3 class="text-[1rem] md:text-[1.25rem] font-bold text-black mb-10 max-w-[900px] mx-auto leading-tight">
-            за внатрешна организација и работа на Казнено-поправната установа Идризово
+            {{ __('regulation_subtitle') }}
         </h3>
         <p class="text-[0.95rem] text-black leading-[1.8] mb-10 max-w-[950px] mx-auto font-normal">
-
-        Со овој Правилник се уредува организацијата и работата на Казнено-поправната установа - Казнено-поправниот дом Идризово - со отворено одделение во Велес
-
-        (во понатамошниот текст: Установата), се утврдуваат внатрешната организација, видот на организационите единици и нивниот делокруг на работење, раководење во
-
-        Установата и во организационите единици, програмирањето и извршувањето на работите и задачите во установата.
-
-    </p>
-            <a href="{{ asset('documents/pravilnik.pdf') }}" target="_blank" class="inline-block bg-[#0F1C2E] hover:bg-black text-white text-[0.8rem] md:text-[0.9rem] font-bold px-10 md:px-12 py-3 md:py-3.5 rounded-md transition-all no-underline shadow-md">ПРЕВЗЕМИ</a>
+            {{ __('about_regulation_text') }}
+        </p>
+            <a href="{{ asset('documents/pravilnik.pdf') }}" target="_blank" class="inline-block bg-[#0F1C2E] hover:bg-black text-white text-[0.8rem] md:text-[0.9rem] font-bold px-10 md:px-12 py-3 md:py-3.5 rounded-md transition-all no-underline shadow-md">{{ __('download') }}</a>
     </div>
 
     <div id="sektori" class="section-sektori relative px-6 py-16 md:py-[100px] overflow-hidden" 
          style="background: linear-gradient(180deg, #5179B9 0%, #79A3D9 50%, #BDD4F0 100%);">
-        <h2 class="relative z-[2] max-w-[1100px] mx-auto mb-16 text-[1.8rem] md:text-[2.2rem] font-bold text-[#1a2a4a] text-center md:text-left">Сектори</h2>
+        <h2 class="relative z-[2] max-w-[1100px] mx-auto mb-16 text-[1.8rem] md:text-[2.2rem] font-bold text-[#1a2a4a] text-center md:text-left">{{ __('sectors') }}</h2>
         <div class="relative z-[2] max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 md:gap-x-8">
             @php
                 $sektori = [

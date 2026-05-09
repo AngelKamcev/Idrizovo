@@ -11,9 +11,9 @@
         <div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-16 relative z-10">
             
             <div class="w-full lg:w-1/2">
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-[#0a192f]">Контакт</h2>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-[#0a192f]">{{ __('contact_title') }}</h2>
                 <p class="text-white text-base mb-10 leading-relaxed max-w-lg opacity-95">
-                    Доколку имате прашања, потреба од дополнителни информации или сакате да закажете официјална посета, нашиот тим е тука за вас.
+                    {{ __('contact_description') }}
                 </p>
 
                 <div class="space-y-4 mb-12">
@@ -23,7 +23,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                             </svg>
                         </div>
-                        <span class="text-xs font-bold text-[#0a192f]">Телефонски број: 02 25 80 312</span>
+                        <span class="text-xs font-bold text-[#0a192f]">{{ __('phone_number') }}: 02 25 80 312</span>
                     </div>
                     <div class="bg-white/95 p-3 rounded-xl shadow-sm flex items-center max-w-md">
                         <div class=" p-2 rounded-lg mr-4 ml-1">
@@ -40,21 +40,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
-                        <span class="text-xs font-bold text-[#0a192f]">Ул.1 Колонија Идризово бр. 4А</span>
+                        <span class="text-xs font-bold text-[#0a192f]">{{ __('address') }}</span>
                     </div>
                 </div>
 
                 <div class="bg-white/95 p-3 rounded-xl shadow-sm max-w-md text-center hidden md:block">
-                    <h4 class="font-black text-[#2E589E] text-sm uppercase mb-4 tracking-widest">Работно време</h4>
+                    <h4 class="font-black text-[#2E589E] text-sm uppercase mb-4 tracking-widest">{{ __('working_hours') }}</h4>
                     <div class="space-y-2 text-[11px] text-gray-600 font-bold uppercase">
-                        <p>Пн-Пт: 07:00 - 15:00</p>
-                        <p>Сб-Нд: Затворено</p>
+                        <p>{{ __('monday_friday') }}: {{ __('working_hours_1') }}</p>
+                        <p>{{ __('saturday_sunday') }}: {{ __('closed') }}</p>
                     </div>
                 </div>
             </div>
 
             <div class="w-full lg:w-[500px] bg-white p-8 md:p-12 rounded-[40px] shadow-2xl self-start">
-                <h3 class="text-2xl font-black text-center mb-8 text-[#0a192f]">Испрати порака</h3>
+                <h3 class="text-2xl font-black text-center mb-8 text-[#0a192f]">{{ __('send_message') }}</h3>
                 @if(session('success'))
                     <div class="mb-4 rounded-xl bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-800">
                         {{ session('success') }}
@@ -64,18 +64,18 @@
                 <form class="space-y-4" method="POST" action="{{ route('contact.submit') }}">
                     @csrf
                     <select name="type" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
-                        <option value="">Избери тип на порака</option>
-                        <option value="Пофалба" @selected(old('type') === 'Пофалба')>Пофалба</option>
-                        <option value="Жалба" @selected(old('type') === 'Жалба')>Жалба</option>
-                        <option value="Прашање" @selected(old('type') === 'Прашање')>Прашање</option>
+                        <option value="">{{ __('select_message_type') }}</option>
+                        <option value="Пофалба" @selected(old('type') === 'Пофалба')>{{ __('praise') }}</option>
+                        <option value="Жалба" @selected(old('type') === 'Жалба')>{{ __('complaint') }}</option>
+                        <option value="Прашање" @selected(old('type') === 'Прашање')>{{ __('question') }}</option>
                     </select>
-                    <input type="text" name="submitted_by_name" value="{{ old('submitted_by_name') }}" placeholder="Име и презиме" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
-                    <input type="text" name="submitted_by_phone" value="{{ old('submitted_by_phone') }}" placeholder="Телефонски број" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
+                    <input type="text" name="submitted_by_name" value="{{ old('submitted_by_name') }}" placeholder="{{ __('full_name') }}" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
+                    <input type="text" name="submitted_by_phone" value="{{ old('submitted_by_phone') }}" placeholder="{{ __('phone') }}" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
                     <input type="email" name="submitted_by_email" value="{{ old('submitted_by_email') }}" placeholder="Email" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none">
-                    <input type="text" name="subject" value="{{ old('subject') }}" placeholder="Наслов / краток опис" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
-                    <textarea name="message" rows="5" placeholder="Остави порака" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none resize-none" required>{{ old('message') }}</textarea>
+                    <input type="text" name="subject" value="{{ old('subject') }}" placeholder="{{ __('subject') }}" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none" required>
+                    <textarea name="message" rows="5" placeholder="{{ __('leave_message') }}" class="w-full p-4 bg-gray-50 border border-black rounded-xl text-sm outline-none resize-none" required>{{ old('message') }}</textarea>
                     <div class="flex justify-center pt-4">
-                        <button class="bg-[#0b1b36] hover:bg-[#2E589E] text-white w-full py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95">Испрати</button>
+                        <button class="bg-[#0b1b36] hover:bg-[#2E589E] text-white w-full py-4 rounded-xl font-black text-sm uppercase tracking-widest transition-all shadow-lg active:scale-95">{{ __('send') }}</button>
                     </div>
                 </form>
             </div>
@@ -85,17 +85,17 @@
 </section>
 
 <section class="py-16 px-6 bg-white">
-    <h2 class="text-3xl md:text-4xl font-black text-center mb-16 text-[#0a192f]">Закажи посета</h2>
+    <h2 class="text-3xl md:text-4xl font-black text-center mb-16 text-[#0a192f]">{{ __('book_visit') }}</h2>
     <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6">
         
         <div class="bg-[#6A92D4] p-10 rounded-[40px] text-white text-center shadow-xl transform transition hover:scale-105">
-            <h3 class="text-2xl font-black mb-8">Преку телефон</h3>
-            <p class="text-[13px] font-medium mb-6">Понеделник-Четврток</p>
+            <h3 class="text-2xl font-black mb-8">{{ __('by_phone') }}</h3>
+            <p class="text-[13px] font-medium mb-6">{{ __('monday_thursday') }}</p>
             <div class="flex justify-center gap-6 text-[11px] mb-8">
-                <div>Прва смена<br><span class="font-bold opacity-80">08:30-10:30</span></div>
-                <div>Втора смена<br><span class="font-bold opacity-80">14:00-18:00</span></div>
+                <div>{{ __('first_shift') }}<br><span class="font-bold opacity-80">08:30-10:30</span></div>
+                <div>{{ __('second_shift') }}<br><span class="font-bold opacity-80">14:00-18:00</span></div>
             </div>
-            <p class="text-[13px] font-medium mb-2">Петок</p>
+            <p class="text-[13px] font-medium mb-2">{{ __('friday') }}</p>
             <p class="text-[11px] font-bold opacity-80 mb-10">8:30-18:00</p>
             <button class="bg-[#0E1B2F] w-full py-3 rounded-xl font-bold text-sm tracking-wide">02 25 80365</button>
         </div>

@@ -1,0 +1,188 @@
+{
+  "language": "Shqip",
+  "home": "Ballina",
+  "about": "Rreth Nesh",
+  "activities": "Aktivitete",
+  "contact": "Kontakt",
+  "gallery": "Galeria",
+  "announcements": "Njoftimet",
+  "handmade": "Punime me Dorë",
+  "handmade_items": "Artikuj të bërë me dorë",
+  "news_and_announcements": "Lajme & Njoftime",
+  "booking": "Rezervo Një Vizitë",
+  "login": "Hyrje",
+  "logout": "Dilni",
+  "register": "Regjistrohu",
+  "admin_panel": "Paneli Admin",
+  "dashboard": "Tabela e Komandës",
+  "settings": "Cilësimet",
+  "users": "Përdoruesit",
+  "roles": "Rolet",
+  "complaints": "Ankesa dhe Përdorime",
+  "save": "Ruaj",
+  "edit": "Ndrysho",
+  "delete": "Fshi",
+  "cancel": "Anulo",
+  "confirm": "Konfirmo",
+  "add_new": "Shto të Ri",
+  "back": "Prapa",
+  "search": "Kërko",
+  "loading": "Duke u ngarkuar...",
+  "no_results": "Nuk ka Rezultate",
+  "error": "Gabim",
+  "success": "Sukses",
+  "warning": "Paralajmërim",
+  "info": "Informacion",
+  "visit_schedules": "Orarë Vizite",
+  "visit_requests": "Kërkesa për Vizitë",
+  "time_slots": "Slot-et e Kohës",
+  "date": "Data",
+  "time": "Koha",
+  "name": "Emri",
+  "email": "Email",
+  "phone": "Telefoni",
+  "message": "Mesazh",
+  "submit": "Dorëzo",
+  "created_at": "Krijuar",
+  "updated_at": "Përditësuar",
+  "status": "Statusi",
+  "pending": "Në pritje",
+  "approved": "Miratuar",
+  "rejected": "Refuzuar",
+  "language_select": "Zgjidh Gjuhën",
+  "change_language": "Ndrysho Gjuhën",
+  "visitor_info": "Informacioni i Vizituesit",
+  "inmate_info": "Informacioni i të Burgosurve",
+  "companions": "Shoqëruesit",
+  "valid_from": "I Vlefshëm Nga",
+  "valid_to": "I Vlefshëm Deri",
+  "monday": "e hënë",
+  "tuesday": "e martë",
+  "wednesday": "e mërkurë",
+  "thursday": "e enjte",
+  "friday": "e premte",
+  "saturday": "e shtunë",
+  "sunday": "e diel",
+  "password": "Fjalëkalim",
+  "password_confirm": "Konfirmo Fjalëkalimin",
+  "old_password": "Fjalëkalim i Vjetër",
+  "new_password": "Fjalëkalim i Ri",
+  "remember_me": "Më Mbaj Mend",
+  "forgot_password": "Harrova Fjalëkalimin?",
+  "please_login": "Ju Lutem Kyçuni",
+  "unauthorized": "I Paautorizuar",
+  "not_found": "Nuk Është Gjetur",
+  "latest_activity": "Aktiviteti më i Fundit",
+  "read_more": "Lexo më Shumë",
+  "all_activities": "Të Gjitha Aktivitetet",
+  "most_read_activities": "Aktivitetet më të Lexuara",
+  "chess_tournament": "Turneu i Shahut",
+  "chess_description": "Turne shahati që nxis fokus, mendimet strategjike dhe ndërveprim pozitiv.",
+  "basketball": "Basketboll",
+  "basketball_description": "Basketboll për të përmirësuar shëndetin fizik, punën në ekip dhe angazhimin pozitiv.",
+  "welding": "Saldim",
+  "welding_description": "Aktivitete saldimi ku nxënësit mësojnë të bashkojnë sigurt metalin.",
+  "carpentry": "Drutaria",
+  "carpentry_description": "Zhanat e punës me dru për të krijuar dhe ndërtuar.",
+  "sports": "Sportet",
+  "sports_description": "Ushtrime fizike për ndërtimin e forcës, formës fizike dhe mirëqenies.",
+  "chess": "Shahu",
+  "carving": "Gdhendja",
+  "carving_description": "Gdhendjet e bëra me dorë të krijuara me kujdes dhe aftësi.",
+  "electrical": "Elektrike",
+  "electrical_description": "Mësim dhe kryerje të detyrave elektrike.",
+  "embroidery": "Qëndisja",
+  "drawing": "Vizatimi",
+  "other_activities": "Aktivitete të tjera",
+  "contact_title": "Kontakt",
+  "contact_description": "Nëse keni pyetje, keni nevojë për informacione shtesë ose doni të planifikoni një vizitë zyrtare, ekipi ynë është këtu për ju.",
+  "phone_number": "Numri i Telefonit",
+  "address": "Rruga 1 Kolonija Idrizovo Nr. 4A",
+  "working_hours": "Orari i Punës",
+  "monday_friday": "Hën-Pet",
+  "saturday_sunday": "Sht-Diel",
+  "closed": "I Mbyllur",
+  "send_message": "Dërgo Mesazh",
+  "select_message_type": "Zgjedh llojin e mesazhit",
+  "praise": "Nderim",
+  "complaint": "Ankesë",
+  "question": "Pyetje",
+  "full_name": "Emri dhe Mbiemri",
+  "subject": "Tema / Përshkrim i Shkurtër",
+  "leave_message": "Lini një mesazh",
+  "send": "Dërgo",
+  "book_visit": "Rezervo Vizitë",
+  "by_phone": "Nga Telefoni",
+  "monday_thursday": "Hënë-Enjte",
+  "first_shift": "Turni i Parë",
+  "second_shift": "Turni i Dytë",
+  "working_hours_1": "07:00 - 15:00",
+  "working_hours_2": "I Mbyllur",
+  "hero_subtitle": "me një degë të hapur Veles",
+  "e_newspaper": "E-gazetë",
+  "latest_announcements": "Njoftime të reja",
+  "older_announcements": "Njoftime të vjetra",
+  "events": "Ngjarje",
+  "about_title": "Rreth Nesh",
+  "history": "Histori",
+  "mission": "Mision",
+  "vision": "Vizioni",
+  "management": "Menaxhment",
+  "responsible_officers": "Zyrtarë përgjegjës",
+  "regulation": "Rregullorja",
+  "regulation_subtitle": "për organizimin e brendshëm dhe funksionimin e Institucionit të Korrektimit Penal Idrizovo",
+  "download": "Shkarko",
+  "sectors": "Sektorët",
+  "handmade_heading": "Punime me dorë",
+  "handmade_intro": "Punime me dorë në KPU Idrizovo",
+  "handmade_quote": "Çdo produkt bart historinë e tij dhe kontribuon në ri-socializim.",
+  "needle_art": "Art me gjilpërë dhe fije",
+  "view_more": "Shiko më shumë",
+  "wood_carving": "Gdhendje druri"
+  ,"about_more": "Më shumë për ne"
+  ,"page_hint_next": "Kliko djathtas për tjetrën"
+  ,"page_hint_prev": "Kliko majtas për mbrapa"
+  ,"institution": "Institucioni"
+  ,"news_item_1_title": "NJOFTIM I BRENDSHËM për plotësimin e vendit të punës me avancim të një zyrtari administrativ"
+  ,"news_item_1_body": "Në bazë të nenit 30 paragrafi 1 pika 2, paragrafët 3 dhe 5, nenit 48 dhe nenit 49 të Ligjit për Zyrtarët Administrativë..."
+  ,"news_item_2_title": "Vendim për përzgjedhjen e kandidatëve për avancim të zyrtarëve administrativë"
+  ,"news_item_2_body": "Në bazë të nenit 52 paragrafi 1 të Ligjit për Zyrtarët Administrativë..."
+  ,"news_item_3_title": "Projektvendim për përzgjedhjen e kandidatëve për avancim të zyrtarëve administrativë"
+  ,"news_item_3_body": "Në bazë të nenit 52 paragrafi 1 të Ligjit për Zyrtarët Administrativë..."
+  ,"news_item_4_title": "NJOFTIM I BRENDSHËM për plotësimin e vendeve të punës me avancim të zyrtarëve administrativë"
+  ,"news_item_4_body": "Në bazë të nenit 30 paragrafi 1 pika 2, paragrafët 3 dhe 5..."
+  ,"news_item_5_title": "NJOFTIM I BRENDSHËM për plotësimin e vendeve të punës me avancim të punonjësve të policisë së burgut"
+  ,"news_item_5_body": "Në bazë të nenit 67 paragrafi 1 pika 2..."
+  ,"news_item_6_title": "Afati për dorëzimin e aplikimeve për njoftimin publik të punësimit..."
+  ,"news_item_6_body": "Aplikimet së bashku me dokumentet..."
+  ,"handmade_card_1_title": "Punim dore"
+  ,"handmade_card_1_body": "Artikuj të punuar me dorë të krijuar me kujdes dhe aftësi."
+  ,"handmade_card_2_title": "Punë zejtare"
+  ,"handmade_card_2_body": "Punë kreative që mbështet zhvillimin e aftësive të reja."
+  ,"handmade_card_3_title": "Ri-socializim"
+  ,"handmade_card_3_body": "Produkte që bartin histori, disiplinë dhe shpresë."
+  ,"activity_chess_title": "Turneu i Shahut"
+  ,"activity_chess_description": "Një turne shahu që nxit fokus, mendim strategjik dhe ndërveprim pozitiv."
+  ,"activity_welding_title": "Saldim"
+  ,"activity_welding_description": "Aktivitete saldimi ku pjesëmarrësit mësojnë të bashkojnë metalin në mënyrë të sigurt."
+  ,"activity_carving_title": "Gdhendje"
+  ,"activity_carving_description": "Gdhendje të bëra me dorë të krijuara me kujdes dhe aftësi."
+  ,"activity_carpentry_title": "Zdrukthtari"
+  ,"activity_carpentry_description": "Punë me dru për krijim dhe ndërtim."
+  ,"activity_electrical_title": "Punë elektrike"
+  ,"activity_electrical_description": "Trajnim dhe kryerje e detyrave elektrike."
+  ,"activity_embroidery_title": "Qëndisje"
+  ,"activity_embroidery_description": "Qëndisje që ndërton durim, saktësi dhe kreativitet."
+  ,"activity_drawing_title": "Vizatim"
+  ,"activity_drawing_description": "Vizatimi që hap imagjinatën dhe qetësinë e brendshme."
+  ,"activity_sewing_title": "Qepje"
+  ,"activity_sewing_description": "Qepje dhe punim praktik me fokus dhe disiplinë."
+  ,"activity_painting_title": "Pikturë"
+  ,"activity_painting_description": "Piktura si mënyrë shprehjeje dhe lirie krijuese."
+  ,"activity_sports_title": "Sport"
+  ,"activity_sports_description": "Aktivitete fizike për shëndet, punë në ekip dhe mirëqenie."
+  ,"about_history_p1": "Institucioni Korrektues Idrizovë është institucioni më i madh i burgut në Republikën e Maqedonisë së Veriut. Ai ndodhet rreth 10 kilometra në juglindje të Shkupit dhe shërben si institucioni qendror për vuajtjen e dënimeve me burg."
+  ,"about_history_p2": "Historia e KPD Idrizovë fillon gjatë Luftës së Dytë Botërore, kur një kamp ushtarak u ndërtua nga ushtria pushtuese bullgare. Menjëherë pas përfundimit të luftës, ai vazhdoi të funksionojë si burg-koloni pune, ku të burgosurit angazhoheshin në punë bujqësore dhe ndërtimore. Me kalimin e kohës, institucioni u zgjerua dhe u bë burgu më i madh në vend."
+  ,"about_history_p3": "Ky rregullore rregullon organizimin dhe punën e Institucionit Korrektues - KPD Idrizovë - me njësinë e hapur në Veles (në vazhdim: Institucioni), dhe përcakton organizimin e brendshëm, llojet e njësive organizative dhe fushën e tyre të punës, drejtimin brenda Institucionit dhe njësive organizative, si dhe planifikimin dhe zbatimin e detyrave në institucion."
+  ,"about_regulation_text": "Ky rregullore rregullon organizimin dhe punën e Institucionit Korrektues - KPD Idrizovë - me njësinë e hapur në Veles (në vazhdim: Institucioni), dhe përcakton organizimin e brendshëm, llojet e njësive organizative dhe fushën e tyre të punës, drejtimin brenda Institucionit dhe njësive organizative, si dhe planifikimin dhe zbatimin e detyrave në institucion."
+}

@@ -97,6 +97,15 @@
     </style>
 </head>
 <body class="bg-[#f5f7fb]">
+    @php
+        $currentUser = auth()->user();
+        $isAdmin = $currentUser?->isAdmin();
+        $isReviewer = $currentUser?->isReviewer();
+        $isVospituvac = $currentUser?->isVospituvac();
+        $canSeeDashboardAndContent = $isAdmin || $isVospituvac;
+        $canSeeComplaints = $isAdmin || $isReviewer;
+        $canSeeSettings = $isAdmin || $isReviewer || $isVospituvac;
+    @endphp
     <div class="min-h-screen lg:flex bg-[#f5f7fb]">
 
         <!-- MOBILE TOP NAV -->
@@ -119,37 +128,59 @@
             </div>
 
             <nav id="mobileMenu" class="hidden mt-5 pb-2 space-y-2">
-                <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                    <i class="fas fa-chart-line"></i><span>Dashboard</span>
-                </a>
-                <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
-                    <i class="fas fa-list"></i><span>Активности (Почетна)</span>
-                </a>
-                <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
-                    <i class="fas fa-newspaper"></i><span>Соопштенија</span>
-                </a>
-                <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
-                    <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
-                </a>
-                <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
-                    <i class="fas fa-images"></i><span>Галерија</span>
-                </a>
-                <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
-                    <i class="fas fa-info-circle"></i><span>За Нас</span>
-                </a>
-                <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
-                    <i class="fas fa-clock"></i><span>Распоред на посети</span>
-                </a>
-                <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
-                    <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
-                </a>
-                <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
-                    <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
-                </a>
-                <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
-                    <i class="fas fa-calendar"></i><span>Активности</span>
-                </a>
+                @if($canSeeDashboardAndContent)
+                    <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                        <i class="fas fa-chart-line"></i><span>Dashboard</span>
+                    </a>
+                    <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
+                        <i class="fas fa-list"></i><span>Активности (Почетна)</span>
+                    </a>
+                    <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
+                        <i class="fas fa-newspaper"></i><span>Соопштенија</span>
+                    </a>
+                    <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
+                        <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
+                    </a>
+                    <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
+                        <i class="fas fa-images"></i><span>Галерија</span>
+                    </a>
+                    <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
+                        <i class="fas fa-info-circle"></i><span>За Нас</span>
+                    </a>
+                    <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                        <i class="fas fa-clock"></i><span>Распоред на посети</span>
+                    </a>
+                    @if($isAdmin)
+                        <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                            <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
+                        </a>
+                    @endif
+                    <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
+                        <i class="fas fa-calendar"></i><span>Активности</span>
+                    </a>
+                @endif
 
+                @if($canSeeComplaints)
+                    <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                        <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
+                    </a>
+                @endif
+
+                @if($canSeeSettings)
+                    <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                        <i class="fas fa-cog"></i><span>Поставки</span>
+                    </a>
+                @endif
+
+                <div class="border-t border-white/20 my-3 pt-3">
+                    <form action="{{ route('logout') }}" method="POST" class="w-full px-3">
+                        @csrf
+                        <button type="submit" class="w-full rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-200 hover:text-red-100 px-4 py-2 font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Одјава</span>
+                        </button>
+                    </form>
+                </div>
             </nav>
         </div>
 
@@ -174,66 +205,83 @@
 
                 <!-- NAVIGATION -->
                 <nav class="relative z-10 flex-1 overflow-y-auto px-5 py-6 space-y-1">
-                    <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                        <i class="fas fa-chart-line"></i><span>Dashboard</span>
-                    </a>
+                    @if($canSeeDashboardAndContent)
+                        <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                            <i class="fas fa-chart-line"></i><span>Dashboard</span>
+                        </a>
 
-                    <div class="section-title">Содржина</div>
+                        <div class="section-title">Содржина</div>
 
-                    <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
-                        <i class="fas fa-list"></i><span>Активности (Почетна)</span>
-                    </a>
+                        <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
+                            <i class="fas fa-list"></i><span>Активности (Почетна)</span>
+                        </a>
 
-                    <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
-                        <i class="fas fa-newspaper"></i><span>Соопштенија</span>
-                    </a>
+                        <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
+                            <i class="fas fa-newspaper"></i><span>Соопштенија</span>
+                        </a>
 
-                    <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
-                        <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
-                    </a>
+                        <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
+                            <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
+                        </a>
 
-                    <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
-                        <i class="fas fa-images"></i><span>Галерија</span>
-                    </a>
+                        <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
+                            <i class="fas fa-images"></i><span>Галерија</span>
+                        </a>
 
-                    <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
-                        <i class="fas fa-info-circle"></i><span>За Нас</span>
-                    </a>
+                        <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
+                            <i class="fas fa-info-circle"></i><span>За Нас</span>
+                        </a>
 
-                    <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
-                        <i class="fas fa-clock"></i><span>Распоред на посети</span>
-                    </a>
+                        <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                            <i class="fas fa-clock"></i><span>Распоред на посети</span>
+                        </a>
 
-                    <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
-                        <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
-                    </a>
+                        @if($isAdmin)
+                            <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                                <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
+                            </a>
+                        @endif
 
-                    <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
-                        <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
-                    </a>
+                        <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
+                            <i class="fas fa-calendar"></i><span>Активности</span>
+                        </a>
+                    @endif
 
-                    <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
-                        <i class="fas fa-calendar"></i><span>Активности</span>
-                    </a>
+                    @if($canSeeComplaints)
+                        <div class="section-title">Контакт</div>
+                        <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                            <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
+                        </a>
+                    @endif
 
-                    <div class="section-title">Систем</div>
-
-                    <a href="/" class="sidebar-link">
-                        <i class="fas fa-cog"></i><span>Поставки</span>
-                    </a>
+                    @if($canSeeSettings)
+                        <div class="section-title">Систем</div>
+                        <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                            <i class="fas fa-cog"></i><span>Поставки</span>
+                        </a>
+                    @endif
                 </nav>
 
                 <!-- FOOTER USER CARD -->
-                <div class="relative z-10 p-5 border-t border-white/10">
-                    <div class="rounded-3xl bg-white/10 border border-white/10 p-4 flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
-                            <i class="fas fa-user text-white"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-sm font-bold text-white truncate">Администратор</p>
-                            <p class="text-[11px] text-white/50">{{ date('d.m.Y') }}</p>
+                <div class="relative z-10 p-5 border-t border-white/10 space-y-3">
+                    <div class="rounded-3xl bg-white/10 border border-white/10 p-4 flex items-center justify-between">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-11 h-11 rounded-2xl bg-white/15 flex items-center justify-center">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-sm font-bold text-white truncate">{{ auth()->user()?->name ?? 'Администратор' }}</p>
+                                <p class="text-[11px] text-white/50">{{ date('d.m.Y') }}</p>
+                            </div>
                         </div>
                     </div>
+                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-200 hover:text-red-100 px-4 py-2.5 font-semibold text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Одјава</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </aside>

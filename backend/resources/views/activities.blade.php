@@ -22,28 +22,28 @@
 
     <div class="absolute top-1/3 left-8 md:left-24 max-w-md z-10">
         <h3 class="text-white font-semibold text-xl mb-2 drop-shadow-md">
-            Најнова активност
+                {{ __('latest_activity') }}
         </h3>
         
         <h1 class="text-[#0E1B2F] text-6xl md:text-7xl font-extrabold mb-4 tracking-tight drop-shadow-sm">
-            Кошарка
+                {{ __('basketball') }}
         </h1>
         
         <p class="text-[#0E1B2F] text-base md:text-lg mb-8 font-semibold leading-snug pr-4 drop-shadow-md">
-            Кошарка за подобрување на физичкото здравје, тимската работа и позитивниот ангажман.
+                {{ __('basketball_description') }}
         </p>
         
         <button class="bg-[#2E589E] hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
-            Прочитај повеќе
+                {{ __('read_more') }}
         </button>
     </div>
 </section>
 
 <section class="md:hidden max-w-md mx-auto py-12">
     <div class="flex justify-between items-center px-5 mb-6">
-        <h2 class="text-[#0E1B2F] text-2xl font-extrabold tracking-tight">Активности</h2>
+        <h2 class="text-[#0E1B2F] text-2xl font-extrabold tracking-tight">{{ __('activities') }}</h2>
         <a href="#" class="bg-[#2E589E] hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors shadow-sm">
-            Сите активности
+            {{ __('all_activities') }}
         </a>
     </div>
 
@@ -51,10 +51,10 @@
         
         @php
             $activities = [
-                ['name' => 'Шах', 'desc' => 'Шаховски натпревар што поттикнува фокус, стратешко размислување.'],
-                ['name' => 'Заварување', 'desc' => 'Активности каде учениците учат безбедно да спојуваат метал.'],
-                ['name' => 'Столарија', 'desc' => 'Занает на работа со дрво за создавање конструирање.'],
-                ['name' => 'Спорт', 'desc' => 'Физички вежби за градење сила, кондиција и благосостојба.'],
+                ['name' => __('chess'), 'desc' => __('chess_description')],
+                ['name' => __('welding'), 'desc' => __('welding_description')],
+                ['name' => __('carpentry'), 'desc' => __('carpentry_description')],
+                ['name' => __('sports'), 'desc' => __('sports_description')],
             ];
         @endphp
 
@@ -79,85 +79,85 @@
 
 <section class="hidden md:block max-w-7xl mx-auto px-4 py-16 font-sans">
     <div class="mb-16">
-        <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">Најчитани активности</h2>
+        <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">{{ __('most_read_activities') }}</h2>
         <div class="grid grid-cols-4 gap-6">
             <div class="col-span-2 row-span-2 relative h-[508px] rounded-2xl overflow-hidden group shadow-lg">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-8 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h3 class="text-3xl font-bold mb-3">Натпревар во шах</h3>
-                    <p class="text-base opacity-90 mb-5">Шаховски натпревар што поттикнува фокус, стратешко размислување и позитивна интеракција.</p>
-                    <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">Прочитај повеќе</a>
+                    <h3 class="text-3xl font-bold mb-3">{{ __('chess_tournament') }}</h3>
+                    <p class="text-base opacity-90 mb-5">{{ __('chess_description') }}</p>
+                    <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">{{ __('read_more') }}</a>
                 </div>
             </div>
 
             <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">Заварување</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">Активности за заварување каде учениците учат безбедно да спојуваат метал.</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">Прочитај повеќе</a>
+                    <h4 class="font-bold text-xl mb-1">{{ __('welding') }}</h4>
+                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('welding_description') }}</p>
+                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
                 </div>
             </div>
 
             <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">Резба</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">Рачно изработени резби создадени со грижа и вештина.</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">Прочитај повеќе</a>
+                    <h4 class="font-bold text-xl mb-1">{{ __('carving') }}</h4>
+                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('carving_description') }}</p>
+                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
                 </div>
             </div>
 
             <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">Столарија</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">Занает на работа со дрво за создавање конструирање.</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">Прочитај повеќе</a>
+                    <h4 class="font-bold text-xl mb-1">{{ __('carpentry') }}</h4>
+                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('carpentry_description') }}</p>
+                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
                 </div>
             </div>
 
             <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                 <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">Електрика</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">Учење и извршување електрични задачи.</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">Прочитај повеќе</a>
+                    <h4 class="font-bold text-xl mb-1">{{ __('electrical') }}</h4>
+                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('electrical_description') }}</p>
+                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
                 </div>
             </div>
         </div>
     </div>
 
     <div>
-        <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">Останати активности</h2>
+        <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">{{ __('other_activities') }}</h2>
         <div class="grid grid-cols-4 gap-6">
             <div class="grid grid-cols-2 col-span-2 gap-6">
                 <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                     <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                        <h4 class="font-bold text-lg mb-2">Везење</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">Прочитај повеќе</a>
+                            <h4 class="font-bold text-lg mb-2">{{ __('embroidery') }}</h4>
+                            <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
                     </div>
                 </div>
                 <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                     <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                        <h4 class="font-bold text-lg mb-2">Цртање</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">Прочитај повеќе</a>
+                            <h4 class="font-bold text-lg mb-2">{{ __('drawing') }}</h4>
+                            <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
                     </div>
                 </div>
                 <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                     <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
                         <h4 class="font-bold text-lg mb-2">Шиење</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">Прочитај повеќе</a>
+                        <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
                     </div>
                 </div>
                 <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
                     <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
                         <h4 class="font-bold text-lg mb-2">Сликање</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">Прочитај повеќе</a>
+                        <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
                 <div class="absolute bottom-0 left-0 w-full p-8 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
                     <h3 class="text-3xl font-bold mb-3">Спорт</h3>
                     <p class="text-base opacity-90 mb-5">Физички вежби за градење сила, кондиција и целокупна благосостојба.</p>
-                    <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">Прочитај повеќе</a>
+                    <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">{{ __('read_more') }}</a>
                 </div>
             </div>
         </div>

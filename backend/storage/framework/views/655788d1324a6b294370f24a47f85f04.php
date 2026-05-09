@@ -1,8 +1,6 @@
-@extends('layouts.app')
+<?php $__env->startSection('title', 'Идризово - Дома'); ?>
 
-@section('title', 'Идризово - Дома')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     .zanas-tabs a {
         transition: background 0.2s, opacity 0.2s;
@@ -51,7 +49,7 @@
     <!-- ================= HERO ================= -->
     <div class="relative w-full overflow-hidden bg-[#1a3a6b] h-[520px] md:h-[820px]">
         <img class="absolute inset-0 w-full h-full object-cover object-center"
-            src="{{ asset('images/hero_main.jpeg') }}" alt="За Нас">
+            src="<?php echo e(asset('images/hero_main.jpeg')); ?>" alt="За Нас">
         <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,30,70,0.3) 0%, rgba(10,30,70,0.6) 100%);"></div>
 
         <div class="absolute top-20 left-6 md:left-28 text-black text-4xl md:text-7xl font-bold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.4);">
@@ -61,13 +59,15 @@
             ИДРИЗОВО
         </div>
         <div class="absolute top-[18rem] md:top-[22rem] left-6 md:left-28 text-white text-sm md:text-xl font-semibold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.6);">
-            {{ __('hero_subtitle') }}
+            <?php echo e(__('hero_subtitle')); ?>
+
         </div>
 
         <div class="zanas-tabs absolute top-72 -left-11 px-4 md:px-40 flex flex-wrap justify-center md:justify-between items-center gap-2 md:gap-0 z-10">
-            <a href="{{ route('aboutus') }}" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105"
+            <a href="<?php echo e(route('aboutus')); ?>" class="inline-block px-6 md:px-10 py-3 md:py-4 text-white text-[0.8rem] md:text-[0.9rem] font-bold no-underline rounded-xl transition-all hover:scale-105"
                 style="background:rgba(20,55,130,0.85); backdrop-filter:blur(6px);">
-                {{ __('about_more') }}
+                <?php echo e(__('about_more')); ?>
+
             </a>
         </div>
     </div>
@@ -76,8 +76,8 @@
     <!-- ================= ACTIVITIES ================= -->
     <section class="max-w-6xl mx-auto mb-16 mt-12 px-4">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold">{{ __('activities') }}</h2>
-            <a href="{{ route('activities') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition">{{ __('read_more') }}</a>
+            <h2 class="text-2xl font-semibold"><?php echo e(__('activities')); ?></h2>
+            <a href="<?php echo e(route('activities')); ?>" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition"><?php echo e(__('read_more')); ?></a>
         </div>
 
         <div class="overflow-hidden relative">
@@ -91,7 +91,7 @@
     <!-- ================= E-NEWSPAPER ================= -->
     <section class="max-w-6xl mx-auto px-4 mb-16">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-semibold">{{ __('e_newspaper') }}</h2>
+            <h2 class="text-2xl font-semibold"><?php echo e(__('e_newspaper')); ?></h2>
         </div>
 
         <div class="flex flex-col items-center gap-4">
@@ -102,9 +102,9 @@
                 title="Кликни за да превртиш страница">
 
                 <div id="pages" class="relative w-full h-full">
-                    <img src="{{ asset('images/vesnik.png') }}"
+                    <img src="<?php echo e(asset('images/vesnik.png')); ?>"
                         class="page absolute w-full h-full object-contain rounded-xl shadow-2xl">
-                    <img src="{{ asset('images/vesnik2.png') }}"
+                    <img src="<?php echo e(asset('images/vesnik2.png')); ?>"
                         class="page absolute w-full h-full object-contain rounded-xl shadow-2xl">
                 </div>
 
@@ -123,93 +123,115 @@
 
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5 md:gap-0 mb-14 md:mb-20">
                 <h2 class="text-[22px] md:text-[24px] font-bold text-[#0b1a2b]">
-                    {{ __('news_and_announcements') }}
+                    <?php echo e(__('news_and_announcements')); ?>
+
                 </h2>
-                <a href="{{ route('soopstenija') }}" class="w-fit bg-[#2f5fa8] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#244f91] transition">
-                    {{ __('read_more') }}
+                <a href="<?php echo e(route('soopstenija')); ?>" class="w-fit bg-[#2f5fa8] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#244f91] transition">
+                    <?php echo e(__('read_more')); ?>
+
                 </a>
             </div>
 
             <h3 class="text-center text-white text-[20px] md:text-[22px] font-semibold mb-10 md:mb-12">
-                {{ __('latest_announcements') }}
+                <?php echo e(__('latest_announcements')); ?>
+
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8 mb-16 md:mb-20">
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_1_title') }}
+                        <?php echo e(__('news_item_1_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_1_body') }}
+                        <?php echo e(__('news_item_1_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
 
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_2_title') }}
+                        <?php echo e(__('news_item_2_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_2_body') }}
+                        <?php echo e(__('news_item_2_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
 
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_3_title') }}
+                        <?php echo e(__('news_item_3_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_3_body') }}
+                        <?php echo e(__('news_item_3_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
             </div>
 
             <h3 class="text-center text-white text-[20px] md:text-[22px] font-semibold mb-10 md:mb-12">
-                {{ __('older_announcements') }}
+                <?php echo e(__('older_announcements')); ?>
+
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_4_title') }}
+                        <?php echo e(__('news_item_4_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_4_body') }}
+                        <?php echo e(__('news_item_4_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
 
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_5_title') }}
+                        <?php echo e(__('news_item_5_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_5_body') }}
+                        <?php echo e(__('news_item_5_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
 
                 <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
                     <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        {{ __('news_item_6_title') }}
+                        <?php echo e(__('news_item_6_title')); ?>
+
                     </h4>
                     <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        {{ __('news_item_6_body') }}
+                        <?php echo e(__('news_item_6_body')); ?>
+
                     </p>
                     <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        {{ __('view_more') }}
+                        <?php echo e(__('view_more')); ?>
+
                     </button>
                 </div>
             </div>
@@ -225,42 +247,47 @@
 
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5 md:gap-0 mb-12 md:mb-14">
                 <h2 class="text-[23px] md:text-[25px] font-bold text-[#0b1a2b]">
-                    {{ __('handmade_items') }}
+                    <?php echo e(__('handmade_items')); ?>
+
                 </h2>
 
-                <a href="{{ route('izrabotki') }}" class="w-fit bg-[#2f5fa8] text-white text-[12px] font-semibold px-6 py-2 rounded-md hover:bg-[#244f91] transition">
-                    {{ __('read_more') }}
+                <a href="<?php echo e(route('izrabotki')); ?>" class="w-fit bg-[#2f5fa8] text-white text-[12px] font-semibold px-6 py-2 rounded-md hover:bg-[#244f91] transition">
+                    <?php echo e(__('read_more')); ?>
+
                 </a>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_1_title') }}</h3>
+                        <h3 class="text-[16px] font-bold underline mb-4"><?php echo e(__('handmade_card_1_title')); ?></h3>
                         <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_1_body') }}
+                            <?php echo e(__('handmade_card_1_body')); ?>
+
                         </p>
                     </div>
                 </div>
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_2_title') }}</h3>
+                        <h3 class="text-[16px] font-bold underline mb-4"><?php echo e(__('handmade_card_2_title')); ?></h3>
                         <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_2_body') }}
+                            <?php echo e(__('handmade_card_2_body')); ?>
+
                         </p>
                     </div>
                 </div>
 
                 <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_3_title') }}</h3>
+                        <h3 class="text-[16px] font-bold underline mb-4"><?php echo e(__('handmade_card_3_title')); ?></h3>
                         <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_3_body') }}
+                            <?php echo e(__('handmade_card_3_body')); ?>
+
                         </p>
                     </div>
                 </div>
@@ -271,36 +298,41 @@
         <div class="max-w-[1120px] mx-auto">
 
             <h2 class="text-[23px] md:text-[25px] font-bold text-[#0b1a2b] mb-10 md:mb-12">
-                {{ __('gallery') }}
+                <?php echo e(__('gallery')); ?>
+
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-14 md:mb-16">
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('handmade_items') }}
+                        <?php echo e(__('handmade_items')); ?>
+
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('activities') }}
+                        <?php echo e(__('activities')); ?>
+
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                         <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('events') }}
+                        <?php echo e(__('events')); ?>
+
                     </div>
                 </div>
 
                 <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
+                    <img src="<?php echo e(asset('images/bla.jpeg')); ?>" class="w-full h-full object-cover">
                     <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('institution') }}
+                        <?php echo e(__('institution')); ?>
+
                     </div>
                 </div>
 
@@ -321,19 +353,19 @@
     const VISIBLE = 3;
 
     const activities = [
-        {name: '{{ __("activity_chess_title") }}', description: '{{ __("activity_chess_description") }}'},
-        {name: '{{ __("activity_welding_title") }}', description: '{{ __("activity_welding_description") }}'},
-        {name: '{{ __("activity_carving_title") }}', description: '{{ __("activity_carving_description") }}'},
-        {name: '{{ __("activity_carpentry_title") }}', description: '{{ __("activity_carpentry_description") }}'},
-        {name: '{{ __("activity_electrical_title") }}', description: '{{ __("activity_electrical_description") }}'},
-        {name: '{{ __("activity_embroidery_title") }}', description: '{{ __("activity_embroidery_description") }}'},
-        {name: '{{ __("activity_drawing_title") }}', description: '{{ __("activity_drawing_description") }}'},
-        {name: '{{ __("activity_sewing_title") }}', description: '{{ __("activity_sewing_description") }}'},
-        {name: '{{ __("activity_painting_title") }}', description: '{{ __("activity_painting_description") }}'},
-        {name: '{{ __("activity_sports_title") }}', description: '{{ __("activity_sports_description") }}'}
+        {name: '<?php echo e(__("activity_chess_title")); ?>', description: '<?php echo e(__("activity_chess_description")); ?>'},
+        {name: '<?php echo e(__("activity_welding_title")); ?>', description: '<?php echo e(__("activity_welding_description")); ?>'},
+        {name: '<?php echo e(__("activity_carving_title")); ?>', description: '<?php echo e(__("activity_carving_description")); ?>'},
+        {name: '<?php echo e(__("activity_carpentry_title")); ?>', description: '<?php echo e(__("activity_carpentry_description")); ?>'},
+        {name: '<?php echo e(__("activity_electrical_title")); ?>', description: '<?php echo e(__("activity_electrical_description")); ?>'},
+        {name: '<?php echo e(__("activity_embroidery_title")); ?>', description: '<?php echo e(__("activity_embroidery_description")); ?>'},
+        {name: '<?php echo e(__("activity_drawing_title")); ?>', description: '<?php echo e(__("activity_drawing_description")); ?>'},
+        {name: '<?php echo e(__("activity_sewing_title")); ?>', description: '<?php echo e(__("activity_sewing_description")); ?>'},
+        {name: '<?php echo e(__("activity_painting_title")); ?>', description: '<?php echo e(__("activity_painting_description")); ?>'},
+        {name: '<?php echo e(__("activity_sports_title")); ?>', description: '<?php echo e(__("activity_sports_description")); ?>'}
     ];
 
-    const activityImageUrl = "{{ asset('images/bla.jpeg') }}";
+    const activityImageUrl = "<?php echo e(asset('images/bla.jpeg')); ?>";
     activities.forEach((activity) => {
         const card = document.createElement("div");
         card.className = "activity-card flex-shrink-0 rounded-2xl overflow-hidden relative shadow-lg";
@@ -451,7 +483,7 @@
 
     function updatePageIndicator() {
         const el = document.getElementById("pageIndicator");
-        const hints = ["{{ __('page_hint_next') }}", "{{ __('page_hint_prev') }}"];
+        const hints = ["<?php echo e(__('page_hint_next')); ?>", "<?php echo e(__('page_hint_prev')); ?>"];
         if (el) el.textContent = `${currentPage + 1} / ${pages.length} — ${currentPage < pages.length - 1 ? hints[0] : hints[1]}`;
         if (arrowLeft) arrowLeft.style.opacity = currentPage > 0 ? "1" : "0";
         if (arrowRight) arrowRight.style.opacity = currentPage < pages.length - 1 ? "1" : "0";
@@ -459,4 +491,6 @@
     updatePageIndicator();
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\xampp\htdocs\Idrizovo\backend\resources\views/index.blade.php ENDPATH**/ ?>

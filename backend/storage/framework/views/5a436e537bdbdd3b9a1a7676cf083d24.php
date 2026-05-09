@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Идризово')</title>
+    <title><?php echo $__env->yieldContent('title', 'Идризово'); ?></title>
     <script src="https://kit.fontawesome.com/0ebb078a69.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="{{ asset('css/output.css') }}" rel="stylesheet">
+    <link href="<?php echo e(asset('css/output.css')); ?>" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -70,66 +70,71 @@
                 </svg>
             </button>
             <div class="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg py-1 z-[100] ring-1 ring-black ring-opacity-5 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all">
-                <a href="{{ localized_url('mk') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 {{ is_locale_active('mk') ? 'bg-blue-50 font-semibold text-blue-600' : '' }}">🇲🇰 Македонски</a>
-                <a href="{{ localized_url('en') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 {{ is_locale_active('en') ? 'bg-blue-50 font-semibold text-blue-600' : '' }}">🇬🇧 English</a>
-                <a href="{{ localized_url('sq') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 {{ is_locale_active('sq') ? 'bg-blue-50 font-semibold text-blue-600' : '' }}">🇦🇱 Shqip</a>
+                <a href="<?php echo e(localized_url('mk')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 <?php echo e(is_locale_active('mk') ? 'bg-blue-50 font-semibold text-blue-600' : ''); ?>">🇲🇰 Македонски</a>
+                <a href="<?php echo e(localized_url('en')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 <?php echo e(is_locale_active('en') ? 'bg-blue-50 font-semibold text-blue-600' : ''); ?>">🇬🇧 English</a>
+                <a href="<?php echo e(localized_url('sq')); ?>" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100 flex items-center gap-2 <?php echo e(is_locale_active('sq') ? 'bg-blue-50 font-semibold text-blue-600' : ''); ?>">🇦🇱 Shqip</a>
             </div>
         </div>
     </div>
 
     <nav class="bg-[#2e589e] border-b border-blue-400/30 text-white relative">
         <div class="flex justify-between items-center px-4 md:px-40 py-4">
-            <a href="{{ route('index') }}" class="flex items-center">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-10 w-auto object-contain">
+            <a href="<?php echo e(route('index')); ?>" class="flex items-center">
+                <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Logo" class="h-10 w-auto object-contain">
             </a>
 
             <ul class="hidden md:flex space-x-10 text-sm font-medium">
                 <li>
-                    <a href="{{ route('index') }}" class="border-b-2 {{ Route::currentRouteName() === 'index' ? 'border-blue-300' : 'border-transparent hover:border-blue-300' }} pb-1 transition-all">
-                        {{ __('home') }}
+                    <a href="<?php echo e(route('index')); ?>" class="border-b-2 <?php echo e(Route::currentRouteName() === 'index' ? 'border-blue-300' : 'border-transparent hover:border-blue-300'); ?> pb-1 transition-all">
+                        <?php echo e(__('home')); ?>
+
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('aboutus') }}" class="border-b-2 {{ Route::currentRouteName() === 'aboutus' ? 'border-blue-300' : 'border-transparent hover:border-blue-300' }} pb-1 transition-all">
-                        {{ __('about') }}
+                    <a href="<?php echo e(route('aboutus')); ?>" class="border-b-2 <?php echo e(Route::currentRouteName() === 'aboutus' ? 'border-blue-300' : 'border-transparent hover:border-blue-300'); ?> pb-1 transition-all">
+                        <?php echo e(__('about')); ?>
+
                     </a>
                 </li>
                 <li class="relative group">
                     <button class="flex items-center border-b-2 border-transparent group-hover:border-blue-300 pb-1 transition-all outline-none">
-                        <span>{{ __('news_and_announcements') }}</span>
+                        <span><?php echo e(__('news_and_announcements')); ?></span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div class="absolute left-0 mt-2 w-48 bg-white text-black rounded-md shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                         <div class="py-2">
-                            <a href="{{ route('soopstenija') }}" class="block px-4 py-2 hover:bg-gray-100">{{ __('announcements') }}</a>
-                            <a href="{{ route('activities') }}" class="block px-4 py-2 hover:bg-gray-100">{{ __('activities') }}</a>
-                            <a href="{{ route('gallery') }}" class="block px-4 py-2 hover:bg-gray-100">{{ __('gallery') }}</a>
+                            <a href="<?php echo e(route('soopstenija')); ?>" class="block px-4 py-2 hover:bg-gray-100"><?php echo e(__('announcements')); ?></a>
+                            <a href="<?php echo e(route('activities')); ?>" class="block px-4 py-2 hover:bg-gray-100"><?php echo e(__('activities')); ?></a>
+                            <a href="<?php echo e(route('gallery')); ?>" class="block px-4 py-2 hover:bg-gray-100"><?php echo e(__('gallery')); ?></a>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('izrabotki') }}" class="border-b-2 {{ Route::currentRouteName() === 'izrabotki' ? 'border-blue-300' : 'border-transparent hover:border-blue-300' }} pb-1 transition-all">
-                        {{ __('handmade_items') }}
+                    <a href="<?php echo e(route('izrabotki')); ?>" class="border-b-2 <?php echo e(Route::currentRouteName() === 'izrabotki' ? 'border-blue-300' : 'border-transparent hover:border-blue-300'); ?> pb-1 transition-all">
+                        <?php echo e(__('handmade_items')); ?>
+
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('contact') }}" class="border-b-2 {{ Route::currentRouteName() === 'contact' ? 'border-blue-300' : 'border-transparent hover:border-blue-300' }} pb-1 transition-all">
-                        {{ __('contact') }}
+                    <a href="<?php echo e(route('contact')); ?>" class="border-b-2 <?php echo e(Route::currentRouteName() === 'contact' ? 'border-blue-300' : 'border-transparent hover:border-blue-300'); ?> pb-1 transition-all">
+                        <?php echo e(__('contact')); ?>
+
                     </a>
                 </li>
             </ul>
 
             <div class="hidden md:flex items-center space-x-6">
                 <div class="relative flex items-center group h-10 w-6">
-                    <input type="text" placeholder="{{ __('search') }}..." class="absolute right-0 w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0">
+                    <input type="text" placeholder="<?php echo e(__('search')); ?>..." class="absolute right-0 w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer absolute right-0 text-white z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </div>
-                <a href="{{ route('zakazi-poseta') }}" class="inline-flex items-center bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md whitespace-nowrap">
-                    {{ __('booking') }}
+                <a href="<?php echo e(route('zakazi-poseta')); ?>" class="inline-flex items-center bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md whitespace-nowrap">
+                    <?php echo e(__('booking')); ?>
+
                 </a>
             </div>
 
@@ -151,33 +156,34 @@
         <div id="mobile-menu" class="md:hidden bg-[#24477e] border-t border-blue-400/30">
             <ul class="flex flex-col text-sm font-medium px-4 py-3 space-y-1">
                 <li>
-                    <a href="{{ route('index') }}" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">{{ __('home') }}</a>
+                    <a href="<?php echo e(route('index')); ?>" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition"><?php echo e(__('home')); ?></a>
                 </li>
                 <li>
-                    <a href="{{ route('aboutus') }}" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">{{ __('about') }}</a>
+                    <a href="<?php echo e(route('aboutus')); ?>" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition"><?php echo e(__('about')); ?></a>
                 </li>
                 <li>
                     <button id="mob-dropdown-btn" class="w-full flex items-center justify-between py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">
-                        <span>{{ __('news_and_announcements') }}</span>
+                        <span><?php echo e(__('news_and_announcements')); ?></span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" id="mob-dropdown-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div id="mob-sub" class="mob-sub">
-                        <a href="{{ route('soopstenija') }}" class="block py-2 px-6 text-blue-100 hover:text-white">{{ __('announcements') }}</a>
-                        <a href="{{ route('activities') }}" class="block py-2 px-6 text-blue-100 hover:text-white">{{ __('activities') }}</a>
-                        <a href="{{ route('gallery') }}" class="block py-2 px-6 text-blue-100 hover:text-white">{{ __('gallery') }}</a>
+                        <a href="<?php echo e(route('soopstenija')); ?>" class="block py-2 px-6 text-blue-100 hover:text-white"><?php echo e(__('announcements')); ?></a>
+                        <a href="<?php echo e(route('activities')); ?>" class="block py-2 px-6 text-blue-100 hover:text-white"><?php echo e(__('activities')); ?></a>
+                        <a href="<?php echo e(route('gallery')); ?>" class="block py-2 px-6 text-blue-100 hover:text-white"><?php echo e(__('gallery')); ?></a>
                     </div>
                 </li>
                 <li>
-                    <a href="{{ route('izrabotki') }}" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">{{ __('handmade_items') }}</a>
+                    <a href="<?php echo e(route('izrabotki')); ?>" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition"><?php echo e(__('handmade_items')); ?></a>
                 </li>
                 <li>
-                    <a href="{{ route('contact') }}" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition">{{ __('contact') }}</a>
+                    <a href="<?php echo e(route('contact')); ?>" class="flex items-center py-3 px-2 border-b border-blue-400/20 hover:text-blue-200 transition"><?php echo e(__('contact')); ?></a>
                 </li>
                 <li>
-                    <a href="{{ route('zakazi-poseta') }}" class="block w-full text-left py-3 px-2 bg-[#0e1b2f] text-white rounded font-semibold hover:bg-black transition mt-2">
-                        {{ __('booking') }}
+                    <a href="<?php echo e(route('zakazi-poseta')); ?>" class="block w-full text-left py-3 px-2 bg-[#0e1b2f] text-white rounded font-semibold hover:bg-black transition mt-2">
+                        <?php echo e(__('booking')); ?>
+
                     </a>
                 </li>
             </ul>
@@ -185,48 +191,48 @@
     </nav>
 
     <main class="flex-grow">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
     </main>
 
     <footer class="w-full bg-white">
         <div class="w-full bg-[#2E589E] text-white rounded-t-[40px] md:rounded-none min-h-[216px] flex flex-col md:flex-row items-center justify-between py-12 md:py-0 px-10 md:px-20 relative">
             <div class="flex-shrink-0 mb-10 md:mb-0">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-20 mb-12 w-auto object-contain"/>
+                <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Logo" class="h-20 mb-12 w-auto object-contain"/>
             </div>
 
             <div class="flex flex-col md:flex-row items-center md:items-start gap-10 md:gap-12 lg:gap-20 w-full md:w-auto text-center md:text-left">
-                <a href="{{ route('index') }}" class="text-[15px] font-normal hover:opacity-80 transition-opacity">{{ __('home') }}</a>
+                <a href="<?php echo e(route('index')); ?>" class="text-[15px] font-normal hover:opacity-80 transition-opacity"><?php echo e(__('home')); ?></a>
 
                 <div class="flex flex-col items-center md:items-start space-y-3">
-                    <h3 class="text-[15px] font-normal">{{ __('about') }}</h3>
+                    <h3 class="text-[15px] font-normal"><?php echo e(__('about')); ?></h3>
                     <ul class="space-y-2 text-[13px] opacity-80 font-light hidden md:block">
-                        <li><a href="{{ route('aboutus') }}#istorija" class="hover:underline">{{ __('history') }}</a></li>
-                        <li><a href="{{ route('aboutus') }}#vizija" class="hover:underline">{{ __('vision') }}</a></li>
-                        <li><a href="{{ route('aboutus') }}#misija" class="hover:underline">{{ __('mission') }}</a></li>
+                        <li><a href="<?php echo e(route('aboutus')); ?>#istorija" class="hover:underline"><?php echo e(__('history')); ?></a></li>
+                        <li><a href="<?php echo e(route('aboutus')); ?>#vizija" class="hover:underline"><?php echo e(__('vision')); ?></a></li>
+                        <li><a href="<?php echo e(route('aboutus')); ?>#misija" class="hover:underline"><?php echo e(__('mission')); ?></a></li>
                     </ul>
                     <div class="md:hidden flex flex-col space-y-2 text-[13px] opacity-80 font-light">
-                        <a href="{{ route('aboutus') }}#istorija">{{ __('history') }}</a>
-                        <a href="{{ route('aboutus') }}#vizija">{{ __('vision') }}</a>
-                        <a href="{{ route('aboutus') }}#misija">{{ __('mission') }}</a>
+                        <a href="<?php echo e(route('aboutus')); ?>#istorija"><?php echo e(__('history')); ?></a>
+                        <a href="<?php echo e(route('aboutus')); ?>#vizija"><?php echo e(__('vision')); ?></a>
+                        <a href="<?php echo e(route('aboutus')); ?>#misija"><?php echo e(__('mission')); ?></a>
                     </div>
                 </div>
 
                 <div class="flex flex-col items-center md:items-start space-y-3">
-                    <h3 class="text-[15px] font-normal">{{ __('news_and_announcements') }}</h3>
+                    <h3 class="text-[15px] font-normal"><?php echo e(__('news_and_announcements')); ?></h3>
                     <ul class="space-y-2 text-[13px] opacity-80 font-light hidden md:block">
-                        <li><a href="{{ route('activities') }}" class="hover:underline">{{ __('activities') }}</a></li>
-                        <li><a href="{{ route('soopstenija') }}" class="hover:underline">{{ __('announcements') }}</a></li>
+                        <li><a href="<?php echo e(route('activities')); ?>" class="hover:underline"><?php echo e(__('activities')); ?></a></li>
+                        <li><a href="<?php echo e(route('soopstenija')); ?>" class="hover:underline"><?php echo e(__('announcements')); ?></a></li>
                     </ul>
                     <div class="md:hidden flex flex-col space-y-2 text-[13px] opacity-80 font-light">
-                        <a href="{{ route('activities') }}">{{ __('activities') }}</a>
-                        <a href="{{ route('soopstenija') }}">{{ __('announcements') }}</a>
+                        <a href="<?php echo e(route('activities')); ?>"><?php echo e(__('activities')); ?></a>
+                        <a href="<?php echo e(route('soopstenija')); ?>"><?php echo e(__('announcements')); ?></a>
                     </div>
                 </div>
 
-                <a href="{{ route('izrabotki') }}" class="text-[15px] font-normal hover:opacity-80 transition-opacity">{{ __('handmade_items') }}</a>
+                <a href="<?php echo e(route('izrabotki')); ?>" class="text-[15px] font-normal hover:opacity-80 transition-opacity"><?php echo e(__('handmade_items')); ?></a>
 
                 <div class="flex flex-col items-center md:items-start space-y-3">
-                    <h3 class="text-[15px] font-normal">{{ __('contact') }}</h3>
+                    <h3 class="text-[15px] font-normal"><?php echo e(__('contact')); ?></h3>
                     <div class="space-y-3 text-[13px] font-light flex flex-col items-center md:items-start">
                         <div class="flex items-center gap-3">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -253,8 +259,9 @@
             </div>
 
             <div class="flex-shrink-0 mt-10 md:mt-0">
-                <a href="{{ route('zakazi-poseta') }}" class="inline-block bg-[#111827] text-white px-10 mb-12 py-3 rounded-[4px] text-[15px] font-semibold hover:bg-black transition-all shadow-md">
-                    {{ __('booking') }}
+                <a href="<?php echo e(route('zakazi-poseta')); ?>" class="inline-block bg-[#111827] text-white px-10 mb-12 py-3 rounded-[4px] text-[15px] font-semibold hover:bg-black transition-all shadow-md">
+                    <?php echo e(__('booking')); ?>
+
                 </a>
             </div>
         </div>
@@ -302,4 +309,4 @@
 
 </body>
 
-</html>
+</html><?php /**PATH D:\xampp\htdocs\Idrizovo\backend\resources\views/layouts/app.blade.php ENDPATH**/ ?>
