@@ -72,6 +72,7 @@ class DatabaseSeeder extends Seeder
         }
         $this->call([
             VisitScheduleSeeder::class,
+            \Database\Seeders\SqlDumpSeeder::class,
         ]);
     }
 }
