@@ -9,6 +9,7 @@ use App\Models\Complaint;
 use App\Models\VisitRequest;
 use App\Models\VisitSchedule;
 use App\Models\Announcement;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -21,12 +22,25 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $activities = [
-            ['name' => 'Активност 1', 'desc' => 'Описание на активност 1'],
-            ['name' => 'Активност 2', 'desc' => 'Описание на активност 2'],
-            ['name' => 'Активност 3', 'desc' => 'Описание на активност 3'],
-        ];
-        return view('index', ['activities' => $activities]);
+        $activities = Activity::active()
+            ->sorted()
+            ->take(10)
+            ->get()
+            ->map(function($a) {
+                return [
+                    'name' => $a->getTranslation('title', app()->getLocale()),
+                    'description' => $a->getTranslation('description', app()->getLocale()),
+                    'image' => $a->getImageUrl() ?? asset('images/bla.jpeg'),
+                ];
+            });
+
+        $announcements = Announcement::active()
+            ->published()
+            ->sorted()
+            ->take(12)
+            ->get();
+
+        return view('index', ['activities' => $activities, 'announcements' => $announcements]);
     }
 
     /**

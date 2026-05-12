@@ -138,50 +138,26 @@
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8 mb-16 md:mb-20">
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_1_title')); ?>
+                <?php $latest = $announcements->slice(0, 3); ?>
+                <?php $__currentLoopData = $latest; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
+                        <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
+                            <?php echo e($item->getTranslation('title', app()->getLocale())); ?>
 
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_1_body')); ?>
+                        </h4>
+                        <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
+                            <?php echo e(Str::limit($item->getTranslation('content', app()->getLocale()), 180)); ?>
 
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
+                        </p>
+                        <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition view-more-btn"
+                                data-announcement-title="<?php echo e($item->getTranslation('title', app()->getLocale())); ?>"
+                                data-announcement-content="<?php echo e($item->getTranslation('content', app()->getLocale())); ?>"
+                                data-announcement-image="<?php echo e($item->getImageUrl() ?? ''); ?>">
+                            <?php echo e(__('view_more')); ?>
 
-                    </button>
-                </div>
-
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_2_title')); ?>
-
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_2_body')); ?>
-
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
-
-                    </button>
-                </div>
-
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_3_title')); ?>
-
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_3_body')); ?>
-
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
-
-                    </button>
-                </div>
+                        </button>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
             <h3 class="text-center text-white text-[20px] md:text-[22px] font-semibold mb-10 md:mb-12">
@@ -190,50 +166,26 @@
             </h3>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_4_title')); ?>
+                <?php $older = $announcements->slice(3, 3); ?>
+                <?php $__currentLoopData = $older; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
+                        <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
+                            <?php echo e($item->getTranslation('title', app()->getLocale())); ?>
 
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_4_body')); ?>
+                        </h4>
+                        <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
+                            <?php echo e(Str::limit($item->getTranslation('content', app()->getLocale()), 140)); ?>
 
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
+                        </p>
+                        <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition view-more-btn"
+                                data-announcement-title="<?php echo e($item->getTranslation('title', app()->getLocale())); ?>"
+                                data-announcement-content="<?php echo e($item->getTranslation('content', app()->getLocale())); ?>"
+                                data-announcement-image="<?php echo e($item->getImageUrl() ?? ''); ?>">
+                            <?php echo e(__('view_more')); ?>
 
-                    </button>
-                </div>
-
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_5_title')); ?>
-
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_5_body')); ?>
-
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
-
-                    </button>
-                </div>
-
-                <div class="min-h-[330px] md:min-h-[360px] flex flex-col bg-white/20 border border-white/30 rounded-xl p-7 md:p-8 backdrop-blur-sm transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <h4 class="text-white font-bold text-[15px] md:text-[16px] leading-7 underline mb-5">
-                        <?php echo e(__('news_item_6_title')); ?>
-
-                    </h4>
-                    <p class="text-white text-[12px] md:text-[13px] leading-6 mb-8">
-                        <?php echo e(__('news_item_6_body')); ?>
-
-                    </p>
-                    <button class="mt-auto self-start bg-[#0b1a2b] text-white text-[12px] font-semibold px-5 py-2 rounded hover:bg-[#142944] transition">
-                        <?php echo e(__('view_more')); ?>
-
-                    </button>
-                </div>
+                        </button>
+                    </div>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
         </div>
@@ -293,6 +245,65 @@
                 </div>
 
             </div>
+
+                <!-- MODAL FOR ANNOUNCEMENT DETAILS -->
+                <div id="announcementModal" class="modal-overlay">
+                    <div class="modal-content">
+                        <button class="modal-close" id="closeModal">&times;</button>
+                        <div id="modalImage"></div>
+                        <h2 class="modal-title" id="modalTitle"></h2>
+                        <div class="modal-body" id="modalContent"></div>
+                    </div>
+                </div>
+
+                <style>
+                    .modal-overlay { display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index:1000; overflow-y:auto; padding:20px; }
+                    .modal-overlay.active { display:flex; align-items:center; justify-content:center; }
+                    .modal-content { background: rgba(255,255,255,0.98); border-radius:15px; max-width:700px; width:100%; padding:30px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); color:#333; max-height:90vh; overflow-y:auto; }
+                    .modal-image { width:100%; height:auto; border-radius:10px; margin-bottom:20px; max-height:400px; object-fit:cover; }
+                    .modal-title { font-size:24px; font-weight:700; color:#0b1426; margin:15px 0; }
+                    .modal-body { font-size:14px; line-height:1.6; color:#333; white-space:pre-wrap; }
+                </style>
+
+                <script>
+                    (function(){
+                        const modal = document.getElementById('announcementModal');
+                        const closeBtn = document.getElementById('closeModal');
+                        const modalImage = document.getElementById('modalImage');
+                        const modalTitle = document.getElementById('modalTitle');
+                        const modalContent = document.getElementById('modalContent');
+                        const viewMoreBtns = document.querySelectorAll('.view-more-btn');
+
+                        viewMoreBtns.forEach(btn => {
+                            btn.addEventListener('click', function() {
+                                const title = this.dataset.announcementTitle;
+                                const content = this.dataset.announcementContent;
+                                const imageUrl = this.dataset.announcementImage;
+
+                                modalTitle.textContent = title || '';
+                                modalContent.textContent = content || '';
+
+                                if (imageUrl) {
+                                    modalImage.innerHTML = '<img src="' + imageUrl + '" class="modal-image" alt="' + (title || '') + '">';
+                                } else {
+                                    modalImage.innerHTML = '';
+                                }
+
+                                modal.classList.add('active');
+                                document.body.style.overflow = 'hidden';
+                            });
+                        });
+
+                        function closeModalFunc(){
+                            modal.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        }
+
+                        if (closeBtn) closeBtn.addEventListener('click', closeModalFunc);
+                        modal.addEventListener('click', function(e){ if (e.target === modal) closeModalFunc(); });
+                        document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.classList.contains('active')) closeModalFunc(); });
+                    })();
+                </script>
         </div>
 
         <div class="max-w-[1120px] mx-auto">
@@ -352,27 +363,15 @@
     let currentIndex = 0;
     const VISIBLE = 3;
 
-    const activities = [
-        {name: '<?php echo e(__("activity_chess_title")); ?>', description: '<?php echo e(__("activity_chess_description")); ?>'},
-        {name: '<?php echo e(__("activity_welding_title")); ?>', description: '<?php echo e(__("activity_welding_description")); ?>'},
-        {name: '<?php echo e(__("activity_carving_title")); ?>', description: '<?php echo e(__("activity_carving_description")); ?>'},
-        {name: '<?php echo e(__("activity_carpentry_title")); ?>', description: '<?php echo e(__("activity_carpentry_description")); ?>'},
-        {name: '<?php echo e(__("activity_electrical_title")); ?>', description: '<?php echo e(__("activity_electrical_description")); ?>'},
-        {name: '<?php echo e(__("activity_embroidery_title")); ?>', description: '<?php echo e(__("activity_embroidery_description")); ?>'},
-        {name: '<?php echo e(__("activity_drawing_title")); ?>', description: '<?php echo e(__("activity_drawing_description")); ?>'},
-        {name: '<?php echo e(__("activity_sewing_title")); ?>', description: '<?php echo e(__("activity_sewing_description")); ?>'},
-        {name: '<?php echo e(__("activity_painting_title")); ?>', description: '<?php echo e(__("activity_painting_description")); ?>'},
-        {name: '<?php echo e(__("activity_sports_title")); ?>', description: '<?php echo e(__("activity_sports_description")); ?>'}
-    ];
+    const activities = <?php echo json_encode($activities); ?>;
 
-    const activityImageUrl = "<?php echo e(asset('images/bla.jpeg')); ?>";
     activities.forEach((activity) => {
         const card = document.createElement("div");
         card.className = "activity-card flex-shrink-0 rounded-2xl overflow-hidden relative shadow-lg";
         card.style.transition = "transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease";
         card.style.cursor = "pointer";
         card.innerHTML = `
-    <img src="${activityImageUrl}" class="w-full h-full object-cover">
+    <img src="${activity.image}" class="w-full h-full object-cover">
     <div class="absolute bottom-0 bg-black/60 text-white p-4 w-full">
         <h3 class="font-semibold">${activity.name}</h3>
         <p class="text-xs mt-1">${activity.description}</p>
