@@ -5,6 +5,7 @@ use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
@@ -97,9 +98,18 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             return view('admin.index_activities');
         })->name('admin.activities');
 
-        Route::get('/soopstenija', function () {
-            return view('admin.soopstenija');
-        })->name('admin.soopstenija');
+        // Announcements (Soopstenija)
+        Route::prefix('announcements')->name('admin.announcements.')->group(function () {
+            Route::get('/', [AnnouncementController::class, 'index'])->name('index');
+            Route::get('/create', [AnnouncementController::class, 'create'])->name('create');
+            Route::post('/', [AnnouncementController::class, 'store'])->name('store');
+            Route::get('/{announcement}/edit', [AnnouncementController::class, 'edit'])->name('edit');
+            Route::patch('/{announcement}', [AnnouncementController::class, 'update'])->name('update');
+            Route::delete('/{announcement}', [AnnouncementController::class, 'destroy'])->name('destroy');
+        });
+
+        // Redirect old soopstenija route to announcements
+        Route::redirect('/soopstenija', '/admin/announcements');
 
         Route::get('/izrabotki', function () {
             return view('admin.izrabotki');

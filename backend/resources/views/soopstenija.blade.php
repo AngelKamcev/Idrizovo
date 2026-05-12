@@ -42,6 +42,97 @@
     }
     .btn-more:hover { background-color: #000000 !important; }
 
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1000;
+        overflow-y: auto;
+        padding: 20px;
+    }
+
+    .modal-overlay.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 15px;
+        max-width: 700px;
+        width: 100%;
+        padding: 30px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        color: #333;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal-close {
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        color: #0b1426;
+        cursor: pointer;
+        transition: color 0.2s ease;
+        border: none;
+        background: none;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-close:hover {
+        color: #000;
+    }
+
+    .modal-image {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        max-height: 400px;
+        object-fit: cover;
+    }
+
+    .modal-title {
+        clear: both;
+        font-size: 24px;
+        font-weight: 700;
+        color: #0b1426;
+        margin: 15px 0;
+        line-height: 1.3;
+    }
+
+    .modal-body {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #333;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+
     .card-title {
         text-decoration: underline;
         text-decoration-thickness: 2px;
@@ -89,153 +180,253 @@
         <!-- НОВИ СООПШТЕНИЈА -->
         <section class="mb-16 relative z-20">
             <h2 class="text-xl font-bold mb-5 text-white/90">{{ __('latest_announcements') }}</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-
-                <div class="flex flex-col gap-4">
-
-                    <div class="glass-card p-6 flex flex-col gap-5 h-full">
-                        <div>
-                            <h3 class="text-[15px] text-white font-bold mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                {{ __('news_item_1_title') }}
-                            </h3>
-                            <p class="text-[12px] text-white/80 leading-relaxed">
-                                {{ __('news_item_1_body') }}
-                            </p>
-                        </div>
-                        <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+            
+            @if ($announcements->count() > 0)
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-4">
+                        {{-- First announcement (large card) --}}
+                        @php $firstAnnouncement = $announcements->first(); @endphp
                         <div class="glass-card p-6 flex flex-col gap-5 h-full">
                             <div>
-                                <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                    {{ __('news_item_3_title') }}
+                                <h3 class="text-[15px] text-white font-bold mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                    {{ $firstAnnouncement->getTranslation('title', app()->getLocale()) }}
                                 </h3>
                                 <p class="text-[12px] text-white/80 leading-relaxed">
-                                    {{ __('news_item_3_body') }}
+                                    {{ Str::limit($firstAnnouncement->getTranslation('content', app()->getLocale()), 150) }}
                                 </p>
                             </div>
-                            <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
+                            <button class="btn-more w-fit mt-auto view-more-btn" 
+                                    data-announcement-title="{{ $firstAnnouncement->getTranslation('title', app()->getLocale()) }}" 
+                                    data-announcement-content="{{ $firstAnnouncement->getTranslation('content', app()->getLocale()) }}"
+                                    data-announcement-image="{{ $firstAnnouncement->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
                         </div>
 
-                        <div class="glass-card p-6 flex flex-col gap-5 h-full">
-                            <div>
-                                <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                    {{ __('news_item_2_title') }}
-                                </h3>
-                                <p class="text-[12px] text-white/80 leading-relaxed">
-                                    {{ __('news_item_2_body') }}
-                                </p>
-                            </div>
-                            <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
+                        {{-- Next 2 announcements (small cards in grid) --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                            @foreach ($announcements->slice(1, 2) as $announcement)
+                                <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                    <div>
+                                        <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                            {{ $announcement->getTranslation('title', app()->getLocale()) }}
+                                        </h3>
+                                        <p class="text-[12px] text-white/80 leading-relaxed">
+                                            {{ Str::limit($announcement->getTranslation('content', app()->getLocale()), 80) }}
+                                        </p>
+                                    </div>
+                                    <button class="btn-more w-fit mt-auto view-more-btn" 
+                                            data-announcement-title="{{ $announcement->getTranslation('title', app()->getLocale()) }}" 
+                                            data-announcement-content="{{ $announcement->getTranslation('content', app()->getLocale()) }}"
+                                            data-announcement-image="{{ $announcement->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
+                    <div class="flex flex-col gap-4">
+                        {{-- Next 2 announcements (small cards in grid) --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                            @foreach ($announcements->slice(3, 2) as $announcement)
+                                <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                    <div>
+                                        <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                            {{ $announcement->getTranslation('title', app()->getLocale()) }}
+                                        </h3>
+                                        <p class="text-[12px] text-white/80 leading-relaxed">
+                                            {{ Str::limit($announcement->getTranslation('content', app()->getLocale()), 80) }}
+                                        </p>
+                                    </div>
+                                    <button class="btn-more w-fit mt-auto view-more-btn" 
+                                            data-announcement-title="{{ $announcement->getTranslation('title', app()->getLocale()) }}" 
+                                            data-announcement-content="{{ $announcement->getTranslation('content', app()->getLocale()) }}"
+                                            data-announcement-image="{{ $announcement->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        {{-- Last announcement of latest section --}}
+                        @if ($announcements->count() > 5)
+                            @php $lastLatest = $announcements->slice(5, 1)->first(); @endphp
+                            <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                <div>
+                                    <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                        {{ $lastLatest->getTranslation('title', app()->getLocale()) }}
+                                    </h3>
+                                    <p class="text-[12px] text-white/80 leading-relaxed">
+                                        {{ Str::limit($lastLatest->getTranslation('content', app()->getLocale()), 80) }}
+                                    </p>
+                                </div>
+                                <button class="btn-more w-fit mt-auto view-more-btn" 
+                                        data-announcement-title="{{ $lastLatest->getTranslation('title', app()->getLocale()) }}" 
+                                        data-announcement-content="{{ $lastLatest->getTranslation('content', app()->getLocale()) }}"
+                                        data-announcement-image="{{ $lastLatest->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                            </div>
+                        @endif
+                    </div>
                 </div>
-
-                <div class="flex flex-col gap-4">
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
-                        <div class="glass-card p-6 flex flex-col gap-5 h-full">
-                            <div>
-                                <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                    {{ __('news_item_4_title') }}
-                                </h3>
-                                <p class="text-[12px] text-white/80 leading-relaxed">
-                                    {{ __('news_item_4_body') }}
-                                </p>
-                            </div>
-                            <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
-                        </div>
-
-                        <div class="glass-card p-6 flex flex-col gap-5 h-full">
-                            <div>
-                                <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                    {{ __('news_item_5_title') }}
-                                </h3>
-                                <p class="text-[12px] text-white/80 leading-relaxed">
-                                    {{ __('news_item_5_body') }}
-                                </p>
-                            </div>
-                            <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
-                        </div>
-                    </div>
-
-                    <div class="glass-card p-6 flex flex-col gap-5 h-full">
-                        <div>
-                            <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
-                                {{ __('news_item_2_title') }}
-                            </h3>
-                            <p class="text-[12px] text-white/80 leading-relaxed">
-                                {{ __('news_item_2_body') }}
-                            </p>
-                        </div>
-                        <button class="btn-more w-fit mt-auto">{{ __('view_more') }}</button>
-                    </div>
-
+            @else
+                <div class="glass-card p-6 text-center">
+                    <p class="text-white">Нема соопштенија во моментов.</p>
                 </div>
-
-            </div>
+            @endif
         </section>
 
         <!-- ПОСТАРИ СООПШТЕНИЈА -->
-        <section class="mb-0 relative z-20">
-            <h2 class="text-xl font-bold mb-5 text-white/90">{{ __('older_announcements') }}</h2>
+        @if ($announcements->count() > 6)
+            <section class="mb-0 relative z-20">
+                <h2 class="text-xl font-bold mb-5 text-white/90">{{ __('older_announcements') }}</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="flex flex-col gap-4">
+                        {{-- First older announcement (large card) --}}
+                        @php $firstOlder = $announcements->slice(6, 1)->first(); @endphp
+                        @if ($firstOlder)
+                            <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                <div>
+                                    <h3 class="text-[15px] text-white font-bold mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                        {{ $firstOlder->getTranslation('title', app()->getLocale()) }}
+                                    </h3>
+                                    <p class="text-[12px] text-white/80 leading-relaxed">
+                                        {{ Str::limit($firstOlder->getTranslation('content', app()->getLocale()), 150) }}
+                                    </p>
+                                </div>
+                                <button class="btn-more w-fit mt-auto view-more-btn" 
+                                        data-announcement-title="{{ $firstOlder->getTranslation('title', app()->getLocale()) }}" 
+                                        data-announcement-content="{{ $firstOlder->getTranslation('content', app()->getLocale()) }}"
+                                        data-announcement-image="{{ $firstOlder->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                            </div>
+                        @endif
 
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-
-                <div class="col-span-1 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_5_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">Врз основа на член 78 и член 19 од Законот за извршување на санкции (Службен весник на Република Македонија бр 99/19 и 220/19)...</p>
+                        {{-- Next 2 older announcements (small cards in grid) --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                            @foreach ($announcements->slice(7, 2) as $announcement)
+                                <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                    <div>
+                                        <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                            {{ $announcement->getTranslation('title', app()->getLocale()) }}
+                                        </h3>
+                                        <p class="text-[12px] text-white/80 leading-relaxed">
+                                            {{ Str::limit($announcement->getTranslation('content', app()->getLocale()), 80) }}
+                                        </p>
+                                    </div>
+                                    <button class="btn-more w-fit mt-auto view-more-btn" 
+                                            data-announcement-title="{{ $announcement->getTranslation('title', app()->getLocale()) }}" 
+                                            data-announcement-content="{{ $announcement->getTranslation('content', app()->getLocale()) }}"
+                                            data-announcement-image="{{ $announcement->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
-                    <button class="btn-more w-fit">{{ __('view_more') }}</button>
-                </div>
 
-                <div class="col-span-1 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_1_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">Врз основа на член 35 став 1 и член 2 став 5, а во врска член 49 од Законот за административни службеници (Службен...</p>
+                    <div class="flex flex-col gap-4">
+                        {{-- Next 2 older announcements (small cards in grid) --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 h-full">
+                            @foreach ($announcements->slice(9, 2) as $announcement)
+                                <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                    <div>
+                                        <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                            {{ $announcement->getTranslation('title', app()->getLocale()) }}
+                                        </h3>
+                                        <p class="text-[12px] text-white/80 leading-relaxed">
+                                            {{ Str::limit($announcement->getTranslation('content', app()->getLocale()), 80) }}
+                                        </p>
+                                    </div>
+                                    <button class="btn-more w-fit mt-auto view-more-btn" 
+                                            data-announcement-title="{{ $announcement->getTranslation('title', app()->getLocale()) }}" 
+                                            data-announcement-content="{{ $announcement->getTranslation('content', app()->getLocale()) }}"
+                                            data-announcement-image="{{ $announcement->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        {{-- Last older announcement (large card) --}}
+                        @if ($announcements->count() > 11)
+                            @php $lastOlder = $announcements->slice(11, 1)->first(); @endphp
+                            <div class="glass-card p-6 flex flex-col gap-5 h-full">
+                                <div>
+                                    <h3 class="text-[15px] font-bold text-white mb-4 underline decoration-[2px] underline-offset-4 decoration-white/40 leading-relaxed">
+                                        {{ $lastOlder->getTranslation('title', app()->getLocale()) }}
+                                    </h3>
+                                    <p class="text-[12px] text-white/80 leading-relaxed">
+                                        {{ Str::limit($lastOlder->getTranslation('content', app()->getLocale()), 80) }}
+                                    </p>
+                                </div>
+                                <button class="btn-more w-fit mt-auto view-more-btn" 
+                                        data-announcement-title="{{ $lastOlder->getTranslation('title', app()->getLocale()) }}" 
+                                        data-announcement-content="{{ $lastOlder->getTranslation('content', app()->getLocale()) }}"
+                                        data-announcement-image="{{ $lastOlder->getImageUrl() ?? '' }}">{{ __('view_more') }}</button>
+                            </div>
+                        @endif
                     </div>
-                    <button class="btn-more w-fit">{{ __('view_more') }}</button>
                 </div>
-
-                <div class="col-span-1 md:col-span-2 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_6_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">{{ __('news_item_6_body') }}</p>
-                    </div>
-                    <button class="btn-more w-fit">{{ __('view_more') }}</button>
-                </div>
-
-                <div class="col-span-1 md:col-span-2 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_5_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">Врз основа на член 52 став 1 и став 2 од Законот за извршување санкции (Службен весник на РМ бр 99/19 и 220/19)...</p>
-                    </div>
-                    <button class="btn-more w-fit">{{ __('view_more') }}</button>
-                </div>
-
-                <div class="col-span-1 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_6_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">Број на оглас 04/20...</p>
-                    </div>
-                    <button class="btn-more w-fit mt-4">{{ __('view_more') }}</button>
-                </div>
-
-                <div class="col-span-1 glass-card p-6 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xs font-bold text-white/90 uppercase mb-3 card-title">{{ __('news_item_4_title') }}</h3>
-                        <p class="text-[11px] text-white/80 leading-relaxed mb-6">Врз основа на член 70...</p>
-                    </div>
-                    <button class="btn-more w-fit mt-4">{{ __('view_more') }}</button>
-                </div>
-
-            </div>
-        </section>
+            </section>
+        @endif
 
     </div>
 </main>
+
+<!-- MODAL FOR ANNOUNCEMENT DETAILS -->
+<div id="announcementModal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close" id="closeModal">&times;</button>
+        <div id="modalImage"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+        <div class="modal-body" id="modalContent"></div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('announcementModal');
+    const closeBtn = document.getElementById('closeModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalContent = document.getElementById('modalContent');
+    const viewMoreBtns = document.querySelectorAll('.view-more-btn');
+
+    // Open modal when clicking view more button
+    viewMoreBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const title = this.dataset.announcementTitle;
+            const content = this.dataset.announcementContent;
+            const imageUrl = this.dataset.announcementImage;
+
+            // Set modal content
+            modalTitle.textContent = title;
+            modalContent.textContent = content;
+
+            // Set image if exists
+            if (imageUrl) {
+                modalImage.innerHTML = '<img src="' + imageUrl + '" alt="' + title + '" class="modal-image">';
+            } else {
+                modalImage.innerHTML = '';
+            }
+
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal
+    function closeModalFunc() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    closeBtn.addEventListener('click', closeModalFunc);
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModalFunc();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModalFunc();
+        }
+    });
+</script>
 
 @endsection

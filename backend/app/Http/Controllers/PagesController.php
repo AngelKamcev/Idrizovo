@@ -8,6 +8,7 @@ use App\Models\VisitCompanion;
 use App\Models\Complaint;
 use App\Models\VisitRequest;
 use App\Models\VisitSchedule;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -193,7 +194,12 @@ class PagesController extends Controller
      */
     public function soopstenija()
     {
-        return view('soopstenija');
+        $announcements = Announcement::active()
+            ->published()
+            ->sorted()
+            ->get();
+
+        return view('soopstenija', ['announcements' => $announcements]);
     }
 
     /**

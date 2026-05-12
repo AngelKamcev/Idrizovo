@@ -13,8 +13,10 @@ class Announcement extends Model
         'title',
         'content',
         'image_url',
+        'image_path',
         'published_at',
         'is_active',
+        'sort_order',
     ];
 
     /**
@@ -36,10 +38,29 @@ class Announcement extends Model
     }
 
     /**
-     * Get published announcements (published_at is set)
+     * Get published announcements (just active ones)
      */
     public function scopePublished($query)
     {
-        return $query->whereNotNull('published_at')->where('published_at', '<=', now());
+        return $query; // All active announcements are published
+    }
+
+    /**
+     * Get sorted announcements (by sort_order then newest first)
+     */
+    public function scopeSorted($query)
+    {
+        return $query->orderBy('sort_order', 'asc')->orderByDesc('created_at')->orderByDesc('id');
+    }
+
+    /**
+     * Get image URL for announcement
+     */
+    public function getImageUrl()
+    {
+        if ($this->image_path) {
+            return asset('storage/' . $this->image_path);
+        }
+        return $this->image_url; // Fallback to old image_url column
     }
 }

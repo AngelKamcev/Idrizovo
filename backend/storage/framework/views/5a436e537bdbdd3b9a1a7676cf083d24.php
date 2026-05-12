@@ -83,7 +83,7 @@
                 <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Logo" class="h-10 w-auto object-contain">
             </a>
 
-            <ul class="hidden md:flex space-x-10 text-sm font-medium">
+            <ul class="hidden md:flex space-x-9 text-sm font-medium">
                 <li>
                     <a href="<?php echo e(route('index')); ?>" class="border-b-2 <?php echo e(Route::currentRouteName() === 'index' ? 'border-blue-300' : 'border-transparent hover:border-blue-300'); ?> pb-1 transition-all">
                         <?php echo e(__('home')); ?>
