@@ -43,10 +43,10 @@ class ActivityController extends Controller
             'description_mk' => 'required|string|max:1000',
             'content' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image_url' => 'nullable|string|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
-            'auto_translate' => 'boolean', // Enable auto-translation
+            'auto_translate' => 'boolean',
         ]);
 
         $sourceData = [
@@ -62,11 +62,16 @@ class ActivityController extends Controller
                 ['en', 'sq']
             );
         } else {
-            // Use only source language
             $translations = [
                 'title' => ['mk' => $validated['title_mk']],
                 'description' => ['mk' => $validated['description_mk']],
             ];
+        }
+
+        // Handle image upload
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('activities', 'public');
         }
 
         $activity = Activity::create([
@@ -74,12 +79,12 @@ class ActivityController extends Controller
             'description' => $translations['description'],
             'content' => $validated['content'],
             'icon' => $validated['icon'],
-            'image_url' => $validated['image_url'],
+            'image_path' => $imagePath,
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        return redirect()->route('admin.activities.index')
+        return redirect()->route('admin.main-activities.index')
             ->with('success', __('Activity created successfully. Auto-translated to EN and SQ.'));
     }
 
@@ -105,7 +110,7 @@ class ActivityController extends Controller
             'description_sq' => 'nullable|string|max:1000',
             'content' => 'nullable|string',
             'icon' => 'nullable|string',
-            'image_url' => 'nullable|string|url',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'sort_order' => 'nullable|integer|min:0',
             'is_active' => 'boolean',
             'auto_translate' => 'boolean',
@@ -137,17 +142,27 @@ class ActivityController extends Controller
             }
         }
 
+        // Handle image upload
+        $imagePath = $activity->image_path;
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($activity->image_path) {
+                \Storage::disk('public')->delete($activity->image_path);
+            }
+            $imagePath = $request->file('image')->store('activities', 'public');
+        }
+
         $activity->update([
             'title' => $translations['title'],
             'description' => $translations['description'],
             'content' => $validated['content'],
             'icon' => $validated['icon'],
-            'image_url' => $validated['image_url'],
+            'image_path' => $imagePath,
             'sort_order' => $validated['sort_order'] ?? 0,
             'is_active' => $validated['is_active'] ?? true,
         ]);
 
-        return redirect()->route('admin.activities.index')
+        return redirect()->route('admin.main-activities.index')
             ->with('success', __('Activity updated successfully.'));
     }
 
@@ -156,9 +171,13 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
+        // Delete image if exists
+        if ($activity->image_path) {
+            \Storage::disk('public')->delete($activity->image_path);
+        }
         $activity->delete();
 
-        return redirect()->route('admin.activities.index')
+        return redirect()->route('admin.main-activities.index')
             ->with('success', __('Activity deleted successfully.'));
     }
 }

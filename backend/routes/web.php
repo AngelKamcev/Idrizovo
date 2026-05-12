@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
@@ -82,6 +83,16 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::patch('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'update'])->name('admin.visit-schedules.update');
         Route::delete('/visit-schedules/{visitSchedule}', [VisitScheduleController::class, 'destroy'])->name('admin.visit-schedules.destroy');
 
+        // Main Activities (carousel activities)
+        Route::prefix('main-activities')->name('admin.main-activities.')->group(function () {
+            Route::get('/', [ActivityController::class, 'index'])->name('index');
+            Route::get('/create', [ActivityController::class, 'create'])->name('create');
+            Route::post('/', [ActivityController::class, 'store'])->name('store');
+            Route::get('/{activity}/edit', [ActivityController::class, 'edit'])->name('edit');
+            Route::patch('/{activity}', [ActivityController::class, 'update'])->name('update');
+            Route::delete('/{activity}', [ActivityController::class, 'destroy'])->name('destroy');
+        });
+
         Route::get('/activities', function () {
             return view('admin.index_activities');
         })->name('admin.activities');
@@ -101,10 +112,6 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         Route::get('/aboutus', function () {
             return view('admin.aboutus');
         })->name('admin.aboutus');
-
-        Route::get('/main-activities', function () {
-            return view('admin.activities');
-        })->name('admin.main-activities');
     });
 
     Route::middleware('role:admin,reviewer')->group(function () {

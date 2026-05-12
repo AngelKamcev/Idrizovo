@@ -41,7 +41,8 @@ class PagesController extends Controller
      */
     public function activities()
     {
-        return view('activities');
+        $activities = \App\Models\Activity::active()->sorted()->get();
+        return view('activities', ['activities' => $activities]);
     }
 
     /**

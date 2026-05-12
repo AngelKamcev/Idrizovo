@@ -127,7 +127,7 @@
 
             <div class="hidden md:flex items-center space-x-6">
                 <div class="relative flex items-center group h-10 w-6">
-                    <input type="text" placeholder="<?php echo e(__('search')); ?>..." class="absolute right-0 w-0 opacity-0 group-hover:w-48 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0">
+                    <input type="text" placeholder="<?php echo e(__('search')); ?>..." class="absolute right-0 w-0 opacity-0 group-hover:w-40 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer absolute right-0 text-white z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
@@ -267,6 +267,11 @@
         </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="fixed bottom-8 right-8 bg-[#2E589E] hover:bg-[#1e3a5f] text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg opacity-0 invisible transition-all duration-300 z-50" title="Назад нагоре">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script>
         // Mobile menu toggle
         const hamburger = document.getElementById('hamburger');
@@ -274,37 +279,67 @@
         const iconOpen = document.getElementById('icon-open');
         const iconClose = document.getElementById('icon-close');
 
-        hamburger.addEventListener('click', function() {
-            mobileMenu.classList.toggle('open');
-            iconOpen.classList.toggle('hidden');
-            iconClose.classList.toggle('hidden');
-        });
+        if (hamburger) {
+            hamburger.addEventListener('click', function() {
+                mobileMenu.classList.toggle('open');
+                iconOpen.classList.toggle('hidden');
+                iconClose.classList.toggle('hidden');
+            });
+        }
 
         // Mobile dropdown toggle
         const mobDropdownBtn = document.getElementById('mob-dropdown-btn');
         const mobSub = document.getElementById('mob-sub');
         const mobDropdownIcon = document.getElementById('mob-dropdown-icon');
 
-        mobDropdownBtn.addEventListener('click', function() {
-            mobSub.classList.toggle('open');
-            mobDropdownIcon.classList.toggle('rotate-180');
-        });
+        if (mobDropdownBtn) {
+            mobDropdownBtn.addEventListener('click', function() {
+                mobSub.classList.toggle('open');
+                mobDropdownIcon.classList.toggle('rotate-180');
+            });
+        }
 
         // Language dropdown toggle
         const langMenuBtn = document.getElementById('lang-menu-btn');
         const langDropdown = document.getElementById('lang-dropdown');
 
-        langMenuBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            langDropdown.classList.toggle('hidden');
-        });
+        if (langMenuBtn) {
+            langMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                langDropdown.classList.toggle('hidden');
+            });
+        }
 
         // Close dropdown when clicking outside
-        window.addEventListener('click', function() {
-            if (!langDropdown.classList.contains('hidden')) {
-                langDropdown.classList.add('hidden');
-            }
-        });
+        if (langDropdown) {
+            window.addEventListener('click', function() {
+                if (!langDropdown.classList.contains('hidden')) {
+                    langDropdown.classList.add('hidden');
+                }
+            });
+        }
+
+        // Scroll to Top Button
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        if (scrollToTopBtn) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.remove('opacity-0', 'invisible');
+                    scrollToTopBtn.classList.add('opacity-100', 'visible');
+                } else {
+                    scrollToTopBtn.classList.add('opacity-0', 'invisible');
+                    scrollToTopBtn.classList.remove('opacity-100', 'visible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
     </script>
 
 </body>

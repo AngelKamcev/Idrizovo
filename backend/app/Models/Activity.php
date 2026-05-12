@@ -9,12 +9,14 @@ class Activity extends Model
 {
     use HasTranslations;
 
+    protected $table = 'main_activities';
+
     protected $fillable = [
         'title',
         'description',
         'content',
         'icon',
-        'image_url',
+        'image_path',
         'sort_order',
         'is_active',
     ];
@@ -42,6 +44,19 @@ class Activity extends Model
      */
     public function scopeSorted($query)
     {
-        return $query->orderBy('sort_order', 'asc');
+        return $query->orderBy('sort_order', 'asc')
+            ->orderByDesc('created_at')
+            ->orderByDesc('id');
+    }
+
+    /**
+     * Get the image URL from the image path
+     */
+    public function getImageUrl()
+    {
+        if ($this->image_path) {
+            return asset('storage/' . $this->image_path);
+        }
+        return null;
     }
 }

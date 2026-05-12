@@ -26,11 +26,11 @@
         </h3>
         
         <h1 class="text-[#0E1B2F] text-6xl md:text-7xl font-extrabold mb-4 tracking-tight drop-shadow-sm">
-                {{ __('basketball') }}
+                {{ $activities->first()?->getTranslation('title', app()->getLocale()) ?? __('basketball') }}
         </h1>
         
         <p class="text-[#0E1B2F] text-base md:text-lg mb-8 font-semibold leading-snug pr-4 drop-shadow-md">
-                {{ __('basketball_description') }}
+                {{ $activities->first()?->getTranslation('description', app()->getLocale()) ?? __('basketball_description') }}
         </p>
         
         <button class="bg-[#2E589E] hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-md shadow-lg transition-all duration-300 transform hover:scale-105">
@@ -49,129 +49,96 @@
 
     <div id="mobile-carousel" class="flex overflow-x-auto snap-x snap-mandatory gap-4 px-5 pb-6 hide-scrollbar">
         
-        @php
-            $activities = [
-                ['name' => __('chess'), 'desc' => __('chess_description')],
-                ['name' => __('welding'), 'desc' => __('welding_description')],
-                ['name' => __('carpentry'), 'desc' => __('carpentry_description')],
-                ['name' => __('sports'), 'desc' => __('sports_description')],
-            ];
-        @endphp
-
-        @foreach ($activities as $activity)
+        @forelse ($activities as $activity)
+            <div class="carousel-item snap-center shrink-0 w-[82vw] h-[400px] relative rounded-2xl overflow-hidden shadow-lg">
+                <img src="{{ $activity->getImageUrl() ?? asset('images/bla.jpeg') }}" class="absolute inset-0 w-full h-full object-cover">
+                <div class="absolute bottom-0 left-0 w-full p-6 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner">
+                    <h2 class="text-2xl font-bold text-white mb-2 inline-block border-b-2 border-white pb-1">{{ $activity->getTranslation('title', app()->getLocale()) }}</h2>
+                    <p class="text-white/90 text-sm leading-snug">{{ $activity->getTranslation('description', app()->getLocale()) }}</p>
+                </div>
+            </div>
+        @empty
             <div class="carousel-item snap-center shrink-0 w-[82vw] h-[400px] relative rounded-2xl overflow-hidden shadow-lg">
                 <img src="{{ asset('images/bla.jpeg') }}" class="absolute inset-0 w-full h-full object-cover">
                 <div class="absolute bottom-0 left-0 w-full p-6 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner">
-                    <h2 class="text-2xl font-bold text-white mb-2 inline-block border-b-2 border-white pb-1">{{ $activity['name'] }}</h2>
-                    <p class="text-white/90 text-sm leading-snug">{{ $activity['desc'] }}</p>
+                    <h2 class="text-2xl font-bold text-white mb-2 inline-block border-b-2 border-white pb-1">{{ __('no_activities') }}</h2>
                 </div>
             </div>
-        @endforeach
+        @endforelse
     </div>
 
     <div class="flex justify-center items-center gap-3 mt-2" id="carousel-indicators">
-        <div class="carousel-dot w-10 h-3.5 bg-[#0E1B2F] rounded-full transition-all duration-300"></div>
-        <div class="carousel-dot w-3.5 h-3.5 rounded-full border-[2px] border-[#0E1B2F] transition-all duration-300"></div>
-        <div class="carousel-dot w-3.5 h-3.5 rounded-full border-[2px] border-[#0E1B2F] transition-all duration-300"></div>
-        <div class="carousel-dot w-3.5 h-3.5 rounded-full border-[2px] border-[#0E1B2F] transition-all duration-300"></div>
+        @for ($i = 0; $i < min($activities->count(), 4); $i++)
+            @if ($i === 0)
+                <div class="carousel-dot w-10 h-3.5 bg-[#0E1B2F] rounded-full transition-all duration-300"></div>
+            @else
+                <div class="carousel-dot w-3.5 h-3.5 rounded-full border-[2px] border-[#0E1B2F] transition-all duration-300"></div>
+            @endif
+        @endfor
     </div>
 </section>
 
 <section class="hidden md:block max-w-7xl mx-auto px-4 py-16 font-sans">
+    @if ($activities->count() > 0)
     <div class="mb-16">
         <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">{{ __('most_read_activities') }}</h2>
         <div class="grid grid-cols-4 gap-6">
+            @php $firstActivity = $activities->first(); @endphp
             <div class="col-span-2 row-span-2 relative h-[508px] rounded-2xl overflow-hidden group shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ $firstActivity->getImageUrl() ?? asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-8 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h3 class="text-3xl font-bold mb-3">{{ __('chess_tournament') }}</h3>
-                    <p class="text-base opacity-90 mb-5">{{ __('chess_description') }}</p>
+                    <h3 class="text-3xl font-bold mb-3">{{ $firstActivity->getTranslation('title', app()->getLocale()) }}</h3>
+                    <p class="text-base opacity-90 mb-5">{{ $firstActivity->getTranslation('description', app()->getLocale()) }}</p>
                     <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">{{ __('read_more') }}</a>
                 </div>
             </div>
 
-            <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">{{ __('welding') }}</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('welding_description') }}</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
+            @php $otherActivities = $activities->skip(1)->take(4); @endphp
+            @foreach ($otherActivities as $activity)
+                <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ $activity->getImageUrl() ?? asset('images/bla.jpeg') }}');"></div>
+                    <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
+                        <h4 class="font-bold text-xl mb-1">{{ $activity->getTranslation('title', app()->getLocale()) }}</h4>
+                        <p class="text-xs leading-tight opacity-90 mb-3">{{ Str::limit($activity->getTranslation('description', app()->getLocale()), 50) }}</p>
+                        <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">{{ __('carving') }}</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('carving_description') }}</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
-                </div>
-            </div>
-
-            <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">{{ __('carpentry') }}</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('carpentry_description') }}</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
-                </div>
-            </div>
-
-            <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h4 class="font-bold text-xl mb-1">{{ __('electrical') }}</h4>
-                    <p class="text-xs leading-tight opacity-90 mb-3">{{ __('electrical_description') }}</p>
-                    <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
+    @endif
 
+    @php $remainingActivities = $activities->skip(5)->take(5); @endphp
+    @if ($remainingActivities->count() > 0)
     <div>
         <h2 class="text-[#1a2b4b] text-3xl font-bold mb-8">{{ __('other_activities') }}</h2>
         <div class="grid grid-cols-4 gap-6">
-            <div class="grid grid-cols-2 col-span-2 gap-6">
-                <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                            <h4 class="font-bold text-lg mb-2">{{ __('embroidery') }}</h4>
-                            <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
+            <div class="col-span-2 grid grid-cols-2 gap-6">
+                @php $smallRemaining = $remainingActivities->skip(1)->take(4); @endphp
+                @foreach ($smallRemaining as $activity)
+                    <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ $activity->getImageUrl() ?? asset('images/bla.jpeg') }}');"></div>
+                        <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
+                            <h4 class="font-bold text-xl mb-1">{{ $activity->getTranslation('title', app()->getLocale()) }}</h4>
+                            <p class="text-xs leading-tight opacity-90 mb-3">{{ Str::limit($activity->getTranslation('description', app()->getLocale()), 50) }}</p>
+                            <a href="#" class="text-[11px] uppercase font-bold border-b border-white">{{ __('read_more') }}</a>
+                        </div>
                     </div>
-                </div>
-                <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                            <h4 class="font-bold text-lg mb-2">{{ __('drawing') }}</h4>
-                            <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
-                    </div>
-                </div>
-                <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                        <h4 class="font-bold text-lg mb-2">Шиење</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
-                    </div>
-                </div>
-                <div class="relative h-[242px] rounded-2xl overflow-hidden group shadow-md">
-                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                        <h4 class="font-bold text-lg mb-2">Сликање</h4>
-                        <a href="#" class="text-xs uppercase border-b border-white">{{ __('read_more') }}</a>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
-            <div class="col-span-2 relative h-[508px] rounded-2xl overflow-hidden group shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ asset('images/bla.jpeg') }}');"></div>
+            @php $firstRemaining = $remainingActivities->first(); @endphp
+            <div class="col-span-2 row-span-2 relative h-[508px] rounded-2xl overflow-hidden group shadow-lg">
+                <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('{{ $firstRemaining->getImageUrl() ?? asset('images/bla.jpeg') }}');"></div>
                 <div class="absolute bottom-0 left-0 w-full p-8 bg-white/5 backdrop-blur-md rounded-t-2xl border border-white/10 shadow-inner text-white">
-                    <h3 class="text-3xl font-bold mb-3">Спорт</h3>
-                    <p class="text-base opacity-90 mb-5">Физички вежби за градење сила, кондиција и целокупна благосостојба.</p>
+                    <h3 class="text-3xl font-bold mb-3">{{ $firstRemaining->getTranslation('title', app()->getLocale()) }}</h3>
+                    <p class="text-base opacity-90 mb-5">{{ $firstRemaining->getTranslation('description', app()->getLocale()) }}</p>
                     <a href="#" class="text-sm uppercase tracking-wider font-bold border-b-2 border-white pb-1">{{ __('read_more') }}</a>
                 </div>
             </div>
         </div>
     </div>
+    @endif
 </section>
 
 <script>
