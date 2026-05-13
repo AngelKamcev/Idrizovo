@@ -11,6 +11,8 @@ class ComplaintController extends Controller
 {
     public function index()
     {
+        abort_unless(Auth::user()?->isReviewer(), 403);
+
         $complaints = Complaint::orderByDesc('created_at')->paginate(12);
 
         return view('admin.complaints', [
@@ -24,6 +26,7 @@ class ComplaintController extends Controller
 
     public function update(Request $request, Complaint $complaint)
     {
+        abort_unless(Auth::user()?->isReviewer(), 403);
         $validated = $request->validate([
             'status' => ['required', 'in:new,seen,in_progress,closed'],
         ]);

@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\ComplaintController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
 use App\Http\Controllers\Admin\VisitScheduleController;
+use App\Http\Controllers\Admin\HandcraftController;
+use App\Http\Controllers\Admin\GalleryController;
 
 // Closure to define shared public routes
 $publicRoutes = function () {
@@ -111,20 +113,20 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         // Redirect old soopstenija route to announcements
         Route::redirect('/soopstenija', '/admin/announcements');
 
-        Route::get('/izrabotki', function () {
-            return view('admin.izrabotki');
-        })->name('admin.izrabotki');
+        Route::get('/izrabotki', [HandcraftController::class, 'index'])->name('admin.izrabotki');
+        Route::get('/izrabotki/{slug}/edit', [HandcraftController::class, 'edit'])->name('admin.izrabotki.edit');
+        Route::patch('/izrabotki/{slug}', [HandcraftController::class, 'update'])->name('admin.izrabotki.update');
 
-        Route::get('/gallery', function () {
-            return view('admin.gallery');
-        })->name('admin.gallery');
+        Route::get('/gallery', [GalleryController::class, 'index'])->name('admin.gallery');
+        Route::post('/gallery', [GalleryController::class, 'store'])->name('admin.gallery.store');
+        Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('admin.gallery.destroy');
 
         Route::get('/aboutus', function () {
             return view('admin.aboutus');
         })->name('admin.aboutus');
     });
 
-    Route::middleware('role:admin,reviewer')->group(function () {
+    Route::middleware('role:reviewer')->group(function () {
         Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
         Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
     });

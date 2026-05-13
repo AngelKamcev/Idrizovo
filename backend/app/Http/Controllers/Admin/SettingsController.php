@@ -15,6 +15,7 @@ class SettingsController extends Controller
     {
         $currentUser = $request->user();
         $isAdmin = $currentUser?->isAdmin();
+        $isReviewer = $currentUser?->isReviewer();
 
         $users = $isAdmin
             ? User::with('role')->orderBy('first_name')->orderBy('last_name')->get()
@@ -23,6 +24,7 @@ class SettingsController extends Controller
         return view('admin.settings', [
             'currentUser' => $currentUser,
             'isAdmin' => $isAdmin,
+            'isReviewer' => $isReviewer,
             'users' => $users,
         ]);
     }

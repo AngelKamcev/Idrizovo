@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin Panel') - Идризово</title>
+    <title><?php echo $__env->yieldContent('title', 'Admin Panel'); ?> - Идризово</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -97,7 +97,7 @@
     </style>
 </head>
 <body class="bg-[#f5f7fb]">
-    @php
+    <?php
         $currentUser = auth()->user();
         $isAdmin = $currentUser?->isAdmin();
         $isReviewer = $currentUser?->isReviewer();
@@ -105,7 +105,7 @@
         $canSeeDashboardAndContent = $isAdmin || $isVospituvac;
         $canSeeComplaints = $isReviewer;
         $canSeeSettings = $isAdmin || $isReviewer || $isVospituvac;
-    @endphp
+    ?>
     <div class="min-h-screen lg:flex bg-[#f5f7fb]">
 
         <!-- MOBILE TOP NAV -->
@@ -128,53 +128,53 @@
             </div>
 
             <nav id="mobileMenu" class="hidden mt-5 pb-2 space-y-2">
-                @if($canSeeDashboardAndContent)
-                    <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                <?php if($canSeeDashboardAndContent): ?>
+                    <a href="/admin/dashboard" class="sidebar-link <?php echo e(request()->is('admin/dashboard') ? 'active' : ''); ?>">
                         <i class="fas fa-chart-line"></i><span>Dashboard</span>
                     </a>
-                    <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
+                    <a href="/admin/activities" class="sidebar-link <?php echo e(request()->is('admin/activities') ? 'active' : ''); ?>">
                         <i class="fas fa-list"></i><span>Активности (Почетна)</span>
                     </a>
-                    <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
+                    <a href="/admin/soopstenija" class="sidebar-link <?php echo e(request()->is('admin/soopstenija') ? 'active' : ''); ?>">
                         <i class="fas fa-newspaper"></i><span>Соопштенија</span>
                     </a>
-                    <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
+                    <a href="/admin/izrabotki" class="sidebar-link <?php echo e(request()->is('admin/izrabotki') ? 'active' : ''); ?>">
                         <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
                     </a>
-                    <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
+                    <a href="/admin/gallery" class="sidebar-link <?php echo e(request()->is('admin/gallery') ? 'active' : ''); ?>">
                         <i class="fas fa-images"></i><span>Галерија</span>
                     </a>
-                    <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
+                    <a href="/admin/aboutus" class="sidebar-link <?php echo e(request()->is('admin/aboutus') ? 'active' : ''); ?>">
                         <i class="fas fa-info-circle"></i><span>За Нас</span>
                     </a>
-                    <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                    <a href="/admin/visit-schedules" class="sidebar-link <?php echo e(request()->is('admin/visit-schedules*') ? 'active' : ''); ?>">
                         <i class="fas fa-clock"></i><span>Распоред на посети</span>
                     </a>
-                    @if($isAdmin)
-                        <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                    <?php if($isAdmin): ?>
+                        <a href="/admin/visit-requests" class="sidebar-link <?php echo e(request()->is('admin/visit-requests*') ? 'active' : ''); ?>">
                             <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
                         </a>
-                    @endif
-                    <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
+                    <?php endif; ?>
+                    <a href="/admin/main-activities" class="sidebar-link <?php echo e(request()->is('admin/main-activities') ? 'active' : ''); ?>">
                         <i class="fas fa-calendar"></i><span>Активности</span>
                     </a>
-                @endif
+                <?php endif; ?>
 
-                @if($canSeeComplaints)
-                    <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                <?php if($canSeeComplaints): ?>
+                    <a href="/admin/complaints" class="sidebar-link <?php echo e(request()->is('admin/complaints*') ? 'active' : ''); ?>">
                         <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
                     </a>
-                @endif
+                <?php endif; ?>
 
-                @if($canSeeSettings)
-                    <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                <?php if($canSeeSettings): ?>
+                    <a href="<?php echo e(route('admin.settings')); ?>" class="sidebar-link <?php echo e(request()->is('admin/settings*') ? 'active' : ''); ?>">
                         <i class="fas fa-cog"></i><span>Поставки</span>
                     </a>
-                @endif
+                <?php endif; ?>
 
                 <div class="border-t border-white/20 my-3 pt-3">
-                    <form action="{{ route('logout') }}" method="POST" class="w-full px-3">
-                        @csrf
+                    <form action="<?php echo e(route('logout')); ?>" method="POST" class="w-full px-3">
+                        <?php echo csrf_field(); ?>
                         <button type="submit" class="w-full rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-200 hover:text-red-100 px-4 py-2 font-semibold text-sm transition-all flex items-center justify-center gap-2">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Одјава</span>
@@ -205,61 +205,61 @@
 
                 <!-- NAVIGATION -->
                 <nav class="relative z-10 flex-1 overflow-y-auto px-5 py-6 space-y-1">
-                    @if($canSeeDashboardAndContent)
-                        <a href="/admin/dashboard" class="sidebar-link {{ request()->is('admin/dashboard') ? 'active' : '' }}">
+                    <?php if($canSeeDashboardAndContent): ?>
+                        <a href="/admin/dashboard" class="sidebar-link <?php echo e(request()->is('admin/dashboard') ? 'active' : ''); ?>">
                             <i class="fas fa-chart-line"></i><span>Dashboard</span>
                         </a>
 
                         <div class="section-title">Содржина</div>
 
-                        <a href="/admin/activities" class="sidebar-link {{ request()->is('admin/activities') ? 'active' : '' }}">
+                        <a href="/admin/activities" class="sidebar-link <?php echo e(request()->is('admin/activities') ? 'active' : ''); ?>">
                             <i class="fas fa-list"></i><span>Активности (Почетна)</span>
                         </a>
 
-                        <a href="/admin/soopstenija" class="sidebar-link {{ request()->is('admin/soopstenija') ? 'active' : '' }}">
+                        <a href="/admin/soopstenija" class="sidebar-link <?php echo e(request()->is('admin/soopstenija') ? 'active' : ''); ?>">
                             <i class="fas fa-newspaper"></i><span>Соопштенија</span>
                         </a>
 
-                        <a href="/admin/izrabotki" class="sidebar-link {{ request()->is('admin/izrabotki') ? 'active' : '' }}">
+                        <a href="/admin/izrabotki" class="sidebar-link <?php echo e(request()->is('admin/izrabotki') ? 'active' : ''); ?>">
                             <i class="fas fa-hammer"></i><span>Рачни Изработки</span>
                         </a>
 
-                        <a href="/admin/gallery" class="sidebar-link {{ request()->is('admin/gallery') ? 'active' : '' }}">
+                        <a href="/admin/gallery" class="sidebar-link <?php echo e(request()->is('admin/gallery') ? 'active' : ''); ?>">
                             <i class="fas fa-images"></i><span>Галерија</span>
                         </a>
 
-                        <a href="/admin/aboutus" class="sidebar-link {{ request()->is('admin/aboutus') ? 'active' : '' }}">
+                        <a href="/admin/aboutus" class="sidebar-link <?php echo e(request()->is('admin/aboutus') ? 'active' : ''); ?>">
                             <i class="fas fa-info-circle"></i><span>За Нас</span>
                         </a>
 
-                        <a href="/admin/visit-schedules" class="sidebar-link {{ request()->is('admin/visit-schedules*') ? 'active' : '' }}">
+                        <a href="/admin/visit-schedules" class="sidebar-link <?php echo e(request()->is('admin/visit-schedules*') ? 'active' : ''); ?>">
                             <i class="fas fa-clock"></i><span>Распоред на посети</span>
                         </a>
 
-                        @if($isAdmin)
-                            <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
+                        <?php if($isAdmin): ?>
+                            <a href="/admin/visit-requests" class="sidebar-link <?php echo e(request()->is('admin/visit-requests*') ? 'active' : ''); ?>">
                                 <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
                             </a>
-                        @endif
+                        <?php endif; ?>
 
-                        <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
+                        <a href="/admin/main-activities" class="sidebar-link <?php echo e(request()->is('admin/main-activities') ? 'active' : ''); ?>">
                             <i class="fas fa-calendar"></i><span>Активности</span>
                         </a>
-                    @endif
+                    <?php endif; ?>
 
-                    @if($canSeeComplaints)
+                    <?php if($canSeeComplaints): ?>
                         <div class="section-title">Контакт</div>
-                        <a href="/admin/complaints" class="sidebar-link {{ request()->is('admin/complaints*') ? 'active' : '' }}">
+                        <a href="/admin/complaints" class="sidebar-link <?php echo e(request()->is('admin/complaints*') ? 'active' : ''); ?>">
                             <i class="fas fa-comments"></i><span>Пофалби / Жалби</span>
                         </a>
-                    @endif
+                    <?php endif; ?>
 
-                    @if($canSeeSettings)
+                    <?php if($canSeeSettings): ?>
                         <div class="section-title">Систем</div>
-                        <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                        <a href="<?php echo e(route('admin.settings')); ?>" class="sidebar-link <?php echo e(request()->is('admin/settings*') ? 'active' : ''); ?>">
                             <i class="fas fa-cog"></i><span>Поставки</span>
                         </a>
-                    @endif
+                    <?php endif; ?>
                 </nav>
 
                 <!-- FOOTER USER CARD -->
@@ -270,13 +270,13 @@
                                 <i class="fas fa-user text-white"></i>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-sm font-bold text-white truncate">{{ auth()->user()?->name ?? 'Администратор' }}</p>
-                                <p class="text-[11px] text-white/50">{{ date('d.m.Y') }}</p>
+                                <p class="text-sm font-bold text-white truncate"><?php echo e(auth()->user()?->name ?? 'Администратор'); ?></p>
+                                <p class="text-[11px] text-white/50"><?php echo e(date('d.m.Y')); ?></p>
                             </div>
                         </div>
                     </div>
-                    <form action="{{ route('logout') }}" method="POST" class="w-full">
-                        @csrf
+                    <form action="<?php echo e(route('logout')); ?>" method="POST" class="w-full">
+                        <?php echo csrf_field(); ?>
                         <button type="submit" class="w-full rounded-2xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-200 hover:text-red-100 px-4 py-2.5 font-semibold text-sm transition-all flex items-center justify-center gap-2">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Одјава</span>
@@ -291,13 +291,13 @@
             <!-- TOP BAR -->
             <div class="hidden lg:flex bg-white/85 backdrop-blur-md border-b border-gray-200 px-10 py-5 items-center justify-between sticky top-0 z-40">
                 <div>
-                    <h2 class="text-[28px] font-bold text-[#0b1a2b] leading-tight">@yield('page-title', 'Dashboard')</h2>
-                    <p class="text-sm text-gray-500 mt-1">@yield('page-subtitle', '')</p>
+                    <h2 class="text-[28px] font-bold text-[#0b1a2b] leading-tight"><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></h2>
+                    <p class="text-sm text-gray-500 mt-1"><?php echo $__env->yieldContent('page-subtitle', ''); ?></p>
                 </div>
                 <div class="flex items-center gap-4">
                     <div class="text-right">
                         <p class="text-sm font-bold text-[#0b1a2b]">Администратор</p>
-                        <p class="text-xs text-gray-500">{{ date('d.m.Y') }}</p>
+                        <p class="text-xs text-gray-500"><?php echo e(date('d.m.Y')); ?></p>
                     </div>
                     <div class="w-12 h-12 bg-gradient-to-br from-[#6f96d8] to-[#2f5fa8] rounded-2xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-user text-white"></i>
@@ -307,15 +307,16 @@
 
             <!-- MOBILE PAGE TITLE -->
             <div class="lg:hidden px-5 pt-7 pb-3">
-                <h2 class="text-[24px] font-bold text-[#0b1a2b] leading-tight">@yield('page-title', 'Dashboard')</h2>
-                <p class="text-sm text-gray-500 mt-1">@yield('page-subtitle', '')</p>
+                <h2 class="text-[24px] font-bold text-[#0b1a2b] leading-tight"><?php echo $__env->yieldContent('page-title', 'Dashboard'); ?></h2>
+                <p class="text-sm text-gray-500 mt-1"><?php echo $__env->yieldContent('page-subtitle', ''); ?></p>
             </div>
 
             <!-- PAGE CONTENT -->
             <div class="flex-1 p-5 md:p-8 lg:p-10 overflow-y-auto">
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
         </main>
     </div>
 </body>
 </html>
+<?php /**PATH C:\Users\Angel\Desktop\backend_modified\resources\views/admin/layouts/app.blade.php ENDPATH**/ ?>

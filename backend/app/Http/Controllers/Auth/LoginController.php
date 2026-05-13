@@ -8,11 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    private function redirectAfterLogin($user): string
+    {
+        if ($user->isAdmin() || $user->isVospituvac()) {
+            return route('admin.dashboard');
+        }
+
+        if ($user->isReviewer()) {
+            return route('admin.complaints');
+        }
+
+        return route('index');
+    }
+
     public function showLoginForm()
     {
         if (Auth::check()) {
             $user = Auth::user();
-            return redirect()->route($user->isAdmin() || $user->isVospituvac() ? 'admin.dashboard' : 'index');
+            return redirect($this->redirectAfterLogin($user));
         }
 
         return view('auth.login');
@@ -37,7 +50,7 @@ class LoginController extends Controller
             $user->last_login = now();
             $user->save();
 
-            return redirect()->intended($user->isAdmin() || $user->isVospituvac() ? route('admin.dashboard') : route('index'));
+            return redirect()->intended($this->redirectAfterLogin($user));
         }
 
         return back()->withErrors(['email' => 'Неуспешна најава. Проверете ја вашата е-пошта и лозинка.'])->onlyInput('email');

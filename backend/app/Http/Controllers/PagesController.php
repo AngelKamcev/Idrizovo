@@ -6,6 +6,7 @@ use App\Models\Inmate;
 use App\Models\TimeSlot;
 use App\Models\VisitCompanion;
 use App\Models\Complaint;
+use App\Models\Handcraft;
 use App\Models\VisitRequest;
 use App\Models\VisitSchedule;
 use App\Models\Announcement;
@@ -221,15 +222,53 @@ class PagesController extends Controller
      */
     public function izrabotki()
     {
-        return view('izrabotki');
+        $handcrafts = collect(array_keys(Handcraft::$categories))->mapWithKeys(function ($slug) {
+            $record = Handcraft::where('category_slug', $slug)
+                ->where('is_published', true)
+                ->latest('id')
+                ->first();
+            return [$slug => $record];
+        });
+
+        return view('izrabotki', [
+            'handcrafts' => $handcrafts,
+            'categories' => Handcraft::$categories,
+        ]);
     }
 
     /**
      * Show the gallery page
      */
-    public function gallery()
+    public function gallery(Request $request)
     {
-        return view('gallery');
+        $categorySlug = $request->query('category');
+
+        // Validate it's a known slug or null
+        if ($categorySlug && !array_key_exists($categorySlug, Handcraft::$categories)) {
+            $categorySlug = null;
+        }
+
+        // Build gallery query using the `gallery` table (not GalleryImage)
+        $galleryQuery = \DB::table('gallery')
+            ->where('is_published', true);
+
+        if ($categorySlug) {
+            $galleryQuery->where('handcraft_category', $categorySlug);
+        }
+
+        $images = $galleryQuery->orderBy('id')->paginate(12);
+
+        // Active handcraft category record for heading
+        $activeCategory = $categorySlug
+            ? Handcraft::where('category_slug', $categorySlug)->where('is_published', true)->first()
+            : null;
+
+        return view('gallery', [
+            'images'          => $images,
+            'categorySlug'    => $categorySlug,
+            'activeCategory'  => $activeCategory,
+            'categories'      => Handcraft::$categories,
+        ]);
     }
 
     private function isScheduleAllowedForDate(string $daysLabel, Carbon $visitDate): bool

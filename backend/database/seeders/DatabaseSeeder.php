@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
             VisitScheduleSeeder::class,
             VisitRequestSeeder::class,
             VisitCompanionSeeder::class,
+            HandcraftGallerySeeder::class,
             // \Database\Seeders\SqlDumpSeeder::class,
         ]);
     }

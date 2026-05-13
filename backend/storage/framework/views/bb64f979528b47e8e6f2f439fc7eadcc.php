@@ -1,10 +1,8 @@
-@extends('admin.layouts.app')
+<?php $__env->startSection('title', 'Dashboard'); ?>
+<?php $__env->startSection('page-title', 'Dashboard'); ?>
+<?php $__env->startSection('page-subtitle', 'Преглед на системот и управување на содржина'); ?>
 
-@section('title', 'Dashboard')
-@section('page-title', 'Dashboard')
-@section('page-subtitle', 'Преглед на системот и управување на содржина')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <!-- STATS CARDS -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -78,17 +76,17 @@
                 <button class="w-full btn-primary text-left">
                     <i class="fas fa-file-plus mr-2"></i> Ново соопштение
                 </button>
-                <a href="{{ route('admin.visit-schedules') }}" class="w-full btn-primary text-left inline-flex items-center">
+                <a href="<?php echo e(route('admin.visit-schedules')); ?>" class="w-full btn-primary text-left inline-flex items-center">
                     <i class="fas fa-clock mr-2"></i> Распоред на посети
                 </a>
-                <a href="{{ route('admin.visit-requests') }}" class="w-full btn-primary text-left inline-flex items-center">
+                <a href="<?php echo e(route('admin.visit-requests')); ?>" class="w-full btn-primary text-left inline-flex items-center">
                     <i class="fas fa-calendar-check mr-2"></i> Барања за посета
                 </a>
-                @if(auth()->user()?->isReviewer())
-                <a href="{{ route('admin.complaints') }}" class="w-full btn-primary text-left inline-flex items-center">
+                <?php if(auth()->user()?->isReviewer()): ?>
+                <a href="<?php echo e(route('admin.complaints')); ?>" class="w-full btn-primary text-left inline-flex items-center">
                     <i class="fas fa-comments mr-2"></i> Пофалби / Жалби
                 </a>
-                @endif
+                <?php endif; ?>
                 <button class="w-full btn-primary text-left">
                     <i class="fas fa-image mr-2"></i> Нова слика
                 </button>
@@ -201,4 +199,6 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('admin.layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH C:\Users\Angel\Desktop\backend_modified\resources\views/admin/dashboard.blade.php ENDPATH**/ ?>
