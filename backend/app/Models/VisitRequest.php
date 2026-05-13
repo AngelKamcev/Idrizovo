@@ -17,7 +17,7 @@ class VisitRequest extends Model
         'inmate_id',
         'requested_inmate_number',
         'visit_date',
-        'visit_schedule_id',
+        // 'visit_schedule_id',
         'time_slot_id',
         'status',
         'cancel_deadline',

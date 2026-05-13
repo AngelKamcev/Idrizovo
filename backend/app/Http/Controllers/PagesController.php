@@ -174,7 +174,7 @@ class PagesController extends Controller
             'inmate_id' => $inmate->id,
             'requested_inmate_number' => $validated['requested_inmate_number'],
             'visit_date' => $visitDate->format('Y-m-d'),
-            'visit_schedule_id' => $schedule->id,
+            // 'visit_schedule_id' => $schedule->id,
             'time_slot_id' => $timeSlot->id,
             'status' => 'approved',
             'cancel_deadline' => Carbon::parse($visitDate->format('Y-m-d') . ' ' . $startTime)->subHours(48),

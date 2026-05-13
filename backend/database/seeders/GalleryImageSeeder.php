@@ -16,7 +16,14 @@ class GalleryImageSeeder extends Seeder
         ];
 
         foreach ($images as $i => $path) {
-            GalleryImage::firstOrCreate(['image_path' => $path], ['caption' => 'Галерија ' . ($i + 1)]);
+            GalleryImage::firstOrCreate(
+                ['image_url' => $path],
+                [
+                    'title' => 'Галерија ' . ($i + 1),
+                    'sort_order' => $i + 1,
+                    'is_active' => true,
+                ]
+            );
         }
     }
 }

@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             VisitScheduleSeeder::class,
             VisitRequestSeeder::class,
             VisitCompanionSeeder::class,
-            \Database\Seeders\SqlDumpSeeder::class,
+            // \Database\Seeders\SqlDumpSeeder::class,
         ]);
     }
 }
