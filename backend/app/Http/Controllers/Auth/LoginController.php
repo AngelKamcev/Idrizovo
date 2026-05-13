@@ -12,7 +12,12 @@ class LoginController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            return redirect()->route($user->isAdmin() || $user->isVospituvac() ? 'admin.dashboard' : 'index');
+            if ($user->isAdmin() || $user->isVospituvac()) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->isReviewer()) {
+                return redirect()->route('admin.reviewer-dashboard');
+            }
+            return redirect()->route('index');
         }
 
         return view('auth.login');
@@ -37,7 +42,13 @@ class LoginController extends Controller
             $user->last_login = now();
             $user->save();
 
-            return redirect()->intended($user->isAdmin() || $user->isVospituvac() ? route('admin.dashboard') : route('index'));
+            if ($user->isAdmin() || $user->isVospituvac()) {
+                return redirect()->intended(route('admin.dashboard'));
+            } elseif ($user->isReviewer()) {
+                return redirect()->intended(route('admin.reviewer-dashboard'));
+            }
+
+            return redirect()->intended(route('index'));
         }
 
         return back()->withErrors(['email' => 'Неуспешна најава. Проверете ја вашата е-пошта и лозинка.'])->onlyInput('email');

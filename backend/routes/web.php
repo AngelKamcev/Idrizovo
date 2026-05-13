@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\ActivityController;
 use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ComplaintController;
+use App\Http\Controllers\Admin\ComplimentController;
+use App\Http\Controllers\Admin\ReviewerDashboardController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
 use App\Http\Controllers\Admin\VisitScheduleController;
@@ -75,7 +77,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     });
 
     Route::middleware('role:admin,vospituvac')->group(function () {
-        Route::get('/dashboard', function () {
+        Route::get('/', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
@@ -125,7 +127,12 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     });
 
     Route::middleware('role:admin,reviewer')->group(function () {
+        Route::get('/reviewer', [ReviewerDashboardController::class, 'index'])->name('admin.reviewer-dashboard');
+        
         Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
         Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+        
+        Route::get('/compliments', [ComplimentController::class, 'index'])->name('admin.compliments');
+        Route::patch('/compliments/{compliment}', [ComplimentController::class, 'update'])->name('admin.compliments.update');
     });
 });

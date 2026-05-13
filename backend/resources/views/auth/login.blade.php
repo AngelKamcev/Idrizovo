@@ -116,7 +116,7 @@
                 @endif
 
                 <!-- Form -->
-                <form method="POST" action="/login" class="space-y-5">
+                <form method="POST" action="{{ route('login.submit') }}" class="space-y-5">
                     @csrf
 
                     <!-- Email -->
