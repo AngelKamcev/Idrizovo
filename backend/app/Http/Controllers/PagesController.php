@@ -10,6 +10,10 @@ use App\Models\VisitRequest;
 use App\Models\VisitSchedule;
 use App\Models\Announcement;
 use App\Models\Activity;
+use App\Models\GalleryImage;
+use App\Models\Handcraft;
+use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\IzrabotkiPageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -40,7 +44,24 @@ class PagesController extends Controller
             ->take(12)
             ->get();
 
-        return view('index', ['activities' => $activities, 'announcements' => $announcements]);
+        $handcrafts = Handcraft::published()
+            ->with('images')
+            ->orderByDesc('published_at')
+            ->orderByDesc('id')
+            ->take(3)
+            ->get();
+
+        $galleryImages = GalleryImage::active()
+            ->sorted()
+            ->take(4)
+            ->get();
+
+        return view('index', [
+            'activities' => $activities,
+            'announcements' => $announcements,
+            'handcrafts' => $handcrafts,
+            'galleryImages' => $galleryImages,
+        ]);
     }
 
     /**
@@ -48,7 +69,9 @@ class PagesController extends Controller
      */
     public function aboutus()
     {
-        return view('aboutus');
+        $aboutData = app(AboutUsController::class)->currentData();
+
+        return view('aboutus', compact('aboutData'));
     }
 
     /**
@@ -221,7 +244,26 @@ class PagesController extends Controller
      */
     public function izrabotki()
     {
-        return view('izrabotki');
+        $iz = app(IzrabotkiPageController::class)->publicData();
+
+        return view('izrabotki', compact('iz'));
+    }
+
+    /**
+     * Show izrabotki section detail
+     */
+    public function izrabotakiSection($index)
+    {
+        $iz = app(IzrabotkiPageController::class)->publicData();
+        $sections = $iz['sections'] ?? [];
+
+        if (!isset($sections[$index])) {
+            abort(404);
+        }
+
+        $section = $sections[$index];
+
+        return view('izrabotaki-section-detail', compact('section', 'index', 'iz'));
     }
 
     /**
@@ -229,7 +271,25 @@ class PagesController extends Controller
      */
     public function gallery()
     {
-        return view('gallery');
+        $galleryImages = GalleryImage::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+
+        return view('gallery', compact('galleryImages'));
+    }
+
+    /**
+     * Show a handcraft detail page
+     */
+    public function handcraftDetail(Handcraft $handcraft)
+    {
+        if (! $handcraft->is_published) {
+            abort(404);
+        }
+
+        return view('handcraft-detail', compact('handcraft'));
     }
 
     private function isScheduleAllowedForDate(string $daysLabel, Carbon $visitDate): bool

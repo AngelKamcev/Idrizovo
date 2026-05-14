@@ -13,7 +13,7 @@
     <div class="grid gap-4 md:grid-cols-2">
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-2">Наслов</label>
-            <input type="text" name="title" value="{{ old('title', $galleryImage->title) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
+            <input type="text" name="title" value="{{ old('title', $galleryImage->adminTitle()) }}" class="w-full border border-gray-300 rounded-lg px-4 py-2" required>
         </div>
 
         <div>

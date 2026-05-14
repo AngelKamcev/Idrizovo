@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Управување со Соопштенија'); ?>
 
 <?php $__env->startSection('content'); ?>

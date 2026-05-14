@@ -2,504 +2,121 @@
 
 <?php $__env->startSection('content'); ?>
 
-
+<?php
+    $hb = (string) ($iz['hero_bg'] ?? '');
+    if ($hb === '') {
+        $izHero = '';
+    } elseif (preg_match('#^https?://#i', $hb)) {
+        $izHero = $hb;
+    } elseif (str_starts_with($hb, '/storage/') || str_starts_with($hb, 'storage/')) {
+        $izHero = asset(ltrim($hb, '/'));
+    } elseif (preg_match('#^(images|documents)/#', $hb)) {
+        $izHero = asset($hb);
+    } else {
+        $izHero = asset('storage/'.ltrim($hb, '/'));
+    }
+    $scrollDup = array_merge($iz['scroll_quotes'] ?? [], $iz['scroll_quotes'] ?? []);
+    $mcFallbacks = [
+        ['title' => __('handmade_card_1_title'), 'body' => __('handmade_card_1_body')],
+        ['title' => __('handmade_card_2_title'), 'body' => __('handmade_card_2_body')],
+        ['title' => __('handmade_card_3_title'), 'body' => __('handmade_card_3_body')],
+    ];
+?>
 
 <section
     class="hidden md:block relative w-full min-h-screen bg-cover bg-center bg-no-repeat flex items-start justify-start"
-    style="background-image: url('<?php echo e(asset('images/ChatGPT Image Apr 28, 2026, 10_45_13 PM.png')); ?>')">
+    style="background-image: url('<?php echo e($izHero); ?>')">
 
     <div class="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent"></div>
 
     <div class="relative z-10 p-8 md:pt-40 md:pl-64 lg:pl-80">
-
         <h1 class="text-white text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tight font-sans">
             <?php echo e(__('handmade_heading')); ?>
 
         </h1>
-
-        <button class="mt-6 md:hidden bg-white text-black font-bold px-6 py-3 rounded-full shadow-lg">
+        <button type="button" class="mt-6 md:hidden bg-white text-black font-bold px-6 py-3 rounded-full shadow-lg">
             <?php echo e(__('read_more')); ?>
 
         </button>
-
     </div>
 </section>
 
-
-
 <section class="hidden md:block max-w-6xl mx-auto px-4 py-16">
-
-    <!-- TOP BOX -->
-    <div class="border rounded-2xl p-8 md:p-10 bg-white shadow-sm  border-black">
+    <div class="border rounded-2xl p-8 md:p-10 bg-white shadow-sm border-black">
         <h2 class="text-2xl md:text-3xl font-bold mb-4">
-            <?php echo e(__('handmade_intro')); ?>
+            <?php echo e(!empty($iz['intro_title']) ? $iz['intro_title'] : __('handmade_intro')); ?>
 
         </h2>
-
         <p class="text-gray-700 leading-relaxed">
-            Во рамките на КПД Идризово, осудениците активно учествуваат во работилници каде што
-            изработуваат различни рачни предмети како: капи, шалови, слики, декорации, дрворези итн.
-            Овие активности придонесуваат кон развој на нови вештини, креативност и подготовка
-            за независен живот по издржувањето на казната. Работилниците се дел од програмите
-            за ресоцијализација и поддршка во процесот на рехабилитација.
+            <?php echo nl2br(e($iz['intro_body'] ?? '')); ?>
+
         </p>
     </div>
 
-    <!-- QUOTE -->
     <div class="text-center my-14">
         <h3 class="text-xl md:text-2xl font-semibold italic">
-            <?php echo e(__('handmade_quote')); ?>
+            <?php echo e(!empty($iz['quote']) ? $iz['quote'] : __('handmade_quote')); ?>
 
         </h3>
     </div>
 
-    <!-- SCROLLING CARDS -->
     <div class="relative overflow-hidden py-10">
-
         <div class="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white to-transparent z-10"></div>
         <div class="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white to-transparent z-10"></div>
 
         <div class="animate-scroll flex gap-5">
-
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева.“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева.“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина...“
-            </div>
-            <!-- Duplicated cards for seamless looping -->
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина. Работилницата ми е како терапија – таму не сум само затвореник, туку човек што учи, создава и се надева."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-            <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
-                „Во секој бод и секој засек има дел од мојата тишина..."
-            </div>
-        </div>
-    </div>
-
-</section>
-<section class="py-16 hidden md:block">
-    <div class=" py-16">
-        <div class="max-w-7xl mx-auto flex items-center gap-12 px-6">
-
-            <!-- LEFT SIDE -->
-            <div class="flex items-center">
-
-                <!-- Main image -->
-                <div class="relative z-10">
-                    <img
-                        src="https://picsum.photos/500/400"
-                        class="w-[420px] h-[420px] object-cover rounded-2xl shadow-lg" />
-                </div>
-
-                <!-- Stack -->
-                <div class="flex -ml-16">
-
-                    <!-- ITEM -->
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-
-                    <div class="group relative -ml-10">
-                        <img
-                            src="https://picsum.photos/500/400?2"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-
-                    <div class="group relative -ml-10">
-                        <img
-                            src="https://picsum.photos/500/400?3"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
+            <?php $__currentLoopData = $scrollDup; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $qText): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="w-[220px] md:w-[240px] p-3 md:p-4 rounded-xl border border-blue-400/60 bg-[#ffffff] text-gray-800 text-sm md:text-[15px] leading-relaxed shrink-0">
+                    <?php echo e($qText); ?>
 
                 </div>
-            </div>
-
-            <!-- RIGHT SIDE -->
-            <div class="max-w-lg">
-                <h2 class="text-2xl font-bold mb-4">
-                    <?php echo e(__('needle_art')); ?>
-
-                </h2>
-
-                <p class="text-gray-700 leading-relaxed mb-6">
-                    Во затворската работилница, конецот и иглата стануваат повеќе од алатки – тие се мост кон внатрешна слобода.
-                    Затворениците со трпеливи движења плетат ташни и кошули, секој бод е чекор кон дисциплина и самоконтрола.
-                    Процесот бара смиреност и концентрација, насочувајќи ја мислата кон нешто позитивно.
-                </p>
-
-                <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                    <?php echo e(__('view_more')); ?>
-
-                </button>
-            </div>
-
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </div>
     </div>
 </section>
-<section class=" py-16 hidden md:block">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
 
-        <!-- TEXT LEFT -->
-        <div>
-            <h2 class="text-2xl font-bold mb-4">
-                <?php echo e(__('wood_carving')); ?>
-
-            </h2>
-
-            <p class="text-gray-700 leading-relaxed mb-6">
-                Во затворската работилница, дрвото станува средство за тишина,
-                фокус и внатрешна трансформација. Затвореникот, со ограничена
-                слобода но со неисцрпна потреба за изразување, го зема парче дрво
-                и преку трпеливо резбање создава сцени од библиски митови,
-                природата или сопствените сеќавања. Секој засек со длето е чекор
-                кон внатрешен мир, секоја фигура е обид да се врати изгубеното
-                достоинство.
-                <br /><br />
-                Работата со раце му дава структура на денот, а уметноста му
-                овозможува да се поврзе со нешто поголемо од ѕидовите што го
-                ограничуваат. Резбањето не е само занает — тоа е терапија,
-                молитва и надеж. Во секоја скулптура се врежани тишините,
-                каењата и соништата на човекот што бара нов почеток.
-            </p>
-
-            <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                <?php echo e(__('view_more')); ?>
-
-            </button>
-        </div>
-
-        <!-- IMAGES RIGHT -->
-        <div class="relative flex items-center justify-end">
-
-            <!-- STRIPS -->
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-            <div class="group relative -ml-10">
-                <img
-                    src="https://picsum.photos/500/400?2"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-            <div class="group relative -ml-10">
-                <img
-                    src="https://picsum.photos/500/400?3"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-
-            <!-- MAIN IMAGE -->
-            <div class="overflow-hidden rounded-2xl shadow-xl w-[320px] h-[420px]">
-                <img
-                    src="https://picsum.photos/600/800?random=5"
-                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-            </div>
-
-        </div>
-
-    </div>
-</section>
-<section class=" py-16 hidden md:block">
-    <div class=" py-16">
-        <div class="max-w-7xl mx-auto flex items-center gap-12 px-6">
-
-            <!-- LEFT SIDE -->
-            <div class="flex items-center">
-
-                <!-- Main image -->
-                <div class="relative z-10">
-                    <img
-                        src="https://picsum.photos/500/400"
-                        class="w-[420px] h-[420px] object-cover rounded-2xl shadow-lg" />
-                </div>
-
-                <!-- Stack -->
-                <div class="flex -ml-16">
-
-                    <!-- ITEM -->
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-
-                    <div class="group relative -ml-10">
-                        <img
-                            src="https://picsum.photos/500/400?2"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-
-                    <div class="group relative -ml-10">
-                        <img
-                            src="https://picsum.photos/500/400?3"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-                    <div class="group relative">
-                        <img
-                            src="https://picsum.photos/500/400?1"
-                            class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- RIGHT SIDE -->
-            <div class="max-w-lg">
-                <h2 class="text-2xl font-bold mb-4">
-                    Боја и перспектива: слики од работилницата
-                </h2>
-
-                <p class="text-gray-700 leading-relaxed mb-6">
-                    Во затворот, хартијата и боите стануваат прозорец кон слобода. Затворениците цртаат пејзажи,
-                    куќи, дрвја и небо — сцени што ги потсетуваат на светот надвор, но и на светот во нив.
-                    Секоја линија е обид да се изрази тишината, секоја боја — чувство што не може да се каже со зборови.
-                    Цртањето бара концентрација, трпение и внатрешна рамнотежа. Работилницата станува место каде што
-                    уметноста не само што се учи, туку и се чувствува. Сликите не се само визуелни прикази —
-                    тие се сведоштва за надеж, копнеж и човечност. Во секоја слика има дел од авторот: спомен, сон,
-                    или момент на мир. Тоа е начин да се создаде убавина таму каде што ретко се гледа, и да се потсети
-                    дека и зад решетки, човекот може да твори.
-                </p>
-
-                <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                <?php echo e(__('view_more')); ?>
-
-            </button>
-            </div>
-
-        </div>
-    </div>
-</section>
-<section class=" py-16 hidden md:block">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-
-        <!-- TEXT LEFT -->
-        <div>
-                <h2 class="text-2xl font-bold mb-4">
-                <?php echo e(__('activity_painting_title')); ?>
-
-            </h2>
-
-            <p class="text-gray-700 leading-relaxed mb-6">
-                Во тишината на затворската работилница, каде времето тече поинаку, глината станува глас.
-                Грнчарството овде не е само занает – тоа е процес на преобразба. Осудените лица преку грнчарството
-                учат да создаваат, а не да уништуваат. Во секое грне, чинија или вазна, се втиснува нивната историја,
-                нивната борба и нивната желба за нов почеток. Работата со глина бара концентрација, дисциплина и
-                емпатија – вредности што често недостасуваат во нивните животи пред затворот. Овие грнчарски
-                производи не се само предмети – тие се сведоштва. Преку продажба на овие рачно изработени предмети,
-                се поддржува рехабилитацијата и се гради мост кон заедницата. Купувачите не добиваат само
-                уникатен производ – тие стануваат дел од приказна за надеж, достоинство и втори шанси.
-            </p>
-
-                <button class="bg-[#0E1B2F] text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
-                    <?php echo e(__('view_more')); ?>
-
-                </button>
-        </div>
-
-        <!-- IMAGES RIGHT -->
-        <div class="relative flex items-center justify-end">
-
-            <!-- STRIPS -->
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-            <div class="group relative -ml-10">
-                <img
-                    src="https://picsum.photos/500/400?2"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-            <div class="group relative -ml-10">
-                <img
-                    src="https://picsum.photos/500/400?3"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-            <div class="group relative">
-                <img
-                    src="https://picsum.photos/500/400?1"
-                    class="w-[70px] h-[420px] object-cover rounded-xl shadow-md
-                   transition-all duration-500
-                   group-hover:w-[420px] group-hover:ml-4 group-hover:z-50" />
-            </div>
-
-            <!-- MAIN IMAGE -->
-            <div class="overflow-hidden rounded-2xl shadow-xl w-[320px] h-[420px]">
-                <img
-                    src="https://picsum.photos/600/800?random=5"
-                    class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
+<?php $__currentLoopData = $iz['sections'] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sectionIndex => $section): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php echo $__env->make('partials.izrabotki_desktop_section', ['section' => $section, 'sectionIndex' => $sectionIndex], array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 <section class="md:hidden px-6 py-6 space-y-8 bg-gray-100">
-
-    <!-- HEADER -->
     <div class="flex items-center justify-between">
-        <h2 class="text-4xl font-bold">
-            <?php echo e(__('handmade_items')); ?>
-
-        </h2>
-
-        <a href="<?php echo e(route('izrabotki')); ?>"
-           class="bg-[#2E589E] text-white text-sm px-8 py-4 rounded-lg">
-            <?php echo e(__('read_more')); ?>
-
-        </a>
+        <h2 class="text-4xl font-bold"><?php echo e(__('handmade_items')); ?></h2>
+        <a href="<?php echo e(route('izrabotki')); ?>" class="bg-[#2E589E] text-white text-sm px-8 py-4 rounded-lg"><?php echo e(__('read_more')); ?></a>
     </div>
 
-    <!-- CARD 1 -->
-    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
-                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
-        <img src="https://picsum.photos/500/400?1" class="w-full h-[380px] object-cover">
-        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold"><?php echo e(__('handmade_card_1_title')); ?></h3>
-            <p class="text-sm opacity-80"><?php echo e(__('handmade_card_1_body')); ?></p>
+    <?php $__currentLoopData = $iz['mobile_cards'] ?? []; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $idx => $card): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php
+            $fb = $mcFallbacks[$idx] ?? $mcFallbacks[0];
+            $cTitle = trim((string) ($card['title'] ?? '')) ?: $fb['title'];
+            $cBody = trim((string) ($card['body'] ?? '')) ?: $fb['body'];
+            $ci = (string) ($card['image'] ?? '');
+            if ($ci === '') {
+                $cImg = '';
+            } elseif (preg_match('#^https?://#i', $ci)) {
+                $cImg = $ci;
+            } elseif (str_starts_with($ci, '/storage/') || str_starts_with($ci, 'storage/')) {
+                $cImg = asset(ltrim($ci, '/'));
+            } elseif (preg_match('#^(images|documents)/#', $ci)) {
+                $cImg = asset($ci);
+            } else {
+                $cImg = asset('storage/'.ltrim($ci, '/'));
+            }
+        ?>
+        <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
+            <?php if($cImg !== ''): ?>
+                <img src="<?php echo e($cImg); ?>" class="w-full h-[380px] object-cover" alt="">
+            <?php else: ?>
+                <div class="flex h-[380px] w-full items-center justify-center bg-gray-200 text-gray-500 text-sm"><?php echo e(__('handmade_items')); ?></div>
+            <?php endif; ?>
+            <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
+                <h3 class="font-semibold"><?php echo e($cTitle); ?></h3>
+                <p class="text-sm opacity-80"><?php echo e($cBody); ?></p>
+            </div>
         </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
-                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
-        <img src="https://picsum.photos/500/400?2" class="w-full h-[380px] object-cover">
-        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold"><?php echo e(__('handmade_card_2_title')); ?></h3>
-            <p class="text-sm opacity-80"><?php echo e(__('handmade_card_2_body')); ?></p>
-        </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="relative max-w-[360px] mx-auto rounded-2xl overflow-hidden shadow-md
-                transition-all duration-[350ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]
-                hover:-translate-y-[10px] hover:scale-[1.04] hover:shadow-2xl">
-        <img src="https://picsum.photos/500/400?3" class="w-full h-[380px] object-cover">
-        <div class="absolute bottom-0 w-full bg-black/50 text-white p-4">
-            <h3 class="font-semibold"><?php echo e(__('handmade_card_3_title')); ?></h3>
-            <p class="text-sm opacity-80"><?php echo e(__('handmade_card_3_body')); ?></p>
-        </div>
-    </div>
-
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </section>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\xampp\htdocs\Idrizovo\backend\resources\views/izrabotki.blade.php ENDPATH**/ ?>

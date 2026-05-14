@@ -44,7 +44,34 @@
     .perspective {
         perspective: 1500px;
     }
+
+    .home-card-overlay {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.18) 100%);
+    }
 </style>
+
+@php
+    $resolveImageSrc = function (?string $path, string $fallback = 'images/bla.jpeg'): string {
+        $path = (string) $path;
+
+        if ($path === '') {
+            return asset($fallback);
+        }
+
+        if (preg_match('/^https?:\/\//i', $path)) {
+            return $path;
+        }
+
+        if (str_starts_with($path, '/storage/') || str_starts_with($path, 'storage/') || str_starts_with($path, 'images/') || str_starts_with($path, 'documents/')) {
+            return asset(ltrim($path, '/'));
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
+    };
+
+    $handcraftCards = collect($handcrafts ?? []);
+    $galleryCards = collect($galleryImages ?? []);
+@endphp
 
 <div class="font-sans text-[#1a2a4a] bg-white overflow-x-hidden">
 
@@ -198,36 +225,22 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
-
-                <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_1_title') }}</h3>
-                        <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_1_body') }}
-                        </p>
+                @forelse ($handcraftCards as $handcraft)
+                    <a href="{{ route('handcraft.detail', $handcraft) }}" class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl block group">
+                        <img src="{{ $resolveImageSrc($handcraft->resolved_image_url ?? '', 'images/bla.jpeg') }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $handcraft->title_mk }}">
+                        <div class="absolute inset-0 home-card-overlay"></div>
+                        <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 text-white rounded-b-[18px]">
+                            <h3 class="text-[16px] font-bold underline mb-4">{{ $handcraft->title_mk }}</h3>
+                            <p class="text-[11px] leading-[20px] text-white">
+                                {{ \Illuminate\Support\Str::limit($handcraft->description_mk ?? '', 170) }}
+                            </p>
+                        </div>
+                    </a>
+                @empty
+                    <div class="col-span-1 md:col-span-3 rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500">
+                        Нема објавени рачни изработки.
                     </div>
-                </div>
-
-                <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_2_title') }}</h3>
-                        <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_2_body') }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 bg-black/35 backdrop-blur-sm text-white rounded-b-[18px]">
-                        <h3 class="text-[16px] font-bold underline mb-4">{{ __('handmade_card_3_title') }}</h3>
-                        <p class="text-[11px] leading-[20px] text-white">
-                            {{ __('handmade_card_3_body') }}
-                        </p>
-                    </div>
-                </div>
+                @endforelse
 
             </div>
 
@@ -298,34 +311,19 @@
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-14 md:mb-16">
-
-                <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('handmade_items') }}
+                @forelse ($galleryCards as $galleryImage)
+                    <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md group">
+                        <img src="{{ $galleryImage->resolved_url }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $galleryImage->displayTitle() }}">
+                        <div class="absolute inset-0 home-card-overlay"></div>
+                        <div class="absolute bottom-0 left-0 w-full min-h-[58px] px-3 py-2 flex items-center justify-center text-white text-[14px] font-bold text-center">
+                            {{ $galleryImage->displayTitle() }}
+                        </div>
                     </div>
-                </div>
-
-                <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('activities') }}
+                @empty
+                    <div class="col-span-1 md:col-span-4 rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500">
+                        Нема активни галериски слики.
                     </div>
-                </div>
-
-                <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                        <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('events') }}
-                    </div>
-                </div>
-
-                <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md">
-                    <img src="{{ asset('images/bla.jpeg') }}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 left-0 w-full h-[58px] flex items-center justify-center bg-black/45 backdrop-blur-sm text-white text-[14px] font-bold">
-                        {{ __('institution') }}
-                    </div>
-                </div>
+                @endforelse
 
             </div>
 

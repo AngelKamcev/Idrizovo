@@ -12,6 +12,16 @@ use App\Http\Controllers\Admin\ReviewerDashboardController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\VisitRequestController;
 use App\Http\Controllers\Admin\VisitScheduleController;
+use App\Http\Controllers\Admin\GalleryImageController;
+use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\IzrabotkiPageController;
+use App\Models\Activity;
+use App\Models\Announcement;
+use App\Models\Complaint;
+use App\Models\Compliment;
+use App\Models\GalleryImage;
+use App\Models\Handcraft;
+use App\Models\VisitRequest;
 
 // Closure to define shared public routes
 $publicRoutes = function () {
@@ -33,6 +43,8 @@ $publicRoutes = function () {
 
     // Izrabotki (crafts) page
     Route::get('/izrabotki', [PagesController::class, 'izrabotki'])->name('izrabotki');
+    Route::get('/izrabotki-section/{index}', [PagesController::class, 'izrabotakiSection'])->name('izrabotki.section');
+    Route::get('/izrabotki/{handcraft}', [PagesController::class, 'handcraftDetail'])->name('handcraft.detail');
 
     // Gallery page
     Route::get('/gallery', [PagesController::class, 'gallery'])->name('gallery');
@@ -78,7 +90,26 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::middleware('role:admin,vospituvac')->group(function () {
         Route::get('/', function () {
-            return view('admin.dashboard');
+            return redirect()->route('admin.dashboard');
+        });
+
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard', [
+                'activitiesCount' => Activity::count(),
+                'announcementsCount' => Announcement::count(),
+                'galleryCount' => GalleryImage::count(),
+                'handcraftsCount' => Handcraft::count(),
+                'visitRequestsCount' => VisitRequest::count(),
+                'approvedRequestsCount' => VisitRequest::where('status', 'approved')->count(),
+                'complaintsCount' => Complaint::count(),
+                'newComplaintsCount' => Complaint::where('status', 'new')->count(),
+                'complimentsCount' => Compliment::count(),
+                'newComplimentsCount' => Compliment::where('status', 'new')->count(),
+                'recentAnnouncements' => Announcement::sorted()->take(3)->get(),
+                'recentActivities' => Activity::sorted()->take(3)->get(),
+                'recentVisitRequests' => VisitRequest::with(['visitSchedule'])->orderByDesc('created_at')->take(3)->get(),
+                'recentHandcrafts' => Handcraft::published()->orderByDesc('published_at')->orderByDesc('id')->take(3)->get(),
+            ]);
         })->name('admin.dashboard');
 
         Route::get('/visit-schedules', [VisitScheduleController::class, 'index'])->name('admin.visit-schedules');
@@ -113,17 +144,18 @@ Route::prefix('admin')->middleware('auth')->group(function () {
         // Redirect old soopstenija route to announcements
         Route::redirect('/soopstenija', '/admin/announcements');
 
-        Route::get('/izrabotki', function () {
-            return view('admin.izrabotki');
-        })->name('admin.izrabotki');
+        Route::get('/izrabotki', [IzrabotkiPageController::class, 'edit'])->name('admin.izrabotki');
+        Route::post('/izrabotki', [IzrabotkiPageController::class, 'update'])->name('admin.izrabotki.update');
 
-        Route::get('/gallery', function () {
-            return view('admin.gallery');
-        })->name('admin.gallery');
+        Route::get('/gallery', [GalleryImageController::class, 'index'])->name('admin.gallery');
+        Route::get('/gallery/create', [GalleryImageController::class, 'create'])->name('admin.gallery.create');
+        Route::post('/gallery', [GalleryImageController::class, 'store'])->name('admin.gallery.store');
+        Route::get('/gallery/{galleryImage}/edit', [GalleryImageController::class, 'edit'])->name('admin.gallery.edit');
+        Route::patch('/gallery/{galleryImage}', [GalleryImageController::class, 'update'])->name('admin.gallery.update');
+        Route::delete('/gallery/{galleryImage}', [GalleryImageController::class, 'destroy'])->name('admin.gallery.destroy');
 
-        Route::get('/aboutus', function () {
-            return view('admin.aboutus');
-        })->name('admin.aboutus');
+        Route::get('/aboutus', [AboutUsController::class, 'index'])->name('admin.aboutus');
+        Route::post('/aboutus', [AboutUsController::class, 'update'])->name('admin.aboutus.update');
     });
 
     Route::middleware('role:admin,reviewer')->group(function () {

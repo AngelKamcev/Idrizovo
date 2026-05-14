@@ -16,7 +16,19 @@ class GalleryImageSeeder extends Seeder
         ];
 
         foreach ($images as $i => $path) {
-            GalleryImage::firstOrCreate(['image_path' => $path], ['caption' => 'Галерија ' . ($i + 1)]);
+            $img = GalleryImage::firstOrCreate(
+                ['image_path' => $path],
+                [
+                    'album' => 'Галерија',
+                    'description' => 'Галерија '.($i + 1),
+                    'sort_order' => $i,
+                    'is_active' => true,
+                ]
+            );
+            foreach (['mk', 'en', 'sq'] as $loc) {
+                $img->setTranslation('title', $loc, 'Галерија '.($i + 1));
+            }
+            $img->save();
         }
     }
 }

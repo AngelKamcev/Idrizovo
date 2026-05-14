@@ -30,14 +30,17 @@ class GalleryImageController extends Controller
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
         ]);
 
-        $imagePath = $request->file('image')->store('gallery', 'public');
+        $storedPath = $request->file('image')->store('gallery', 'public');
 
-        GalleryImage::create([
-            'title' => $validated['title'],
+        $image = new GalleryImage([
             'album' => $validated['album'],
             'description' => $validated['description'] ?? null,
-            'image_path' => $imagePath,
+            'image_path' => $storedPath,
+            'sort_order' => (int) (GalleryImage::max('sort_order') ?? 0) + 1,
+            'is_active' => true,
         ]);
+        $this->syncTitleTranslations($image, $validated['title']);
+        $image->save();
 
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно додадена во галеријата.');
@@ -57,20 +60,15 @@ class GalleryImageController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
         ]);
 
-        $imagePath = $galleryImage->image_path;
         if ($request->hasFile('image')) {
-            if ($galleryImage->image_path && !preg_match('/^https?:\/\//i', $galleryImage->image_path) && Storage::disk('public')->exists($galleryImage->image_path)) {
-                Storage::disk('public')->delete($galleryImage->image_path);
-            }
-            $imagePath = $request->file('image')->store('gallery', 'public');
+            $this->deleteStoredPublicImage($galleryImage->image_path);
+            $galleryImage->image_path = $request->file('image')->store('gallery', 'public');
         }
 
-        $galleryImage->update([
-            'title' => $validated['title'],
-            'album' => $validated['album'],
-            'description' => $validated['description'] ?? null,
-            'image_path' => $imagePath,
-        ]);
+        $galleryImage->album = $validated['album'];
+        $galleryImage->description = $validated['description'] ?? null;
+        $this->syncTitleTranslations($galleryImage, $validated['title']);
+        $galleryImage->save();
 
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно изменета.');
@@ -78,13 +76,40 @@ class GalleryImageController extends Controller
 
     public function destroy(GalleryImage $galleryImage)
     {
-        if ($galleryImage->image_path && !preg_match('/^https?:\/\//i', $galleryImage->image_path) && Storage::disk('public')->exists($galleryImage->image_path)) {
-            Storage::disk('public')->delete($galleryImage->image_path);
-        }
+        $this->deleteStoredPublicImage($galleryImage->image_path);
 
         $galleryImage->delete();
 
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно избришана.');
+    }
+
+    private function syncTitleTranslations(GalleryImage $image, string $title): void
+    {
+        foreach (['mk', 'en', 'sq'] as $locale) {
+            $image->setTranslation('title', $locale, $title);
+        }
+    }
+
+    /**
+     * @param  string|null  $pathOrUrl  Relative path on the public disk (e.g. gallery/foo.jpg), or legacy /storage/... URL.
+     */
+    private function deleteStoredPublicImage(?string $pathOrUrl): void
+    {
+        if (! $pathOrUrl || preg_match('#^https?://#i', $pathOrUrl)) {
+            return;
+        }
+
+        $path = ltrim((string) $pathOrUrl, '/');
+
+        if (str_starts_with($path, 'storage/')) {
+            $relative = substr($path, strlen('storage/'));
+        } else {
+            $relative = $path;
+        }
+
+        if ($relative !== '' && Storage::disk('public')->exists($relative)) {
+            Storage::disk('public')->delete($relative);
+        }
     }
 }

@@ -37,10 +37,29 @@
 </style>
 
 <div class="font-sans text-[#1a2a4a] bg-white overflow-x-hidden">
+    @php
+        $resolveImageSrc = function (?string $path, string $defaultFolder = 'images'): string {
+            $path = (string) $path;
+
+            if ($path === '') {
+                return asset($defaultFolder . '/');
+            }
+
+            if (preg_match('/^https?:\/\//i', $path)) {
+                return $path;
+            }
+
+            if (str_starts_with($path, '/storage/') || str_starts_with($path, 'storage/') || str_starts_with($path, 'images/') || str_starts_with($path, 'documents/')) {
+                return asset(ltrim($path, '/'));
+            }
+
+            return asset($defaultFolder . '/' . ltrim($path, '/'));
+        };
+    @endphp
 
     <div class="relative w-full overflow-hidden bg-[#1a3a6b] h-[400px] md:h-[640px]">
         <img class="absolute inset-0 w-full h-full object-cover object-center"
-             src="{{ asset('images/about_hero.jpeg') }}" alt="За Нас">
+             src="{{ asset($aboutData['hero_image'] ?? 'images/about_hero.jpeg') }}" alt="За Нас">
         <div class="absolute inset-0" style="background:linear-gradient(to bottom, rgba(10,30,70,0.3) 0%, rgba(10,30,70,0.6) 100%);"></div>
 
         <div class="absolute top-20 left-6 md:left-28 text-black text-4xl md:text-7xl font-bold tracking-widest uppercase z-10" style="text-shadow:0 2px 8px rgba(0,0,0,0.4);">
@@ -56,18 +75,32 @@
 
     <div id="istorija" class="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-16 flex flex-col md:flex-row items-center gap-10 md:gap-16">
         <div class="flex-shrink-0 w-full md:w-[420px]">
-            <img src="{{ asset('images/about_hero.jpeg') }}" alt="Историја"
+            <img src="{{ asset($aboutData['history_side_image'] ?? 'images/about_hero.jpeg') }}" alt="Историја"
                  class="w-full h-[300px] md:h-[410px] object-cover rounded-2xl block shadow-md">
         </div>
         <div class="flex-1 text-center md:text-left">
             <h2 class="text-[1.6rem] md:text-[1.9rem] font-bold text-[#1a1a1a] mb-5 mt-0">{{ __('history') }}</h2>
             <p class="text-[0.95rem] leading-7 text-[#333] mb-4">
-                {{ __('about_history_p1') }}
+                {{ $aboutData['history']['p1'] ?? '' }}
             </p>
             <p class="text-[0.95rem] leading-7 text-[#333] mb-6">
-                {{ __('about_history_p2') }}
+                {{ $aboutData['history']['p2'] ?? '' }}
             </p>
             <a href="#" class="inline-block text-[#1a1a1a] text-[0.95rem] font-bold underline underline-offset-4 mt-1 hover:text-[#2E589E] transition-colors">{{ __('read_more') }}</a>
+        </div>
+    </div>
+
+    <div id="misija" class="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-16 flex flex-col md:flex-row-reverse items-center gap-10 md:gap-16">
+        <div class="flex-1 text-center md:text-left">
+            <h2 class="text-[1.6rem] md:text-[1.9rem] font-bold text-[#1a1a1a] mb-5 mt-0">{{ __('mission') }}</h2>
+            <p class="text-[0.95rem] leading-7 text-[#333] mb-4 whitespace-pre-line">{{ $aboutData['mission'] ?? '' }}</p>
+        </div>
+    </div>
+
+    <div id="vizija" class="max-w-[1200px] mx-auto px-6 md:px-10 py-10 md:py-16 flex flex-col md:flex-row items-center gap-10 md:gap-16">
+        <div class="flex-1 text-center md:text-left">
+            <h2 class="text-[1.6rem] md:text-[1.9rem] font-bold text-[#1a1a1a] mb-5 mt-0">{{ __('vision') }}</h2>
+            <p class="text-[0.95rem] leading-7 text-[#333] mb-4 whitespace-pre-line">{{ $aboutData['vision'] ?? '' }}</p>
         </div>
     </div>
 
@@ -76,18 +109,12 @@
     <div id="uprava" class="max-w-[1200px] mx-auto px-6 md:px-10 pt-4 pb-12 mt-10 md:mt-20">
         <h2 class="text-[1.4rem] font-bold text-[#1a2a4a] mb-10 text-center md:text-left">{{ __('management') }}</h2>
         <div class="flex flex-col md:flex-row flex-wrap justify-center items-center md:items-start gap-12 md:gap-32">
-            @php
-                $uprava_members = [
-                    ['image' => 'direktor.png', 'name' => 'М-р. Зоран Јовановски', 'title' => 'ДИРЕКТОР'],
-                    ['image' => 'direktor.png', 'name' => 'Наим Љамалари', 'title' => 'ЗАМЕНИК ДИРЕКТОР'],
-                ];
-            @endphp
-            @foreach ($uprava_members as $member)
+            @foreach ($aboutData['management'] ?? [] as $member)
                 <div class="flex flex-col items-center">
-                    <img src="{{ asset('images/' . $member['image']) }}" 
+                    <img src="{{ $resolveImageSrc($member['image'] ?? 'direktor.png') }}"
                          class="w-[240px] md:w-[260px] h-[260px] md:h-[280px] object-cover object-top rounded-2xl shadow-sm block">
-                    <p class="text-[1rem] font-bold text-[#1a1a1a] mt-4 text-center leading-snug">{{ $member['name'] }}</p>
-                    <p class="text-[0.7rem] text-[#888] text-center mt-1 tracking-widest font-medium uppercase">{{ $member['title'] }}</p>
+                    <p class="text-[1rem] font-bold text-[#1a1a1a] mt-4 text-center leading-snug">{{ $member['name'] ?? '' }}</p>
+                    <p class="text-[0.7rem] text-[#888] text-center mt-1 tracking-widest font-medium uppercase">{{ $member['title'] ?? '' }}</p>
                 </div>
             @endforeach
         </div>
@@ -96,22 +123,10 @@
     <div id="odgovorni" class="max-w-[1100px] mx-auto px-6 pb-20 mt-10 md:mt-20">
         <h2 class="text-[1.4rem] md:text-[1.6rem] font-bold text-black mb-12 text-center">{{ __('responsible_officers') }}</h2>
         <div class="flex flex-wrap gap-6 justify-center">
-            @php
-                $odgovorni = [
-                    ['name' => 'Разије Османи Хоџа', 'role' => 'ЛИЦЕ ЗА ПОСРЕДУВАЊЕ СО ИНФОРМАЦИИ', 'email' => 'razije@kpuidrizovo.gov.mk'],
-                    ['name' => 'Горан Јовчевски', 'role' => 'ЛИЦЕ ЗА ЗАШТИТЕНО ВНАТРЕШНО ПРИЈАВУВАЊЕ', 'email' => 'prijava@kpuidrizovo.gov.mk'],
-                    ['name' => 'Виолета Тепеѓозова', 'role' => 'РАКОВОДИТЕЛ НА ОДДЕЛЕНИЕ ЗА ЧОВЕЧКИ РЕСУРСИ', 'email' => 'violeta.tepegozova@kpuidrizovo.gov.mk'],
-                    ['name' => 'Владимир Арсковски', 'role' => 'РАКОВОДИТЕЛ НА СЕКТОР ЗА ОПШТИ-ПРАВНИ РАБОТИ И ЈАВНИ НАБАВКИ', 'email' => 'vladimirarskovski@gmail.com'],
-                    ['name' => 'Африм Незири', 'role' => 'РАКОВОДИТЕЛ НА СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'email' => 'kpuidrizovo@kpuidrizovo.gov.mk'],
-                    ['name' => 'Цветков Љупчо', 'role' => 'ПОМОШНИК РАКОВОДИТЕЛ ВО СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'email' => 'ljupco.cvetkov73@gmail.com'],
-                    ['name' => 'Марија Цветкова', 'role' => 'РАКОВОДИТЕЛ ВО ОТВОРЕНО ОДДЕЛЕНИЕ ВЕЛЕС', 'email' => 'otvorenooddelenieveles@yahoo.com'],
-                    ['name' => 'Игор Кокалински', 'role' => 'ЗАПОВЕДНИК ВО ЗАТВОРСКА ПОЛИЦИЈА', 'email' => ''],
-                ];
-            @endphp
-            @foreach ($odgovorni as $item)
+            @foreach ($aboutData['responsible_officers'] ?? [] as $item)
                 <div class="bg-[#6691D2] text-white rounded-2xl p-6 md:p-8 text-center flex flex-col justify-center items-center shadow-sm w-full md:w-[320px] min-h-[180px]">
-                    <p class="text-[1rem] font-semibold mb-3 leading-tight">{{ $item['name'] }}</p>
-                    <p class="text-[0.65rem] font-medium opacity-100 leading-normal mb-4 tracking-wide uppercase">{{ $item['role'] }}</p>
+                    <p class="text-[1rem] font-semibold mb-3 leading-tight">{{ $item['name'] ?? '' }}</p>
+                    <p class="text-[0.65rem] font-medium opacity-100 leading-normal mb-4 tracking-wide uppercase">{{ $item['role'] ?? '' }}</p>
                     @if (!empty($item['email']))
                         <div class="flex items-center justify-center space-x-2 mt-auto">
                             <span class="text-[0.75rem] lowercase opacity-90 break-all">{{ $item['email'] }}</span>
@@ -125,36 +140,26 @@
     <div id="pravilnik" class="max-w-[1100px] mx-auto px-6 py-12 md:py-20 text-center">
         <h2 class="text-[1.5rem] md:text-[1.8rem] font-bold text-black mb-4 tracking-tight uppercase">{{ __('regulation') }}</h2>
         <h3 class="text-[1rem] md:text-[1.25rem] font-bold text-black mb-10 max-w-[900px] mx-auto leading-tight">
-            {{ __('regulation_subtitle') }}
+            {{ $aboutData['regulation']['subtitle'] ?? '' }}
         </h3>
         <p class="text-[0.95rem] text-black leading-[1.8] mb-10 max-w-[950px] mx-auto font-normal">
-            {{ __('about_regulation_text') }}
+            {{ $aboutData['regulation']['text'] ?? '' }}
         </p>
-            <a href="{{ asset('documents/pravilnik.pdf') }}" target="_blank" class="inline-block bg-[#0F1C2E] hover:bg-black text-white text-[0.8rem] md:text-[0.9rem] font-bold px-10 md:px-12 py-3 md:py-3.5 rounded-md transition-all no-underline shadow-md">{{ __('download') }}</a>
+            <a href="{{ asset($aboutData['regulation']['pdf'] ?? 'documents/pravilnik.pdf') }}" target="_blank" class="inline-block bg-[#0F1C2E] hover:bg-black text-white text-[0.8rem] md:text-[0.9rem] font-bold px-10 md:px-12 py-3 md:py-3.5 rounded-md transition-all no-underline shadow-md">{{ __('download') }}</a>
     </div>
 
     <div id="sektori" class="section-sektori relative px-6 py-16 md:py-[100px] overflow-hidden" 
          style="background: linear-gradient(180deg, #5179B9 0%, #79A3D9 50%, #BDD4F0 100%);">
         <h2 class="relative z-[2] max-w-[1100px] mx-auto mb-16 text-[1.8rem] md:text-[2.2rem] font-bold text-[#1a2a4a] text-center md:text-left">{{ __('sectors') }}</h2>
         <div class="relative z-[2] max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 md:gap-x-8">
-            @php
-                $sektori = [
-                    ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'sub' => ['1. Одделение за прием', '2. Одделение за третман', '3. Одделение за стручно инструкторски работи']],
-                    ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА ОПШТИ-ПРАВНИ РАБОТИ', 'sub' => ['1. Одделение за општи-правни работи', '2. Одделение за јавни набавки']],
-                    ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА ФИНАНСИСКИ ПРАШАЊА', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
-                    ['img' => 'dokumenti.png', 'name' => 'ОДДЕЛЕНИЕ ЗА ЧОВЕЧКИ РЕСУРСИ', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
-                    ['img' => 'dokumenti.png', 'name' => 'ОТВОРЕНО ОДДЕЛЕНИЕ ВЕЛЕС', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
-                    ['img' => 'dokumenti.png', 'name' => 'СЕКТОР НА ЗАТВОРСКА ПОЛИЦИЈА', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
-                ];
-            @endphp
-            @foreach ($sektori as $sektor)
+            @foreach ($aboutData['sectors'] ?? [] as $sektor)
                 <div class="flex flex-col items-center">
                     <div class="h-[120px] md:h-[150px] w-full flex items-center justify-center mb-[-40px] relative z-10">
-                        <img src="{{ asset('images/' . $sektor['img']) }}" class="max-h-full object-contain drop-shadow-xl">
+                        <img src="{{ $resolveImageSrc($sektor['img'] ?? 'dokumenti.png') }}" class="max-h-full object-contain drop-shadow-xl" alt="">
                     </div>
                     <div class="w-full bg-white/25 border border-white/40 backdrop-blur-lg rounded-[25px] p-6 md:p-8 pt-12 min-h-[200px] md:min-h-[220px] shadow-lg flex flex-col">
-                        <h3 class="text-[0.9rem] md:text-[1rem] font-bold text-white leading-tight mb-4">{{ $sektor['name'] }}</h3>
-                        @if (!empty($sektor['sub']))
+                        <h3 class="text-[0.9rem] md:text-[1rem] font-bold text-white leading-tight mb-4">{{ $sektor['name'] ?? '' }}</h3>
+                        @if (!empty($sektor['sub']) && is_array($sektor['sub']))
                             <ul class="text-[0.7rem] md:text-[0.75rem] text-white/90 space-y-1 font-normal list-none p-0 m-0">
                                 @foreach ($sektor['sub'] as $sub)
                                     <li>{{ $sub }}</li>

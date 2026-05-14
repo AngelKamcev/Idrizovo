@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AboutUsController extends Controller
 {
@@ -26,13 +27,24 @@ class AboutUsController extends Controller
             'history_p2' => ['required', 'string'],
             'director_name' => ['required', 'string', 'max:255'],
             'director_title' => ['required', 'string', 'max:255'],
-            'director_image' => ['required', 'string', 'max:255'],
+            'director_image_current' => ['nullable', 'string', 'max:255'],
+            'director_image_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
             'deputy_name' => ['required', 'string', 'max:255'],
             'deputy_title' => ['required', 'string', 'max:255'],
-            'deputy_image' => ['required', 'string', 'max:255'],
-            'officers' => ['required', 'array', 'min:1'],
-            'officers.*.name' => ['required', 'string', 'max:255'],
-            'officers.*.role' => ['required', 'string', 'max:255'],
+            'deputy_image_current' => ['nullable', 'string', 'max:255'],
+            'deputy_image_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
+            'hero_image_current' => ['nullable', 'string', 'max:255'],
+            'hero_image_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
+            'history_side_image_current' => ['nullable', 'string', 'max:255'],
+            'history_side_image_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
+            'sectors' => ['nullable', 'array'],
+            'sectors.*.name' => ['nullable', 'string', 'max:500'],
+            'sectors.*.img_current' => ['nullable', 'string', 'max:255'],
+            'sectors.*.img_file' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:8192'],
+            'sectors.*.subs_text' => ['nullable', 'string'],
+            'officers' => ['nullable', 'array'],
+            'officers.*.name' => ['nullable', 'string', 'max:255'],
+            'officers.*.role' => ['nullable', 'string', 'max:255'],
             'officers.*.email' => ['nullable', 'email', 'max:255'],
             'mission' => ['required', 'string'],
             'vision' => ['required', 'string'],
@@ -44,10 +56,56 @@ class AboutUsController extends Controller
             'address' => ['required', 'string', 'max:255'],
         ]);
 
+        $officers = $this->normalizeOfficers($validated['officers'] ?? []);
+
+        if (count($officers) < 1) {
+            throw ValidationException::withMessages([
+                'officers' => 'Додади барем едно одговорно лице со име.',
+            ]);
+        }
+
+        $sectors = $this->normalizeSectors($validated['sectors'] ?? []);
+
+        if (count($sectors) < 1) {
+            throw ValidationException::withMessages([
+                'sectors' => 'Додади барем еден сектор со име.',
+            ]);
+        }
+
+        $default = $this->defaultAboutData();
+        $heroImage = $this->resolveStoredImage(
+            $request->file('hero_image_file'),
+            (string) ($validated['hero_image_current'] ?? ''),
+            'aboutus',
+            $default['hero_image']
+        );
+        $historySideImage = $this->resolveStoredImage(
+            $request->file('history_side_image_file'),
+            (string) ($validated['history_side_image_current'] ?? ''),
+            'aboutus',
+            $default['history_side_image']
+        );
+        $directorImage = $this->resolveStoredImage(
+            $request->file('director_image_file'),
+            (string) ($validated['director_image_current'] ?? ''),
+            'aboutus',
+            $default['management'][0]['image'] ?? 'images/direktor.png'
+        );
+        $deputyImage = $this->resolveStoredImage(
+            $request->file('deputy_image_file'),
+            (string) ($validated['deputy_image_current'] ?? ''),
+            'aboutus',
+            $default['management'][1]['image'] ?? 'images/direktor.png'
+        );
+
+        $sectors = $this->normalizeSectors($validated['sectors'] ?? [], $request, $default['sectors'] ?? []);
+
         SystemSetting::updateOrCreate(
             ['setting_key' => self::SETTING_KEY],
             [
                 'value' => json_encode([
+                    'hero_image' => $heroImage,
+                    'history_side_image' => $historySideImage,
                     'history' => [
                         'p1' => $validated['history_p1'],
                         'p2' => $validated['history_p2'],
@@ -56,21 +114,16 @@ class AboutUsController extends Controller
                         [
                             'name' => $validated['director_name'],
                             'title' => $validated['director_title'],
-                            'image' => $validated['director_image'],
+                            'image' => $directorImage,
                         ],
                         [
                             'name' => $validated['deputy_name'],
                             'title' => $validated['deputy_title'],
-                            'image' => $validated['deputy_image'],
+                            'image' => $deputyImage,
                         ],
                     ],
-                    'responsible_officers' => array_values(array_map(function ($row) {
-                        return [
-                            'name' => trim($row['name']),
-                            'role' => trim($row['role']),
-                            'email' => trim($row['email'] ?? ''),
-                        ];
-                    }, $validated['officers'])),
+                    'responsible_officers' => $officers,
+                    'sectors' => $sectors,
                     'mission' => $validated['mission'],
                     'vision' => $validated['vision'],
                     'regulation' => [
@@ -93,6 +146,17 @@ class AboutUsController extends Controller
             ->with('success', 'Содржината за „За Нас“ е успешно зачувана.');
     }
 
+    private function resolveStoredImage(?\Illuminate\Http\UploadedFile $file, string $currentPath, string $folder, string $defaultPath): string
+    {
+        if ($file) {
+            return 'storage/' . $file->store($folder, 'public');
+        }
+
+        $currentPath = trim($currentPath);
+
+        return $currentPath !== '' ? $currentPath : $defaultPath;
+    }
+
     private function getAboutData(): array
     {
         $default = $this->defaultAboutData();
@@ -110,6 +174,8 @@ class AboutUsController extends Controller
     private function defaultAboutData(): array
     {
         return [
+            'hero_image' => 'images/about_hero.jpeg',
+            'history_side_image' => 'images/about_hero.jpeg',
             'history' => [
                 'p1' => 'Казнено-поправна установа КПУ-КПД Идризово е една од главните установи за извршување на казни лишување од слобода во Република Македонија. Установата е основана со цел да обезбеди хуманен и безбеден начин на извршување на казнени санкции во согласност со национално и меѓународно право.',
                 'p2' => 'Историјата на КПД Идризово започнува во текот на Втората светска војна, кога е изграден воен камп од страна на бугарската окупаторска војска. Веднаш по завршувањето на Втората светска војна продолжува да функционира како затвор – работна колонија, каде што затворениците биле ангажирани во земјоделски и градежни работи. Со текот на времето, установата се проширила и станала најголемиот затвор во државата.',
@@ -140,7 +206,90 @@ class AboutUsController extends Controller
                 'capacity' => '450',
                 'address' => 'Идризово, Скопје',
             ],
+            'sectors' => [
+                ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА РЕСОЦИЈАЛИЗАЦИЈА', 'sub' => ['1. Одделение за прием', '2. Одделение за третман', '3. Одделение за стручно инструкторски работи']],
+                ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА ОПШТИ-ПРАВНИ РАБОТИ', 'sub' => ['1. Одделение за општи-правни работи', '2. Одделение за јавни набавки']],
+                ['img' => 'dokumenti.png', 'name' => 'СЕКТОР ЗА ФИНАНСИСКИ ПРАШАЊА', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
+                ['img' => 'dokumenti.png', 'name' => 'ОДДЕЛЕНИЕ ЗА ЧОВЕЧКИ РЕСУРСИ', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
+                ['img' => 'dokumenti.png', 'name' => 'ОТВОРЕНО ОДДЕЛЕНИЕ ВЕЛЕС', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
+                ['img' => 'dokumenti.png', 'name' => 'СЕКТОР НА ЗАТВОРСКА ПОЛИЦИЈА', 'sub' => ['1. Буџетска координација', '2. Сметководство']],
+            ],
         ];
+    }
+
+    /**
+     * @param  array<int, mixed>  $rows
+     * @return array<int, array{name: string, role: string, email: string}>
+     */
+    private function normalizeOfficers(array $rows): array
+    {
+        $out = [];
+
+        foreach ($rows as $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+
+            $name = trim((string) ($row['name'] ?? ''));
+
+            if ($name === '') {
+                continue;
+            }
+
+            $out[] = [
+                'name' => $name,
+                'role' => trim((string) ($row['role'] ?? '')),
+                'email' => trim((string) ($row['email'] ?? '')),
+            ];
+        }
+
+        return array_values($out);
+    }
+
+    /**
+     * @param  array<int, mixed>  $rows
+     * @return array<int, array{img: string, name: string, sub: array<int, string>}>
+     */
+    private function normalizeSectors(array $rows, Request $request, array $defaults = []): array
+    {
+        $out = [];
+
+        foreach ($rows as $index => $row) {
+            if (! is_array($row)) {
+                continue;
+            }
+
+            $name = trim((string) ($row['name'] ?? ''));
+
+            if ($name === '') {
+                continue;
+            }
+
+            $lines = preg_split('/\r\n|\r|\n/', (string) ($row['subs_text'] ?? ''));
+            $sub = [];
+
+            if (is_array($lines)) {
+                foreach ($lines as $line) {
+                    $t = trim((string) $line);
+
+                    if ($t !== '') {
+                        $sub[] = $t;
+                    }
+                }
+            }
+
+            $out[] = [
+                'img' => $this->resolveStoredImage(
+                    $request->file('sectors.' . $index . '.img_file'),
+                    (string) ($row['img_current'] ?? ''),
+                    'aboutus/sectors',
+                    $defaults[$index]['img'] ?? 'images/dokumenti.png'
+                ),
+                'name' => $name,
+                'sub' => $sub,
+            ];
+        }
+        return array_values($out);
     }
 
     public function currentData(): array
