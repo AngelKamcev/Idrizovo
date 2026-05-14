@@ -64,7 +64,7 @@ class AboutUsController extends Controller
             ]);
         }
 
-        $sectors = $this->normalizeSectors($validated['sectors'] ?? []);
+        $sectors = $this->normalizeSectors($validated['sectors'] ?? [], $request, $this->defaultAboutData()['sectors'] ?? []);
 
         if (count($sectors) < 1) {
             throw ValidationException::withMessages([

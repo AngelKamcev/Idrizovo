@@ -16,7 +16,7 @@
         </div>
         <div class="pb-1">
             <h1 class="text-2xl md:text-3xl font-bold text-[#0e1b38]">
-            {{ __('needle_art') }}
+            {{ __('gallery') }}
           </h1>
         </div>
       </div>
@@ -35,7 +35,7 @@
               <p class="text-white/60 text-xs mb-3 uppercase tracking-wide">{{ $img->album }}</p>
             @endif
             <button type="button" class="bg-[#0E1B2F] text-white text-sm font-semibold px-5 py-2 rounded-md hover:opacity-90 transition">
-              {{ __('booking') }}
+              {{ __('reserve') }}
             </button>
           </div>
         </div>
@@ -46,7 +46,7 @@
             <div class="p-5">
               <h2 class="text-white font-bold text-xl mb-3">{{ __('handmade_card_1_title') }}</h2>
               <p class="text-white/80 text-sm leading-6 mb-5">{{ __('handmade_card_1_body') }}</p>
-              <button type="button" class="bg-[#0E1B2F] text-white text-sm font-semibold px-5 py-2 rounded-md hover:opacity-90 transition">{{ __('booking') }}</button>
+              <button type="button" class="bg-[#0E1B2F] text-white text-sm font-semibold px-5 py-2 rounded-md hover:opacity-90 transition">{{ __('reserve') }}</button>
             </div>
           </div>
         @endfor

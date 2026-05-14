@@ -42,4 +42,9 @@ class VisitRequest extends Model
     {
         return $this->hasMany(VisitCompanion::class, 'visit_id');
     }
+
+    public function confirmation()
+    {
+        return $this->hasOne(VisitConfirmation::class, 'visit_id');
+    }
 }

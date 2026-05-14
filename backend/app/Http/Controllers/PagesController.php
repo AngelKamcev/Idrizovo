@@ -12,11 +12,15 @@ use App\Models\Announcement;
 use App\Models\Activity;
 use App\Models\GalleryImage;
 use App\Models\Handcraft;
+use App\Models\VisitConfirmation;
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\IzrabotkiPageController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class PagesController extends Controller
@@ -46,6 +50,8 @@ class PagesController extends Controller
 
         $izrabotki = app(IzrabotkiPageController::class)->publicData();
         $izrabotkiSections = collect($izrabotki['sections'] ?? []);
+        $aboutData = app(AboutUsController::class)->currentData();
+        $homeSectors = collect($aboutData['sectors'] ?? [])->take(3);
 
         $galleryImages = GalleryImage::active()
             ->sorted()
@@ -56,6 +62,7 @@ class PagesController extends Controller
             'activities' => $activities,
             'announcements' => $announcements,
             'izrabotkiSections' => $izrabotkiSections,
+            'homeSectors' => $homeSectors,
             'galleryImages' => $galleryImages,
         ]);
     }
@@ -184,42 +191,69 @@ class PagesController extends Controller
             ]
         );
 
-        $visitRequest = VisitRequest::create([
-            'visitor_first_name' => $validated['visitor_first_name'],
-            'visitor_last_name' => $validated['visitor_last_name'],
-            'visitor_email' => $validated['visitor_email'] ?? null,
-            'visitor_phone' => $validated['visitor_phone'] ?? null,
-            'visitor_relation_type' => $validated['visitor_relation_type'],
-            'inmate_id' => $inmate->id,
-            'requested_inmate_number' => $validated['requested_inmate_number'],
-            'visit_date' => $visitDate->format('Y-m-d'),
-            'visit_schedule_id' => $schedule->id,
-            'time_slot_id' => $timeSlot->id,
-            'status' => 'approved',
-            'cancel_deadline' => Carbon::parse($visitDate->format('Y-m-d') . ' ' . $startTime)->subHours(48),
-        ]);
+        $visitRequest = DB::transaction(function () use ($validated, $visitDate, $schedule, $timeSlot, $inmate, $startTime) {
+            $visitRequest = VisitRequest::create([
+                'visitor_first_name' => $validated['visitor_first_name'],
+                'visitor_last_name' => $validated['visitor_last_name'],
+                'visitor_email' => $validated['visitor_email'] ?? null,
+                'visitor_phone' => $validated['visitor_phone'] ?? null,
+                'visitor_relation_type' => $validated['visitor_relation_type'],
+                'inmate_id' => $inmate->id,
+                'requested_inmate_number' => $validated['requested_inmate_number'],
+                'visit_date' => $visitDate->format('Y-m-d'),
+                'visit_schedule_id' => $schedule->id,
+                'time_slot_id' => $timeSlot->id,
+                'status' => 'approved',
+                'cancel_deadline' => Carbon::parse($visitDate->format('Y-m-d') . ' ' . $startTime)->subHours(48),
+            ]);
 
-        $companionNames = preg_split('/\r\n|\r|\n/', (string) ($validated['companions'] ?? ''));
-        foreach ($companionNames as $companionName) {
-            $companionName = trim($companionName);
-            if ($companionName === '') {
-                continue;
+            $companionNames = preg_split('/\r\n|\r|\n/', (string) ($validated['companions'] ?? ''));
+            foreach ($companionNames as $companionName) {
+                $companionName = trim($companionName);
+                if ($companionName === '') {
+                    continue;
+                }
+
+                [$firstName, $lastName] = $this->splitFullName($companionName);
+
+                VisitCompanion::create([
+                    'visit_id' => $visitRequest->id,
+                    'first_name' => $firstName,
+                    'last_name' => $lastName,
+                    'relation_to_visitor' => 'companion',
+                    'is_child' => false,
+                ]);
             }
 
-            [$firstName, $lastName] = $this->splitFullName($companionName);
+            $confirmationCode = $this->generateVisitConfirmationCode();
+            $qrToken = (string) Str::uuid();
+            $pdfPath = 'visit-confirmations/visit-' . $visitRequest->id . '-' . $confirmationCode . '.pdf';
 
-            VisitCompanion::create([
+            $confirmation = VisitConfirmation::create([
                 'visit_id' => $visitRequest->id,
-                'first_name' => $firstName,
-                'last_name' => $lastName,
-                'relation_to_visitor' => 'companion',
-                'is_child' => false,
+                'confirmation_code' => $confirmationCode,
+                'qr_code_token' => $qrToken,
+                'pdf_url' => $pdfPath,
+                'issued_at' => now(),
+                'valid_until' => Carbon::parse($visitRequest->visit_date)->endOfDay(),
             ]);
-        }
 
-        return redirect()
-            ->route('zakazi-poseta')
-            ->with('success', 'Барањето за посета е испратено и е видливо во админ панелот.');
+            $pdf = Pdf::loadView('pdf.visit-confirmation', [
+                'visitRequest' => $visitRequest->load(['visitSchedule', 'timeSlot', 'companions']),
+                'confirmation' => $confirmation,
+            ])->setPaper('a4');
+
+            Storage::disk('public')->put($pdfPath, $pdf->output());
+
+            return $visitRequest->load('confirmation');
+        });
+
+        $confirmation = $visitRequest->confirmation;
+
+        return response()->download(
+            Storage::disk('public')->path($confirmation->pdf_url),
+            'potvrda-poseta-' . $confirmation->confirmation_code . '.pdf'
+        );
     }
 
     /**
@@ -325,5 +359,14 @@ class PagesController extends Controller
         $parts = preg_split('/\s+/', trim($fullName), 2);
 
         return [$parts[0] ?? '', $parts[1] ?? ''];
+    }
+
+    private function generateVisitConfirmationCode(): string
+    {
+        do {
+            $code = (string) random_int(10000, 99999);
+        } while (VisitConfirmation::where('confirmation_code', $code)->exists());
+
+        return $code;
     }
 }

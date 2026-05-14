@@ -10,7 +10,7 @@ class VisitRequestController extends Controller
 {
     public function index()
     {
-        $visitRequests = VisitRequest::with(['visitSchedule', 'timeSlot', 'companions'])
+        $visitRequests = VisitRequest::with(['visitSchedule', 'timeSlot', 'companions', 'confirmation'])
             ->orderByDesc('created_at')
             ->paginate(12);
 

@@ -70,6 +70,7 @@
     };
 
     $izrabotkiSections = collect($izrabotkiSections ?? []);
+    $homeSectors = collect($homeSectors ?? []);
     $galleryCards = collect($galleryImages ?? []);
 @endphp
 
@@ -337,60 +338,27 @@
         <div class="max-w-[1200px] mx-auto">
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-y-[95px] md:gap-y-0 md:gap-x-[120px] items-end">
+                @forelse ($homeSectors as $sector)
+                    <div class="flex flex-col items-center">
+                        <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
+                            <img src="{{ $resolveImageSrc($sector['img'] ?? '', 'sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl" alt="{{ $sector['name'] ?? '' }}">
+                        </div>
 
-                <div class="flex flex-col items-center">
-                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
-                    </div>
+                        <div class="w-full max-w-[320px] md:w-[290px] min-h-[170px] md:min-h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10 py-7">
+                            <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
+                                {{ $sector['name'] ?? '' }}
+                            </h3>
 
-                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
-                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
-                            РЕГУЛАТИВА
-                        </h3>
-
-                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
-                            <a href="#">ЗАКОНИ</a>
-                            <a href="#">ПРАВИЛНИЦИ</a>
-                            <a href="#">УПАТСТВО И ПРОТОКОЛИ</a>
+                            <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
+                                @foreach(($sector['sub'] ?? []) as $item)
+                                    <span>{{ $item }}</span>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="flex flex-col items-center">
-                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
-                    </div>
-
-                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
-                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
-                            РЕСУРСИ
-                        </h3>
-
-                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
-                            <a href="#">ЈАВНИ НАБАВКИ</a>
-                            <a href="#">БУЏЕТ</a>
-                            <a href="#">ИЗВЕШТАИ</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col items-center">
-                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
-                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
-                    </div>
-
-                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
-                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
-                            ОДНОСИ СО ЈАВНОСТА
-                        </h3>
-
-                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
-                            <a href="#">ИНФОРМАЦИИ ОД ЈАВЕН КАРАКТЕР</a>
-                            <a href="#">ОГЛАСИ</a>
-                        </div>
-                    </div>
-                </div>
-
+                @empty
+                    <div class="md:col-span-3 text-center text-gray-500">Нема внесени сектори во админ панелот.</div>
+                @endforelse
             </div>
 
             <div class="mt-[100px] md:mt-[150px] flex flex-col md:flex-row items-center justify-center gap-5 md:gap-[35px]">
