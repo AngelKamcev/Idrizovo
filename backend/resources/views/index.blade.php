@@ -69,7 +69,7 @@
         return asset('storage/' . ltrim($path, '/'));
     };
 
-    $handcraftCards = collect($handcrafts ?? []);
+    $izrabotkiSections = collect($izrabotkiSections ?? []);
     $galleryCards = collect($galleryImages ?? []);
 @endphp
 
@@ -225,20 +225,20 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-8">
-                @forelse ($handcraftCards as $handcraft)
-                    <a href="{{ route('handcraft.detail', $handcraft) }}" class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl block group">
-                        <img src="{{ $resolveImageSrc($handcraft->resolved_image_url ?? '', 'images/bla.jpeg') }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $handcraft->title_mk }}">
+                @forelse ($izrabotkiSections as $index => $section)
+                    <a href="{{ route('izrabotki.section', $index) }}" class="relative h-[300px] md:h-[300px] rounded-[18px] overflow-hidden shadow-lg transition-all duration-300 ease-out hover:-translate-y-3 hover:shadow-2xl block group">
+                        <img src="{{ $resolveImageSrc($section['main_image'] ?? '', 'images/bla.jpeg') }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $section['title'] ?? '' }}">
                         <div class="absolute inset-0 home-card-overlay"></div>
                         <div class="absolute bottom-0 left-0 w-full min-h-[125px] px-6 py-5 text-white rounded-b-[18px]">
-                            <h3 class="text-[16px] font-bold underline mb-4">{{ $handcraft->title_mk }}</h3>
+                            <h3 class="text-[16px] font-bold underline mb-4">{{ $section['title'] ?? '' }}</h3>
                             <p class="text-[11px] leading-[20px] text-white">
-                                {{ \Illuminate\Support\Str::limit($handcraft->description_mk ?? '', 170) }}
+                                {{ \Illuminate\Support\Str::limit($section['body'] ?? '', 170) }}
                             </p>
                         </div>
                     </a>
                 @empty
                     <div class="col-span-1 md:col-span-3 rounded-2xl border border-dashed border-gray-300 p-8 text-center text-gray-500">
-                        Нема објавени рачни изработки.
+                        Нема внесени изработки.
                     </div>
                 @endforelse
 
@@ -311,7 +311,7 @@
             </h2>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 md:gap-6 mb-14 md:mb-16">
-                @forelse ($galleryCards as $galleryImage)
+                @forelse ($galleryImages as $galleryImage)
                     <div class="relative h-[210px] md:h-[205px] rounded-[16px] overflow-hidden shadow-md group">
                         <img src="{{ $galleryImage->resolved_url }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="{{ $galleryImage->displayTitle() }}">
                         <div class="absolute inset-0 home-card-overlay"></div>
@@ -324,6 +324,85 @@
                         Нема активни галериски слики.
                     </div>
                 @endforelse
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= СЕКТОРИ ================= -->
+    <div id="sektori" class="w-full bg-white px-5 md:px-6 pt-[150px] md:pt-[220px] pb-[100px] md:pb-[140px]">
+
+        <div class="max-w-[1200px] mx-auto">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-y-[95px] md:gap-y-0 md:gap-x-[120px] items-end">
+
+                <div class="flex flex-col items-center">
+                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
+                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                    </div>
+
+                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
+                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
+                            РЕГУЛАТИВА
+                        </h3>
+
+                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
+                            <a href="#">ЗАКОНИ</a>
+                            <a href="#">ПРАВИЛНИЦИ</a>
+                            <a href="#">УПАТСТВО И ПРОТОКОЛИ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
+                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                    </div>
+
+                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
+                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
+                            РЕСУРСИ
+                        </h3>
+
+                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
+                            <a href="#">ЈАВНИ НАБАВКИ</a>
+                            <a href="#">БУЏЕТ</a>
+                            <a href="#">ИЗВЕШТАИ</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="h-[165px] md:h-[190px] flex items-end justify-center mb-[-15px] relative z-10">
+                        <img src="{{ asset('sliki/dokumenti.png') }}" class="h-[155px] md:h-[180px] object-contain drop-shadow-2xl">
+                    </div>
+
+                    <div class="w-full max-w-[320px] md:w-[290px] h-[170px] md:h-[175px] bg-[#6f96d8] rounded-[18px] flex flex-col items-center justify-center text-center px-8 md:px-10">
+                        <h3 class="text-white text-[15px] md:text-[16px] font-bold mb-[22px]">
+                            ОДНОСИ СО ЈАВНОСТА
+                        </h3>
+
+                        <div class="flex flex-col items-center gap-[6px] text-white text-[11px] font-bold underline leading-[16px]">
+                            <a href="#">ИНФОРМАЦИИ ОД ЈАВЕН КАРАКТЕР</a>
+                            <a href="#">ОГЛАСИ</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-[100px] md:mt-[150px] flex flex-col md:flex-row items-center justify-center gap-5 md:gap-[35px]">
+
+                <a href="#" class="w-full max-w-[340px] md:w-[330px] h-[75px] bg-[#081529] rounded-[6px] flex items-center justify-between px-[20px] text-white text-[14px] md:text-[15px] font-bold hover:opacity-90 transition">
+                    <span>Пријави корупција</span>
+                    <span>02 25 80 312</span>
+                </a>
+
+                <a href="#" class="w-full max-w-[340px] md:w-[330px] h-[75px] bg-[#081529] rounded-[6px] flex items-center px-[20px] text-white text-[14px] md:text-[15px] font-bold leading-[20px] hover:opacity-90 transition">
+                    Годишен план за спречување на корупција
+                </a>
 
             </div>
 

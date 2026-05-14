@@ -44,12 +44,8 @@ class PagesController extends Controller
             ->take(12)
             ->get();
 
-        $handcrafts = Handcraft::published()
-            ->with('images')
-            ->orderByDesc('published_at')
-            ->orderByDesc('id')
-            ->take(3)
-            ->get();
+        $izrabotki = app(IzrabotkiPageController::class)->publicData();
+        $izrabotkiSections = collect($izrabotki['sections'] ?? []);
 
         $galleryImages = GalleryImage::active()
             ->sorted()
@@ -59,7 +55,7 @@ class PagesController extends Controller
         return view('index', [
             'activities' => $activities,
             'announcements' => $announcements,
-            'handcrafts' => $handcrafts,
+            'izrabotkiSections' => $izrabotkiSections,
             'galleryImages' => $galleryImages,
         ]);
     }
