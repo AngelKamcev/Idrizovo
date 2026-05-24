@@ -34,10 +34,14 @@
         .mob-sub.open {
             max-height: 200px;
         }
+
     </style>
 </head>
 
 <body class="bg-white text-black flex flex-col min-h-screen">
+    @php
+        $navAnnouncements = \App\Models\Announcement::active()->published()->sorted()->take(5)->get();
+    @endphp
 
     <div class="hidden md:flex bg-[#2e589e] text-[12px] py-2 px-40 justify-between items-center text-white">
         <div class="flex flex-wrap space-x-30">
@@ -122,12 +126,49 @@
             </ul>
 
             <div class="hidden md:flex items-center space-x-6">
-                <div class="relative flex items-center group h-10 w-6">
-                    <input type="text" placeholder="{{ __('search') }}..." class="absolute right-0 w-0 opacity-0 group-hover:w-40 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer absolute right-0 text-white z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
+                <form method="GET" action="{{ route('soopstenija') }}" class="group relative">
+                    <div class="relative flex items-center h-10 w-6">
+                        <input
+                            id="navAnnouncementSearch"
+                            type="text"
+                            name="search"
+                            value="{{ request('search') }}"
+                            placeholder="{{ __('search') }}..."
+                            autocomplete="off"
+                            class="absolute right-0 w-0 opacity-0 group-hover:w-40 group-hover:opacity-100 group-hover:pr-10 py-2 border-b border-white bg-[#2e589e] text-white transition-all duration-300 focus:outline-none focus:w-48 z-0 placeholder-white/75"
+                        >
+                        <button type="submit" aria-label="{{ __('search') }}" class="absolute right-0 text-white z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="absolute right-0 top-full mt-3 w-96 rounded-2xl border border-white/15 bg-[#0e1b2f] shadow-2xl overflow-hidden opacity-0 invisible group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-all duration-200 z-50">
+                        <div class="px-4 py-3 border-b border-white/10">
+                            <p class="text-[12px] uppercase tracking-[0.18em] text-white/45">Последни соопштенија</p>
+                        </div>
+                        <div id="navAnnouncementSearchList" class="max-h-80 overflow-y-auto">
+                            @forelse ($navAnnouncements as $announcement)
+                                <button
+                                    type="button"
+                                    class="nav-announcement-item w-full text-left px-4 py-3 border-b border-white/10 hover:bg-white/5 transition"
+                                    data-search-text="{{ mb_strtolower($announcement->getTranslation('title', app()->getLocale()) . ' ' . $announcement->getTranslation('content', app()->getLocale())) }}"
+                                    data-search-title="{{ $announcement->getTranslation('title', app()->getLocale()) }}"
+                                >
+                                    <div class="text-[13px] font-semibold text-white leading-5">
+                                        {{ $announcement->getTranslation('title', app()->getLocale()) }}
+                                    </div>
+                                    <div class="text-[11px] text-white/55 mt-1 line-clamp-2">
+                                        {{ \Illuminate\Support\Str::limit($announcement->getTranslation('content', app()->getLocale()), 90) }}
+                                    </div>
+                                </button>
+                            @empty
+                                <div class="px-4 py-4 text-[13px] text-white/60">Нема соопштенија.</div>
+                            @endforelse
+                        </div>
+                    </div>
+                </form>
                 <a href="{{ route('zakazi-poseta') }}" class="inline-flex items-center bg-[#0e1b2f] text-white px-6 py-3 text-sm font-bold rounded-xl hover:bg-black transition shadow-md whitespace-nowrap">
                     {{ __('booking') }}
                 </a>
@@ -312,6 +353,45 @@
             });
         }
 
+        const navAnnouncementSearch = document.getElementById('navAnnouncementSearch');
+        const navAnnouncementSearchList = document.getElementById('navAnnouncementSearchList');
+
+        if (navAnnouncementSearch && navAnnouncementSearchList) {
+            const items = Array.from(navAnnouncementSearchList.querySelectorAll('.nav-announcement-item'));
+
+            const emptyState = document.createElement('div');
+            emptyState.id = 'navAnnouncementSearchEmpty';
+            emptyState.className = 'px-4 py-4 text-[13px] text-white/60 hidden';
+            emptyState.textContent = 'Нема резултати.';
+            navAnnouncementSearchList.appendChild(emptyState);
+
+            const filterAnnouncements = () => {
+                const query = navAnnouncementSearch.value.trim().toLowerCase();
+                let visibleCount = 0;
+
+                items.forEach((item) => {
+                    const haystack = item.dataset.searchText || '';
+                    const show = query === '' || haystack.includes(query);
+                    item.classList.toggle('hidden', !show);
+                    if (show) {
+                        visibleCount += 1;
+                    }
+                });
+
+                emptyState.classList.toggle('hidden', visibleCount !== 0);
+            };
+
+            navAnnouncementSearch.addEventListener('input', filterAnnouncements);
+            filterAnnouncements();
+
+            items.forEach((item) => {
+                item.addEventListener('click', () => {
+                    navAnnouncementSearch.value = item.dataset.searchTitle || '';
+                    navAnnouncementSearch.form.submit();
+                });
+            });
+        }
+
         // Scroll to Top Button
         const scrollToTopBtn = document.getElementById('scrollToTop');
 
@@ -333,6 +413,7 @@
                 });
             });
         }
+
     </script>
 
 </body>

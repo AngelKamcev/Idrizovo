@@ -259,14 +259,30 @@ class PagesController extends Controller
     /**
      * Show the soopstenija page
      */
-    public function soopstenija()
+    public function soopstenija(Request $request)
     {
+        $search = trim((string) $request->query('search', ''));
+
         $announcements = Announcement::active()
             ->published()
             ->sorted()
             ->get();
 
-        return view('soopstenija', ['announcements' => $announcements]);
+        if ($search !== '') {
+            $needle = mb_strtolower($search);
+
+            $announcements = $announcements->filter(function ($announcement) use ($needle) {
+                $title = mb_strtolower($announcement->getTranslation('title', app()->getLocale()));
+                $content = mb_strtolower($announcement->getTranslation('content', app()->getLocale()));
+
+                return str_contains($title, $needle) || str_contains($content, $needle);
+            })->values();
+        }
+
+        return view('soopstenija', [
+            'announcements' => $announcements,
+            'search' => $search,
+        ]);
     }
 
     /**

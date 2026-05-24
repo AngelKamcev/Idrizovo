@@ -21,6 +21,34 @@
       box-shadow: 0 0 0 3px rgba(47,95,168,0.15);
     }
     .field-error { border-color: rgba(220,60,60,0.6) !important; }
+    .loading-overlay {
+      animation: loadingFadeIn .2s ease-out forwards;
+    }
+    .loading-card {
+      animation: loadingPopIn .28s ease-out forwards;
+    }
+    .loading-ring {
+      animation: loadingSpin 1s linear infinite, loadingPulse 1.4s ease-in-out infinite;
+    }
+    .loading-text {
+      animation: loadingPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes loadingFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes loadingPopIn {
+      from { opacity: 0; transform: scale(.92) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes loadingSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes loadingPulse {
+      0%, 100% { opacity: .72; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -197,6 +225,17 @@
         </button>
       </div>
 
+      <div id="loadingOverlay" class="hidden fixed inset-0 z-50 flex flex-col items-center justify-center"
+        style="background: rgba(8,21,41,0.75); backdrop-filter: blur(4px);">
+        <div class="flex flex-col items-center gap-5">
+          <div class="w-16 h-16 rounded-full border-4 border-white/20 border-t-white animate-spin"></div>
+          <div class="text-center">
+            <p class="text-white text-[16px] font-medium">Се генерира потврдата...</p>
+            <p class="text-white/60 text-[13px] mt-1">Ве молиме почекајте, PDF документот се подготвува.</p>
+          </div>
+        </div>
+      </div>
+
     </form>
   </div>
 </section>
@@ -333,7 +372,7 @@
     const errBox = document.getElementById('formErrorBox');
     const errors = [];
 
-    if (!document.getElementById('firstName').value.trim()) errors.push('Внесете ime.');
+    if (!document.getElementById('firstName').value.trim()) errors.push('Внесете име.');
     if (!document.getElementById('lastName').value.trim())  errors.push('Внесете презиме.');
     if (!document.getElementById('relationValue').value)    errors.push('Изберете однос.');
     if (!document.getElementById('inmateNumber').value.trim()) errors.push('Внесете број на осудено лице.');
@@ -342,12 +381,14 @@
     if (!document.getElementById('confirmCheck').checked)   errors.push('Потврдете ги податоците.');
 
     if (errors.length) {
-      errBox.textContent = errors[0];
-      errBox.classList.remove('hidden');
-      errBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        errBox.textContent = errors[0];
+        errBox.classList.remove('hidden');
+        errBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
       errBox.classList.add('hidden');
-      this.submit();
+      document.getElementById('loadingOverlay').classList.remove('hidden');
+      document.querySelector('button[type="submit"]').disabled = true;
+        this.submit();
     }
   });
 </script>
