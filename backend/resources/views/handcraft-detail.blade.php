@@ -126,14 +126,7 @@
 </div>
 
 <!-- Related Handcrafts -->
-@php
-    $relatedHandcrafts = \App\Models\Handcraft::query()
-        ->where('is_published', true)
-        ->where('id', '!=', $handcraft->id)
-        ->inRandomOrder()
-        ->limit(3)
-        ->get();
-@endphp
+{{-- Related handcrafts are passed from the controller (cached) --}}
 
 @if($relatedHandcrafts->count() > 0)
 <section class="py-12 md:py-16">

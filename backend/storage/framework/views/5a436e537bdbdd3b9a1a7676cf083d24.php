@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $__env->yieldContent('title', 'Идризово'); ?></title>
-    <script src="https://kit.fontawesome.com/0ebb078a69.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    
     <link href="<?php echo e(asset('css/output.css')); ?>" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"></noscript>
+    
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://kit.fontawesome.com/0ebb078a69.js" crossorigin="anonymous" defer></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -40,7 +45,9 @@
 
 <body class="bg-white text-black flex flex-col min-h-screen">
     <?php
-        $navAnnouncements = \App\Models\Announcement::active()->published()->sorted()->take(5)->get();
+        $navAnnouncements = \Illuminate\Support\Facades\Cache::remember('nav_announcements', 300, function () {
+            return \App\Models\Announcement::active()->published()->sorted()->take(5)->get();
+        });
     ?>
 
     <div class="hidden md:flex bg-[#2e589e] text-[12px] py-2 px-40 justify-between items-center text-white">

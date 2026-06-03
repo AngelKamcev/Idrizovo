@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -30,40 +31,41 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $activities = Activity::active()
-            ->sorted()
-            ->take(10)
-            ->get()
-            ->map(function($a) {
-                return [
-                    'name' => $a->getTranslation('title', app()->getLocale()),
-                    'description' => $a->getTranslation('description', app()->getLocale()),
-                    'image' => $a->getImageUrl() ?? asset('images/bla.jpeg'),
-                ];
-            });
+        $locale = app()->getLocale();
 
-        $announcements = Announcement::active()
-            ->published()
-            ->sorted()
-            ->take(12)
-            ->get();
+        $activities = Cache::remember('home_activities_' . $locale, 600, function () use ($locale) {
+            return Activity::active()->sorted()->take(10)->get()
+                ->map(fn($a) => [
+                    'name'        => $a->getTranslation('title', $locale),
+                    'description' => $a->getTranslation('description', $locale),
+                    'image'       => $a->getImageUrl() ?? asset('images/bla.jpeg'),
+                ]);
+        });
 
-        $izrabotki = app(IzrabotkiPageController::class)->publicData();
+        $announcements = Cache::remember('home_announcements', 300, fn() =>
+            Announcement::active()->published()->sorted()->take(12)->get()
+        );
+
+        $izrabotki = Cache::remember('izrabotki_page_data', 3600, fn() =>
+            app(IzrabotkiPageController::class)->publicData()
+        );
         $izrabotkiSections = collect($izrabotki['sections'] ?? []);
-        $aboutData = app(AboutUsController::class)->currentData();
+
+        $aboutData = Cache::remember('about_page_data', 3600, fn() =>
+            app(AboutUsController::class)->currentData()
+        );
         $homeSectors = collect($aboutData['sectors'] ?? [])->take(3);
 
-        $galleryImages = GalleryImage::active()
-            ->sorted()
-            ->take(4)
-            ->get();
+        $galleryImages = Cache::remember('home_gallery', 600, fn() =>
+            GalleryImage::active()->sorted()->take(4)->get()
+        );
 
         return view('index', [
-            'activities' => $activities,
-            'announcements' => $announcements,
+            'activities'        => $activities,
+            'announcements'     => $announcements,
             'izrabotkiSections' => $izrabotkiSections,
-            'homeSectors' => $homeSectors,
-            'galleryImages' => $galleryImages,
+            'homeSectors'       => $homeSectors,
+            'galleryImages'     => $galleryImages,
         ]);
     }
 
@@ -72,7 +74,9 @@ class PagesController extends Controller
      */
     public function aboutus()
     {
-        $aboutData = app(AboutUsController::class)->currentData();
+        $aboutData = Cache::remember('about_page_data', 3600, fn() =>
+            app(AboutUsController::class)->currentData()
+        );
 
         return view('aboutus', compact('aboutData'));
     }
@@ -82,7 +86,9 @@ class PagesController extends Controller
      */
     public function activities()
     {
-        $activities = \App\Models\Activity::active()->sorted()->get();
+        $activities = Cache::remember('all_activities', 600, fn() =>
+            \App\Models\Activity::active()->sorted()->take(50)->get()
+        );
         return view('activities', ['activities' => $activities]);
     }
 
@@ -91,10 +97,12 @@ class PagesController extends Controller
      */
     public function contact()
     {
-        $visitSchedules = VisitSchedule::where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+        $visitSchedules = Cache::remember('visit_schedules_active', 3600, fn() =>
+            VisitSchedule::where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+        );
 
         return view('contact', [
             'visitSchedules' => $visitSchedules,
@@ -103,10 +111,12 @@ class PagesController extends Controller
 
     public function zakaziPoseta()
     {
-        $visitSchedules = VisitSchedule::where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+        $visitSchedules = Cache::remember('visit_schedules_active', 3600, fn() =>
+            VisitSchedule::where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+        );
 
         return view('zakaziposeta', [
             'visitSchedules' => $visitSchedules,
@@ -263,21 +273,17 @@ class PagesController extends Controller
     {
         $search = trim((string) $request->query('search', ''));
 
-        $announcements = Announcement::active()
-            ->published()
-            ->sorted()
-            ->get();
+        $query = Announcement::active()->published()->sorted();
 
         if ($search !== '') {
-            $needle = mb_strtolower($search);
-
-            $announcements = $announcements->filter(function ($announcement) use ($needle) {
-                $title = mb_strtolower($announcement->getTranslation('title', app()->getLocale()));
-                $content = mb_strtolower($announcement->getTranslation('content', app()->getLocale()));
-
-                return str_contains($title, $needle) || str_contains($content, $needle);
-            })->values();
+            // Search in the JSON title/content columns at DB level (no PHP loop)
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw('LOWER(title) LIKE ?', ['%' . mb_strtolower($search) . '%'])
+                  ->orWhereRaw('LOWER(content) LIKE ?', ['%' . mb_strtolower($search) . '%']);
+            });
         }
+
+        $announcements = $query->get();
 
         return view('soopstenija', [
             'announcements' => $announcements,
@@ -290,7 +296,9 @@ class PagesController extends Controller
      */
     public function izrabotki()
     {
-        $iz = app(IzrabotkiPageController::class)->publicData();
+        $iz = Cache::remember('izrabotki_page_data', 3600, fn() =>
+            app(IzrabotkiPageController::class)->publicData()
+        );
 
         return view('izrabotki', compact('iz'));
     }
@@ -300,7 +308,9 @@ class PagesController extends Controller
      */
     public function izrabotakiSection($index)
     {
-        $iz = app(IzrabotkiPageController::class)->publicData();
+        $iz = Cache::remember('izrabotki_page_data', 3600, fn() =>
+            app(IzrabotkiPageController::class)->publicData()
+        );
         $sections = $iz['sections'] ?? [];
 
         if (!isset($sections[$index])) {
@@ -317,11 +327,13 @@ class PagesController extends Controller
      */
     public function gallery()
     {
-        $galleryImages = GalleryImage::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
-            ->orderBy('id')
-            ->get();
+        $galleryImages = Cache::remember('gallery_page_all', 600, fn() =>
+            GalleryImage::query()
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->get()
+        );
 
         return view('gallery', compact('galleryImages'));
     }
@@ -335,7 +347,19 @@ class PagesController extends Controller
             abort(404);
         }
 
-        return view('handcraft-detail', compact('handcraft'));
+        // Eager load images so the view doesn't trigger separate queries
+        $handcraft->load('images');
+
+        // Related handcrafts: cached per handcraft to avoid inRandomOrder() full table scan
+        $relatedHandcrafts = Cache::remember('related_handcrafts_' . $handcraft->id, 600, fn() =>
+            Handcraft::where('is_published', true)
+                ->where('id', '!=', $handcraft->id)
+                ->inRandomOrder()
+                ->limit(3)
+                ->get()
+        );
+
+        return view('handcraft-detail', compact('handcraft', 'relatedHandcrafts'));
     }
 
     private function isScheduleAllowedForDate(string $daysLabel, Carbon $visitDate): bool

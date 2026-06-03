@@ -2,134 +2,120 @@
 
 namespace App\Services;
 
-use Stichoza\GoogleTranslate\GoogleTranslate;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class AutoTranslateService
 {
-    protected $translator;
+    protected string $model  = 'llama-3.1-8b-instant';
+    protected string $apiUrl = 'https://api.groq.com/openai/v1/chat/completions';
 
-    public function __construct()
+    protected function apiKey(): string
     {
-        try {
-            $this->translator = new GoogleTranslate();
-        } catch (\Exception $e) {
-            Log::error('Failed to initialize GoogleTranslate: ' . $e->getMessage());
-            $this->translator = null;
-        }
+        return config('services.groq.api_key', '');
     }
 
     /**
-     * Translate text from source language to target language
-     *
-     * @param string $text
-     * @param string $from Source language code (mk, en, sq)
-     * @param string $to Target language code (mk, en, sq)
-     * @return string|null
+     * Returns true when a Groq API key is configured.
      */
-    public function translate($text, $from = 'mk', $to = 'en')
+    public function isConfigured(): bool
     {
-        try {
-            if (!$this->translator || empty($text)) {
-                return $text;
-            }
-
-            // Map language codes to Google Translate language codes if needed
-            $fromLang = $this->mapLanguageCode($from);
-            $toLang = $this->mapLanguageCode($to);
-
-            // Translate the text
-            $translated = $this->translator
-                ->setSource($fromLang)
-                ->setTarget($toLang)
-                ->translate($text);
-
-            return $translated ?? $text;
-        } catch (\Exception $e) {
-            Log::warning("Translation failed from {$from} to {$to}: " . $e->getMessage());
-            return $text;
-        }
+        return trim($this->apiKey()) !== '';
     }
 
     /**
-     * Translate array of fields
+     * Detect the language of the given fields and translate into MK, EN, and SQ in ONE API call.
      *
-     * @param array $fields Key-value pairs to translate
-     * @param string $from Source language
-     * @param array $targetLanguages Target languages
-     * @return array
+     * @param  array  $fields  e.g. ['title' => '...', 'content' => '...']
+     * @return array  ['mk' => [...], 'en' => [...], 'sq' => [...]]
+     * @throws \RuntimeException  when no API key is configured
      */
-    public function translateFields($fields, $from = 'mk', $targetLanguages = ['en', 'sq'])
+    public function translateAll(array $fields): array
     {
-        $translations = [];
+        $fields = array_filter($fields, fn($v) => is_string($v) && $v !== '');
 
-        foreach ($targetLanguages as $targetLang) {
-            $translations[$targetLang] = [];
-
-            foreach ($fields as $field => $value) {
-                $translations[$targetLang][$field] = $this->translate($value, $from, $targetLang);
-            }
+        if (empty($fields)) {
+            return ['mk' => $fields, 'en' => $fields, 'sq' => $fields];
         }
 
-        return $translations;
+        if (!$this->isConfigured()) {
+            throw new \RuntimeException(
+                'Groq API key is not configured. Add GROQ_API_KEY to your .env file. Get a free key at https://console.groq.com'
+            );
+        }
+
+        $inputJson = json_encode($fields, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $fieldKeys = implode(', ', array_keys($fields));
+
+        $systemPrompt = <<<PROMPT
+You are a professional translator for a Macedonian government institution website.
+
+You will receive a JSON object. Your job:
+1. Detect the language of the text (Macedonian, English, or Albanian).
+2. Translate every field into ALL THREE languages: Macedonian (mk), English (en), Albanian (sq).
+3. Return ONLY a raw JSON object - no markdown, no explanation, no extra text, just the JSON.
+
+Output structure must be exactly:
+{"mk":{"FIELD":"..."},"en":{"FIELD":"..."},"sq":{"FIELD":"..."}}
+
+Replace FIELD with the actual key names from the input: {$fieldKeys}
+
+Rules:
+- Same key names as input.
+- If the source is already one of the three languages, copy it as-is for that locale.
+- Preserve newlines and formatting within field values.
+- Output ONLY the JSON. Nothing before or after it.
+PROMPT;
+
+        $response = Http::withToken($this->apiKey())
+            ->timeout(30)
+            ->post($this->apiUrl, [
+                'model'       => $this->model,
+                'messages'    => [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user',   'content' => $inputJson],
+                ],
+                'temperature' => 0.1,
+                'max_tokens'  => 3000,
+            ]);
+
+        if (!$response->successful()) {
+            $body = $response->json();
+            $msg  = $body['error']['message'] ?? $response->body();
+            Log::error('Groq API error', ['status' => $response->status(), 'body' => $msg]);
+            throw new \RuntimeException('Groq API error ' . $response->status() . ': ' . $msg);
+        }
+
+        $raw  = trim($response->json('choices.0.message.content') ?? '');
+        // Strip any markdown fences the model may add despite instructions
+        $raw  = preg_replace('/^```(?:json)?\s*/i', '', $raw);
+        $raw  = preg_replace('/\s*```\s*$/i', '', trim($raw));
+        $data = json_decode($raw, true);
+
+        if (!is_array($data) || !isset($data['mk'], $data['en'], $data['sq'])) {
+            Log::error('Groq returned unexpected structure', ['raw' => $raw]);
+            throw new \RuntimeException('AI returned an unexpected response format. Try again.');
+        }
+
+        return $data;
     }
 
     /**
-     * Map custom language codes to Google Translate language codes
-     *
-     * @param string $code
-     * @return string
+     * Spatie-style wrapper: ['field' => ['mk'=>'...','en'=>'...','sq'=>'...']]
      */
-    protected function mapLanguageCode($code)
+    public function createTranslatableData(array $sourceData): array
     {
-        $mapping = [
-            'mk' => 'mk', // Macedonian
-            'en' => 'en', // English
-            'sq' => 'sq', // Albanian
-        ];
+        $all    = $this->translateAll($sourceData);
+        $result = [];
 
-        return $mapping[$code] ?? $code;
-    }
-
-    /**
-     * Create translatable data structure for a model
-     *
-     * @param array $sourceData Data in source language
-     * @param string $sourceLang Source language
-     * @param array $targetLangs Target languages
-     * @return array
-     */
-    public function createTranslatableData($sourceData, $sourceLang = 'mk', $targetLangs = ['en', 'sq'])
-    {
-        $translatableFields = ['title', 'description', 'content'];
-        $translations = [];
-
-        // Add the source language data
-        foreach ($translatableFields as $field) {
-            if (isset($sourceData[$field])) {
-                if (!isset($translations[$field])) {
-                    $translations[$field] = [];
-                }
-                $translations[$field][$sourceLang] = $sourceData[$field];
-            }
+        foreach (array_keys($sourceData) as $field) {
+            $result[$field] = [
+                'mk' => $all['mk'][$field] ?? $sourceData[$field],
+                'en' => $all['en'][$field] ?? $sourceData[$field],
+                'sq' => $all['sq'][$field] ?? $sourceData[$field],
+            ];
         }
 
-        // Auto-translate to target languages
-        foreach ($targetLangs as $targetLang) {
-            foreach ($translatableFields as $field) {
-                if (isset($sourceData[$field])) {
-                    if (!isset($translations[$field])) {
-                        $translations[$field] = [];
-                    }
-                    $translations[$field][$targetLang] = $this->translate(
-                        $sourceData[$field],
-                        $sourceLang,
-                        $targetLang
-                    );
-                }
-            }
-        }
-
-        return $translations;
+        return $result;
     }
 }

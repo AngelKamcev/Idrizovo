@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\VisitSchedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class VisitScheduleController extends Controller
 {
@@ -35,6 +36,7 @@ class VisitScheduleController extends Controller
             'is_active' => $request->boolean('is_active'),
         ]);
 
+        Cache::forget('visit_schedules_active');
         return redirect()->route('admin.visit-schedules')->with('success', 'Групата е додадена.');
     }
 
@@ -56,6 +58,7 @@ class VisitScheduleController extends Controller
             'is_active' => $request->boolean('is_active'),
         ]);
 
+        Cache::forget('visit_schedules_active');
         return redirect()->route('admin.visit-schedules')->with('success', 'Групата е ажурирана.');
     }
 
@@ -63,6 +66,7 @@ class VisitScheduleController extends Controller
     {
         $visitSchedule->delete();
 
+        Cache::forget('visit_schedules_active');
         return redirect()->route('admin.visit-schedules')->with('success', 'Групата е избришана.');
     }
 }

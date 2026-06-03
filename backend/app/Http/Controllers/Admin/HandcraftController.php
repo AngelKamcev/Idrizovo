@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Handcraft;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -15,7 +16,7 @@ class HandcraftController extends Controller
     {
         $query = Handcraft::orderByDesc('created_at');
 
-        if (Schema::hasTable('handcraft_images')) {
+        if (Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             $query->withCount('images');
         }
 
@@ -31,7 +32,7 @@ class HandcraftController extends Controller
 
     public function store(Request $request)
     {
-        if (! Schema::hasTable('handcraft_images')) {
+        if (! Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             throw ValidationException::withMessages([
                 'images' => 'Недостасува табелата за дополнителни слики. Пушти: php artisan migrate',
             ]);
@@ -53,11 +54,11 @@ class HandcraftController extends Controller
 
         $handcraft = Handcraft::create([
             'title_mk' => $validated['title_mk'],
-            'title_al' => $validated['title_mk'],
-            'title_en' => $validated['title_mk'],
+            'title_en' => $request->input('title_en') ?: $validated['title_mk'],
+            'title_al' => $request->input('title_al') ?: $validated['title_mk'],
             'description_mk' => $validated['description_mk'],
-            'description_al' => $validated['description_mk'],
-            'description_en' => $validated['description_mk'],
+            'description_en' => $request->input('description_en') ?: $validated['description_mk'],
+            'description_al' => $request->input('description_al') ?: $validated['description_mk'],
             'image_url' => $imagePath,
             'is_published' => $request->boolean('is_published', true),
             'created_by' => $request->user()->id,
@@ -86,7 +87,7 @@ class HandcraftController extends Controller
 
     public function edit(Handcraft $handcraft)
     {
-        if (Schema::hasTable('handcraft_images')) {
+        if (Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             $handcraft->load('images');
         }
 
@@ -95,7 +96,7 @@ class HandcraftController extends Controller
 
     public function update(Request $request, Handcraft $handcraft)
     {
-        if (! Schema::hasTable('handcraft_images')) {
+        if (! Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             throw ValidationException::withMessages([
                 'images' => 'Недостасува табелата за дополнителни слики. Пушти: php artisan migrate',
             ]);
@@ -157,11 +158,11 @@ class HandcraftController extends Controller
 
         $handcraft->update([
             'title_mk' => $validated['title_mk'],
-            'title_al' => $validated['title_mk'],
-            'title_en' => $validated['title_mk'],
+            'title_en' => $request->input('title_en') ?: $validated['title_mk'],
+            'title_al' => $request->input('title_al') ?: $validated['title_mk'],
             'description_mk' => $validated['description_mk'],
-            'description_al' => $validated['description_mk'],
-            'description_en' => $validated['description_mk'],
+            'description_en' => $request->input('description_en') ?: $validated['description_mk'],
+            'description_al' => $request->input('description_al') ?: $validated['description_mk'],
             'image_url' => $imagePath,
             'is_published' => $request->boolean('is_published', true),
             'published_at' => $request->boolean('is_published', true) ? ($handcraft->published_at ?? now()) : null,
@@ -173,11 +174,11 @@ class HandcraftController extends Controller
 
     public function destroy(Handcraft $handcraft)
     {
-        if (Schema::hasTable('handcraft_images')) {
+        if (Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             $handcraft->load('images');
         }
 
-        if (Schema::hasTable('handcraft_images')) {
+        if (Cache::remember('table_exists_handcraft_images', 86400, fn() => Schema::hasTable('handcraft_images'))) {
             foreach ($handcraft->images as $image) {
                 if ($image->image_url && ! preg_match('/^https?:\/\//i', $image->image_url) && Storage::disk('public')->exists($image->image_url)) {
                     Storage::disk('public')->delete($image->image_url);

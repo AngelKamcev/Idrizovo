@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SystemSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class IzrabotkiPageController extends Controller
@@ -145,6 +146,7 @@ class IzrabotkiPageController extends Controller
             ];
         }
 
+        Cache::forget('izrabotki_page_data');
         SystemSetting::updateOrCreate(
             ['setting_key' => self::SETTING_KEY],
             [

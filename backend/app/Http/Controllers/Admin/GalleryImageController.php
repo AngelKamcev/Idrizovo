@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\GalleryImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class GalleryImageController extends Controller
@@ -24,10 +25,12 @@ class GalleryImageController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:300'],
-            'album' => ['required', 'string', 'max:100'],
+            'title_mk'    => ['required', 'string', 'max:300'],
+            'title_en'    => ['nullable', 'string', 'max:300'],
+            'title_sq'    => ['nullable', 'string', 'max:300'],
+            'album'       => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string'],
-            'image' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
+            'image'       => ['required', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
         ]);
 
         $storedPath = $request->file('image')->store('gallery', 'public');
@@ -39,8 +42,11 @@ class GalleryImageController extends Controller
             'sort_order' => (int) (GalleryImage::max('sort_order') ?? 0) + 1,
             'is_active' => true,
         ]);
-        $this->syncTitleTranslations($image, $validated['title']);
+        $this->syncTitleTranslations($image, $request);
         $image->save();
+
+        Cache::forget('gallery_page_all');
+        Cache::forget('home_gallery');
 
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно додадена во галеријата.');
@@ -54,10 +60,12 @@ class GalleryImageController extends Controller
     public function update(Request $request, GalleryImage $galleryImage)
     {
         $validated = $request->validate([
-            'title' => ['required', 'string', 'max:300'],
-            'album' => ['required', 'string', 'max:100'],
+            'title_mk'    => ['required', 'string', 'max:300'],
+            'title_en'    => ['nullable', 'string', 'max:300'],
+            'title_sq'    => ['nullable', 'string', 'max:300'],
+            'album'       => ['required', 'string', 'max:100'],
             'description' => ['nullable', 'string'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
+            'image'       => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:4096'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -67,8 +75,11 @@ class GalleryImageController extends Controller
 
         $galleryImage->album = $validated['album'];
         $galleryImage->description = $validated['description'] ?? null;
-        $this->syncTitleTranslations($galleryImage, $validated['title']);
+        $this->syncTitleTranslations($galleryImage, $request);
         $galleryImage->save();
+
+        Cache::forget('gallery_page_all');
+        Cache::forget('home_gallery');
 
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно изменета.');
@@ -80,15 +91,22 @@ class GalleryImageController extends Controller
 
         $galleryImage->delete();
 
+        Cache::forget('gallery_page_all');
+        Cache::forget('home_gallery');
+
         return redirect()->route('admin.gallery')
             ->with('success', 'Сликата е успешно избришана.');
     }
 
-    private function syncTitleTranslations(GalleryImage $image, string $title): void
+    private function syncTitleTranslations(GalleryImage $image, Request $request): void
     {
-        foreach (['mk', 'en', 'sq'] as $locale) {
-            $image->setTranslation('title', $locale, $title);
-        }
+        $mk = $request->input('title_mk') ?: $request->input('title', '');
+        $en = $request->input('title_en') ?: $mk;
+        $sq = $request->input('title_sq') ?: $mk;
+
+        $image->setTranslation('title', 'mk', $mk);
+        $image->setTranslation('title', 'en', $en);
+        $image->setTranslation('title', 'sq', $sq);
     }
 
     /**

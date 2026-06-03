@@ -103,7 +103,7 @@
         $isReviewer = $currentUser?->isReviewer();
         $isVospituvac = $currentUser?->isVospituvac();
         $canSeeDashboardAndContent = $isAdmin || $isVospituvac;
-        $canSeeComplaints = $isAdmin || $isReviewer;
+        $canSeeComplaints = $isReviewer;
         $canSeeSettings = $isAdmin || $isReviewer || $isVospituvac;
     ?>
     <div class="min-h-screen lg:flex bg-[#f5f7fb]">
@@ -212,9 +212,7 @@
 
                         <div class="section-title">Содржина</div>
 
-                        <a href="/admin/activities" class="sidebar-link <?php echo e(request()->is('admin/activities') ? 'active' : ''); ?>">
-                            <i class="fas fa-list"></i><span>Активности (Почетна)</span>
-                        </a>
+                        
 
                         <a href="/admin/soopstenija" class="sidebar-link <?php echo e(request()->is('admin/soopstenija') ? 'active' : ''); ?>">
                             <i class="fas fa-newspaper"></i><span>Соопштенија</span>

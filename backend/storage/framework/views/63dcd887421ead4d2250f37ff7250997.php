@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Dashboard'); ?>
 <?php $__env->startSection('page-title', 'Dashboard'); ?>
 <?php $__env->startSection('page-subtitle', 'Преглед на системот и брз пристап до содржината'); ?>

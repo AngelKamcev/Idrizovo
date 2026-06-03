@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\VisitScheduleController;
 use App\Http\Controllers\Admin\GalleryImageController;
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\IzrabotkiPageController;
+use App\Http\Controllers\Admin\TranslateController;
 use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Complaint;
@@ -79,6 +80,9 @@ $publicRoutes();
 
 // ADMIN PANEL ROUTES
 Route::prefix('admin')->middleware('auth')->group(function () {
+    // AI Translation endpoint (available to all authenticated admin users)
+    Route::post('/translate', [TranslateController::class, 'translate'])->name('admin.translate');
+
     Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('admin.settings.password');
 
@@ -160,11 +164,13 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
     Route::middleware('role:admin,reviewer')->group(function () {
         Route::get('/reviewer', [ReviewerDashboardController::class, 'index'])->name('admin.reviewer-dashboard');
-        
-        Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
-        Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
-        
+
         Route::get('/compliments', [ComplimentController::class, 'index'])->name('admin.compliments');
         Route::patch('/compliments/{compliment}', [ComplimentController::class, 'update'])->name('admin.compliments.update');
+
+        Route::middleware('role:reviewer')->group(function () {
+            Route::get('/complaints', [ComplaintController::class, 'index'])->name('admin.complaints');
+            Route::patch('/complaints/{complaint}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+        });
     });
 });
