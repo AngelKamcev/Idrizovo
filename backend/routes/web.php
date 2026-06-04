@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\GalleryImageController;
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\IzrabotkiPageController;
 use App\Http\Controllers\Admin\TranslateController;
+use App\Http\Controllers\Admin\SiteLogController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Activity;
 use App\Models\Announcement;
 use App\Models\Complaint;
@@ -87,6 +89,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::post('/settings/password', [SettingsController::class, 'updatePassword'])->name('admin.settings.password');
 
     Route::middleware('role:admin')->group(function () {
+        Route::get('/site-logs', [SiteLogController::class, 'index'])->name('admin.site-logs');
         Route::post('/settings/users', [SettingsController::class, 'storeUser'])->name('admin.settings.users');
         Route::get('/visit-requests', [VisitRequestController::class, 'index'])->name('admin.visit-requests');
         Route::patch('/visit-requests/{visitRequest}', [VisitRequestController::class, 'update'])->name('admin.visit-requests.update');
@@ -97,24 +100,10 @@ Route::prefix('admin')->middleware('auth')->group(function () {
             return redirect()->route('admin.dashboard');
         });
 
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard', [
-                'activitiesCount' => Activity::count(),
-                'announcementsCount' => Announcement::count(),
-                'galleryCount' => GalleryImage::count(),
-                'handcraftsCount' => Handcraft::count(),
-                'visitRequestsCount' => VisitRequest::count(),
-                'approvedRequestsCount' => VisitRequest::where('status', 'approved')->count(),
-                'complaintsCount' => Complaint::count(),
-                'newComplaintsCount' => Complaint::where('status', 'new')->count(),
-                'complimentsCount' => Compliment::count(),
-                'newComplimentsCount' => Compliment::where('status', 'new')->count(),
-                'recentAnnouncements' => Announcement::sorted()->take(3)->get(),
-                'recentActivities' => Activity::sorted()->take(3)->get(),
-                'recentVisitRequests' => VisitRequest::with(['visitSchedule'])->orderByDesc('created_at')->take(3)->get(),
-                'recentHandcrafts' => Handcraft::published()->orderByDesc('published_at')->orderByDesc('id')->take(3)->get(),
-            ]);
-        })->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+        Route::get('/visit-search', [VisitRequestController::class, 'searchVisit'])->name('admin.visit-search');
+        Route::get('/visit-search/preview', [VisitRequestController::class, 'previewVisitPdf'])->name('admin.visit-search.preview');
+        Route::get('/visit-search/download', [VisitRequestController::class, 'downloadVisitPdf'])->name('admin.visit-search.download');
 
         Route::get('/visit-schedules', [VisitScheduleController::class, 'index'])->name('admin.visit-schedules');
         Route::post('/visit-schedules', [VisitScheduleController::class, 'store'])->name('admin.visit-schedules.store');

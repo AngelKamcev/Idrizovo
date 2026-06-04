@@ -154,9 +154,16 @@
                         <a href="/admin/visit-requests" class="sidebar-link {{ request()->is('admin/visit-requests*') ? 'active' : '' }}">
                             <i class="fas fa-calendar-check"></i><span>Барања за посета</span>
                         </a>
+                        <a href="{{ route('admin.site-logs') }}" class="sidebar-link {{ request()->is('admin/site-logs*') ? 'active' : '' }}">
+                            <i class="fas fa-clipboard-list"></i><span>Дневник</span>
+                        </a>
                     @endif
                     <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
                         <i class="fas fa-calendar"></i><span>Активности</span>
+                    </a>
+
+                    <a href="{{ route('admin.visit-search') }}" class="sidebar-link {{ request()->is('admin/visit-search*') ? 'active' : '' }}">
+                        <i class="fas fa-search"></i><span>Пребарај посета</span>
                     </a>
                 @endif
 
@@ -245,6 +252,10 @@
                         <a href="/admin/main-activities" class="sidebar-link {{ request()->is('admin/main-activities') ? 'active' : '' }}">
                             <i class="fas fa-calendar"></i><span>Активности</span>
                         </a>
+
+                        <a href="{{ route('admin.visit-search') }}" class="sidebar-link {{ request()->is('admin/visit-search*') ? 'active' : '' }}">
+                            <i class="fas fa-search"></i><span>Брзо пребарај на посета</span>
+                        </a>
                     @endif
 
                     @if($canSeeComplaints)
@@ -256,6 +267,11 @@
 
                     @if($canSeeSettings)
                         <div class="section-title">Систем</div>
+                        @if($isAdmin)
+                            <a href="{{ route('admin.site-logs') }}" class="sidebar-link {{ request()->is('admin/site-logs*') ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list"></i><span>Дневник</span>
+                            </a>
+                        @endif
                         <a href="{{ route('admin.settings') }}" class="sidebar-link {{ request()->is('admin/settings*') ? 'active' : '' }}">
                             <i class="fas fa-cog"></i><span>Поставки</span>
                         </a>

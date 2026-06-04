@@ -15,6 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
             'setLocale' => \App\Http\Middleware\SetLocale::class,
         ]);
+
+        $middleware->web(append: [
+            \App\Http\Middleware\LogSiteAccess::class,
+            \App\Http\Middleware\LogStaffActivity::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

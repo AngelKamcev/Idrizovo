@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Services\ActivityLogDescriptions;
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct(
+        private ActivityLogService $activityLog,
+    ) {}
+
     public function showLoginForm()
     {
         if (Auth::check()) {
@@ -42,6 +48,14 @@ class LoginController extends Controller
             $user->last_login = now();
             $user->save();
 
+            if ($user->isAdmin() || $user->isVospituvac() || $user->isReviewer()) {
+                $this->activityLog->logStaffAction(
+                    user: $user,
+                    request: $request,
+                    description: ActivityLogDescriptions::forStaffRequest($request, 'login'),
+                );
+            }
+
             if ($user->isAdmin() || $user->isVospituvac()) {
                 return redirect()->intended(route('admin.dashboard'));
             } elseif ($user->isReviewer()) {
@@ -56,6 +70,15 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
+        $user = $request->user();
+        if ($user && ($user->isAdmin() || $user->isVospituvac() || $user->isReviewer())) {
+            $this->activityLog->logStaffAction(
+                user: $user,
+                request: $request,
+                description: ActivityLogDescriptions::forStaffRequest($request, 'logout'),
+            );
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();

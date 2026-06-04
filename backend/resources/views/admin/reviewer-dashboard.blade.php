@@ -6,6 +6,34 @@
 
 @section('content')
 
+@if(($newComplaints ?? 0) > 0 || ($newCompliments ?? 0) > 0)
+    <div class="mb-8 rounded-2xl border-2 border-amber-300 bg-amber-50 p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center shrink-0">
+                <i class="fas fa-bell text-white"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-amber-950">Имате нови пораки</h3>
+                <p class="text-sm text-amber-900/80">Проверете ги пред да ги затворите</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            @if(($newComplaints ?? 0) > 0)
+                <a href="{{ route('admin.complaints') }}" class="inline-flex items-center gap-2 rounded-xl bg-white border border-amber-200 px-4 py-2.5 text-sm font-semibold text-gray-800 hover:border-red-300">
+                    Нови жалби
+                    <span class="min-w-[1.5rem] h-7 px-2 rounded-full bg-red-500 text-white text-xs font-bold flex items-center justify-center">{{ $newComplaints }}</span>
+                </a>
+            @endif
+            @if(($newCompliments ?? 0) > 0)
+                <a href="{{ route('admin.compliments') }}" class="inline-flex items-center gap-2 rounded-xl bg-white border border-amber-200 px-4 py-2.5 text-sm font-semibold text-gray-800 hover:border-emerald-300">
+                    Нови пофалби
+                    <span class="min-w-[1.5rem] h-7 px-2 rounded-full bg-emerald-500 text-white text-xs font-bold flex items-center justify-center">{{ $newCompliments }}</span>
+                </a>
+            @endif
+        </div>
+    </div>
+@endif
+
 <!-- STATS CARDS -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
     <!-- Вкупно жалби -->
@@ -20,7 +48,7 @@
     </div>
 
     <!-- Нови жалби -->
-    <div class="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col gap-3">
+    <div class="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col gap-3 {{ ($newComplaints ?? 0) > 0 ? 'ring-2 ring-amber-400' : '' }}">
         <div class="flex items-center justify-between">
             <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Жалби - Нови</span>
             <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
@@ -42,7 +70,7 @@
     </div>
 
     <!-- Нови пофалби -->
-    <div class="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col gap-3">
+    <div class="bg-white border border-gray-100 rounded-2xl p-5 flex flex-col gap-3 {{ ($newCompliments ?? 0) > 0 ? 'ring-2 ring-amber-400' : '' }}">
         <div class="flex items-center justify-between">
             <span class="text-xs font-medium text-gray-400 uppercase tracking-wide">Пофалби - Нови</span>
             <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">

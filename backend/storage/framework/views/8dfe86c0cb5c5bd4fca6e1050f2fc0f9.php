@@ -161,10 +161,6 @@
                     <a href="/admin/main-activities" class="sidebar-link <?php echo e(request()->is('admin/main-activities') ? 'active' : ''); ?>">
                         <i class="fas fa-calendar"></i><span>Активности</span>
                     </a>
-
-                    <a href="<?php echo e(route('admin.visit-search')); ?>" class="sidebar-link <?php echo e(request()->is('admin/visit-search*') ? 'active' : ''); ?>">
-                        <i class="fas fa-search"></i><span>Пребарај посета</span>
-                    </a>
                 <?php endif; ?>
 
                 <?php if($canSeeComplaints): ?>
@@ -250,10 +246,6 @@
                         <a href="/admin/main-activities" class="sidebar-link <?php echo e(request()->is('admin/main-activities') ? 'active' : ''); ?>">
                             <i class="fas fa-calendar"></i><span>Активности</span>
                         </a>
-
-                        <a href="<?php echo e(route('admin.visit-search')); ?>" class="sidebar-link <?php echo e(request()->is('admin/visit-search*') ? 'active' : ''); ?>">
-                            <i class="fas fa-search"></i><span>Брзо пребарај на посета</span>
-                        </a>
                     <?php endif; ?>
 
                     <?php if($canSeeComplaints): ?>
@@ -333,4 +325,4 @@
     </div>
 </body>
 </html>
-<?php /**PATH D:\xampp\htdocs\Idrizovo\backend\resources\views/admin/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\Angel\Desktop\Idrizovo-dimeBackend\backend\resources\views/admin/layouts/app.blade.php ENDPATH**/ ?>
