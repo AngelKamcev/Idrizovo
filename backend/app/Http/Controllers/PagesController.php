@@ -46,7 +46,7 @@ class PagesController extends Controller
             Announcement::active()->published()->sorted()->take(12)->get()
         );
 
-        $izrabotki = Cache::remember('izrabotki_page_data', 3600, fn() =>
+        $izrabotki = Cache::remember('izrabotki_page_data_' . $locale, 3600, fn() =>
             app(IzrabotkiPageController::class)->publicData()
         );
         $izrabotkiSections = collect($izrabotki['sections'] ?? []);
@@ -296,7 +296,8 @@ class PagesController extends Controller
      */
     public function izrabotki()
     {
-        $iz = Cache::remember('izrabotki_page_data', 3600, fn() =>
+        $locale = app()->getLocale();
+        $iz = Cache::remember('izrabotki_page_data_' . $locale, 3600, fn() =>
             app(IzrabotkiPageController::class)->publicData()
         );
 
@@ -308,7 +309,8 @@ class PagesController extends Controller
      */
     public function izrabotakiSection($index)
     {
-        $iz = Cache::remember('izrabotki_page_data', 3600, fn() =>
+        $locale = app()->getLocale();
+        $iz = Cache::remember('izrabotki_page_data_' . $locale, 3600, fn() =>
             app(IzrabotkiPageController::class)->publicData()
         );
         $sections = $iz['sections'] ?? [];

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $handcraft->title_mk . ' - Идризово')
+@section('title', $handcraft->localizedTitle() . ' - Идризово')
 
 @section('content')
 
@@ -35,10 +35,10 @@
             </a>
         </div>
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-            {{ $handcraft->title_mk }}
+            {{ $handcraft->localizedTitle() }}
         </h1>
         <p class="mt-6 text-lg text-slate-300 max-w-2xl leading-relaxed">
-            {!! nl2br(e($handcraft->description_mk)) !!}
+            {!! nl2br(e($handcraft->localizedDescription())) !!}
         </p>
         <div class="mt-6 text-sm text-slate-400">
             Објавено: <time datetime="{{ $handcraft->published_at?->format('Y-m-d') }}">
@@ -54,7 +54,7 @@
         <div class="rounded-2xl overflow-hidden shadow-2xl h-96 md:h-[500px]">
             <img 
                 src="{{ $resolveUrl($handcraft->image_url) }}" 
-                alt="{{ $handcraft->title_mk }}"
+                alt="{{ $handcraft->localizedTitle() }}"
                 class="w-full h-full object-cover"
             />
         </div>
@@ -144,16 +144,16 @@
                     <div class="h-64 overflow-hidden">
                         <img 
                             src="{{ $resolveUrl($craft->image_url) }}"
-                            alt="{{ $craft->title_mk }}"
+                            alt="{{ $craft->localizedTitle() }}"
                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                     </div>
                     <div class="p-4">
                         <h3 class="font-bold text-gray-900 group-hover:text-blue-600 transition">
-                            {{ $craft->title_mk }}
+                            {{ $craft->localizedTitle() }}
                         </h3>
                         <p class="text-sm text-gray-600 mt-2 line-clamp-2">
-                            {{ $craft->description_mk }}
+                            {{ $craft->localizedDescription() }}
                         </p>
                     </div>
                 </a>

@@ -10,9 +10,10 @@ class GalleryImageSeeder extends Seeder
     public function run()
     {
         $images = [
-            'gallery/img1.jpg',
-            'gallery/img2.jpg',
-            'gallery/img3.jpg',
+            'https://picsum.photos/id/101/500/400',
+            'https://picsum.photos/id/102/500/400',
+            'https://picsum.photos/id/103/500/400',
+            'https://picsum.photos/id/104/500/400',
         ];
 
         foreach ($images as $i => $path) {

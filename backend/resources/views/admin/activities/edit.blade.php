@@ -32,13 +32,42 @@
 
         <!-- DESCRIPTION -->
         <div class="mb-6">
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Опис <span class="text-red-500">*</span></label>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Опис (Македонски) <span class="text-red-500">*</span></label>
             <textarea name="description_mk" rows="4"
                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 @error('description_mk') border-red-500 @enderror"
                       placeholder="Напишите опис на активност" required>{{ old('description_mk', $activity->getTranslation('description', 'mk')) }}</textarea>
             @error('description_mk')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
+        </div>
+
+        @include('admin.partials.ai-translate', [
+            'buttonId' => 'activityEditTranslate',
+            'fieldMap' => [
+                'title' => ['mk' => 'title_mk', 'en' => 'title_en', 'sq' => 'title_sq'],
+                'description' => ['mk' => 'description_mk', 'en' => 'description_en', 'sq' => 'description_sq'],
+            ],
+        ])
+
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Назив (Англиски)</label>
+            <input type="text" name="title_en" value="{{ old('title_en', $activity->getTranslation('title', 'en')) }}"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+        </div>
+        <div class="mb-4">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Назив (Албански)</label>
+            <input type="text" name="title_sq" value="{{ old('title_sq', $activity->getTranslation('title', 'sq')) }}"
+                   class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+        </div>
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Опис (Англиски)</label>
+            <textarea name="description_en" rows="4"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">{{ old('description_en', $activity->getTranslation('description', 'en')) }}</textarea>
+        </div>
+        <div class="mb-6">
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Опис (Албански)</label>
+            <textarea name="description_sq" rows="4"
+                      class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">{{ old('description_sq', $activity->getTranslation('description', 'sq')) }}</textarea>
         </div>
 
         <!-- CONTENT -->
@@ -98,14 +127,6 @@
             <label class="flex items-center gap-3">
                 <input type="checkbox" name="is_active" value="1" {{ old('is_active', $activity->is_active) ? 'checked' : '' }} class="rounded">
                 <span class="text-sm font-semibold text-gray-700">Активна активност</span>
-            </label>
-        </div>
-
-        <!-- AUTO TRANSLATE -->
-        <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <label class="flex items-center gap-3">
-                <input type="checkbox" name="auto_translate" value="1" {{ old('auto_translate', true) ? 'checked' : '' }} class="rounded">
-                <span class="text-sm font-semibold text-gray-700">Автоматско преведување на англиски и албански</span>
             </label>
         </div>
 

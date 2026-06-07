@@ -22,13 +22,40 @@
 
     <div class="space-y-4">
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Наслов</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Наслов (Македонски) <span class="text-red-500">*</span></label>
             <input type="text" name="title_mk" value="{{ old('title_mk', $handcraft->title_mk) }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500" required>
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Опис</label>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Опис (Македонски) <span class="text-red-500">*</span></label>
             <textarea name="description_mk" rows="6" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:border-blue-500" required>{{ old('description_mk', $handcraft->description_mk) }}</textarea>
+        </div>
+
+        @include('admin.partials.ai-translate', [
+            'buttonId' => 'handcraftEditTranslate',
+            'fieldMap' => [
+                'title' => ['mk' => 'title_mk', 'en' => 'title_en', 'sq' => 'title_al'],
+                'description' => ['mk' => 'description_mk', 'en' => 'description_en', 'sq' => 'description_al'],
+            ],
+        ])
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Наслов (Англиски)</label>
+                <input type="text" name="title_en" value="{{ old('title_en', $handcraft->title_en) }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Наслов (Албански)</label>
+                <input type="text" name="title_al" value="{{ old('title_al', $handcraft->title_al) }}" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50">
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Опис (Англиски)</label>
+                <textarea name="description_en" rows="4" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50">{{ old('description_en', $handcraft->description_en) }}</textarea>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Опис (Албански)</label>
+                <textarea name="description_al" rows="4" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50">{{ old('description_al', $handcraft->description_al) }}</textarea>
+            </div>
         </div>
 
         <div>

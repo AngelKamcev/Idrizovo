@@ -64,4 +64,32 @@ class Handcraft extends Model
 
         return array_values(array_filter($urls));
     }
+
+    public function localizedTitle(?string $locale = null): string
+    {
+        $locale = $locale ?? app()->getLocale();
+        $field = match ($locale) {
+            'en' => 'title_en',
+            'sq' => 'title_al',
+            default => 'title_mk',
+        };
+
+        $value = trim((string) ($this->{$field} ?? ''));
+
+        return $value !== '' ? $value : (string) ($this->title_mk ?? '');
+    }
+
+    public function localizedDescription(?string $locale = null): string
+    {
+        $locale = $locale ?? app()->getLocale();
+        $field = match ($locale) {
+            'en' => 'description_en',
+            'sq' => 'description_al',
+            default => 'description_mk',
+        };
+
+        $value = trim((string) ($this->{$field} ?? ''));
+
+        return $value !== '' ? $value : (string) ($this->description_mk ?? '');
+    }
 }

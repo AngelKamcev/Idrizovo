@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ImageUrl;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
@@ -68,21 +69,17 @@ class GalleryImage extends Model
      */
     public function getResolvedUrlAttribute(): string
     {
-        $u = (string) ($this->image_path ?? '');
+        $resolved = ImageUrl::resolve($this->image_path);
 
-        if ($u === '') {
-            return '';
+        if ($resolved !== '') {
+            return $resolved;
         }
 
-        if (preg_match('#^https?://#i', $u)) {
-            return $u;
+        if ($this->id) {
+            return ImageUrl::galleryPlaceholder((int) $this->id);
         }
 
-        if (str_starts_with($u, '/storage/') || str_starts_with($u, 'storage/')) {
-            return asset(ltrim($u, '/'));
-        }
-
-        return asset('storage/'.ltrim($u, '/'));
+        return '';
     }
 
     public function adminTitle(): string
