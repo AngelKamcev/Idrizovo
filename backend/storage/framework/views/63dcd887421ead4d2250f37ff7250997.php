@@ -10,6 +10,7 @@
     $isReviewer = $user?->isReviewer();
     $visitStatusLabels = [
         'approved'              => 'Одобрено',
+        'Одобрено'             => 'Одобрено',
         'cancelled_by_visitor'  => 'Откажано (посетител)',
         'cancelled_by_admin'    => 'Откажано (админ)',
         'completed'             => 'Завршено',
@@ -177,7 +178,7 @@
         <div class="db-stat-body">
             <span class="db-stat-label">Одобрени барања</span>
             <span class="db-stat-value"><?php echo e($approvedRequestsCount ?? 0); ?></span>
-            <span class="db-stat-hint">Посети со статус approved</span>
+            <span class="db-stat-hint">Посети со статус Одобрено</span>
         </div>
     </div>
 
