@@ -1,0 +1,194 @@
+{
+  "language": "English",
+  "home": "Home",
+  "about": "About Us",
+  "activities": "Activities",
+  "contact": "Contact",
+  "gallery": "Gallery",
+  "announcements": "Announcements",
+  "handmade": "Handmade",
+  "handmade_items": "Handmade Items",
+  "news_and_announcements": "News & Announcements",
+  "booking": "Book a Visit",
+  "login": "Login",
+  "logout": "Logout",
+  "register": "Register",
+  "admin_panel": "Admin Panel",
+  "dashboard": "Dashboard",
+  "settings": "Settings",
+  "users": "Users",
+  "roles": "Roles",
+  "complaints": "Complaints & Praise",
+  "save": "Save",
+  "edit": "Edit",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "add_new": "Add New",
+  "back": "Back",
+  "search": "Search",
+  "loading": "Loading...",
+  "no_results": "No Results",
+  "error": "Error",
+  "success": "Success",
+  "warning": "Warning",
+  "info": "Information",
+  "visit_schedules": "Visit Schedules",
+  "visit_requests": "Visit Requests",
+  "time_slots": "Time Slots",
+  "date": "Date",
+  "time": "Time",
+  "name": "Name",
+  "email": "Email",
+  "phone": "Phone",
+  "message": "Message",
+  "submit": "Submit",
+  "created_at": "Created",
+  "updated_at": "Updated",
+  "status": "Status",
+  "pending": "Pending",
+  "approved": "Approved",
+  "rejected": "Rejected",
+  "language_select": "Select Language",
+  "change_language": "Change Language",
+  "visitor_info": "Visitor Information",
+  "inmate_info": "Inmate Information",
+  "companions": "Companions",
+  "valid_from": "Valid From",
+  "valid_to": "Valid To",
+  "monday": "Monday",
+  "tuesday": "Tuesday",
+  "wednesday": "Wednesday",
+  "thursday": "Thursday",
+  "friday": "Friday",
+  "saturday": "Saturday",
+  "sunday": "Sunday",
+  "password": "Password",
+  "password_confirm": "Confirm Password",
+  "old_password": "Old Password",
+  "new_password": "New Password",
+  "remember_me": "Remember Me",
+  "forgot_password": "Forgot Password?",
+  "please_login": "Please Login",
+  "unauthorized": "Unauthorized",
+  "not_found": "Not Found"
+    ,
+    "latest_activity": "Latest Activity",
+    "read_more": "Read More",
+    "all_activities": "All Activities",
+    "most_read_activities": "Most Read Activities",
+    "chess_tournament": "Chess Tournament",
+    "chess_description": "Chess tournament that encourages focus, strategic thinking and positive interaction.",
+    "basketball": "Basketball",
+    "basketball_description": "Basketball for improving physical health, teamwork and positive engagement.",
+    "welding": "Welding",
+    "welding_description": "Welding activities where students learn to safely join metal.",
+    "carpentry": "Carpentry",
+    "carpentry_description": "Woodworking craft for creating and construction.",
+    "sports": "Sports",
+    "sports_description": "Physical exercises for building strength, fitness and well-being.",
+    "chess": "Chess",
+    "chess_description": "Chess tournament that encourages focus, strategic thinking."
+  ,
+      "carving": "Carving",
+      "carving_description": "Hand-crafted carvings created with care and skill.",
+      "electrical": "Electrical",
+      "electrical_description": "Learning and performing electrical tasks.",
+      "embroidery": "Embroidery",
+      "drawing": "Drawing",
+      "other_activities": "Other Activities"
+  ,
+        "contact_title": "Contact",
+        "contact_description": "If you have questions, need additional information or want to schedule an official visit, our team is here for you.",
+        "phone_number": "Phone Number",
+        "address": "Str. 1 Kolonija Idrizovo No. 4A",
+        "working_hours": "Working Hours",
+        "monday_friday": "Mon-Fri",
+        "saturday_sunday": "Sat-Sun",
+        "closed": "Closed",
+        "send_message": "Send Message",
+        "select_message_type": "Select message type",
+        "praise": "Praise",
+        "complaint": "Complaint",
+        "question": "Question",
+        "full_name": "Full Name",
+        "phone": "Phone Number",
+        "subject": "Subject / Brief Description",
+        "leave_message": "Leave a message",
+        "send": "Send",
+        "book_visit": "Book a Visit",
+        "by_phone": "By Phone",
+        "monday_thursday": "Monday-Thursday",
+        "first_shift": "First Shift",
+        "second_shift": "Second Shift",
+        "friday": "Friday",
+        "working_hours_1": "07:00 - 15:00",
+        "working_hours_2": "Closed",
+        "hero_subtitle": "with open unit Veles",
+        "e_newspaper": "E-newspaper",
+        "latest_announcements": "Latest announcements",
+        "older_announcements": "Older announcements",
+        "events": "Events",
+        "about_title": "About Us",
+        "history": "History",
+        "mission": "Mission",
+        "vision": "Vision",
+        "management": "Management",
+        "responsible_officers": "Responsible Officers",
+        "regulation": "Regulation",
+        "regulation_subtitle": "on internal organization and operation of the Penal Correctional Institution Idrizovo",
+        "download": "Download",
+        "sectors": "Sectors",
+        "handmade_heading": "Handmade Items",
+        "handmade_intro": "Handmade items at KPU Idrizovo",
+        "handmade_quote": "Every product carries its own story and contributes to resocialization.",
+        "needle_art": "Needle and Thread Art",
+        "view_more": "View More",
+        "wood_carving": "Wood Carving"
+        ,"about_more": "More About Us"
+        ,"page_hint_next": "Click right for next"
+        ,"page_hint_prev": "Click left for back"
+        ,"institution": "Institution"
+        ,"news_item_1_title": "INTERNAL ANNOUNCEMENT for filling a position through promotion of an administrative officer"
+        ,"news_item_1_body": "Based on Article 30 paragraph 1 item 2, paragraphs 3 and 5, Article 48 and Article 49 of the Administrative Officers Act..."
+        ,"news_item_2_title": "Decision on selecting candidates for promotion of administrative officers"
+        ,"news_item_2_body": "Based on Article 52 paragraph 1 of the Administrative Officers Act..."
+        ,"news_item_3_title": "Draft decision on selecting candidates for promotion of administrative officers"
+        ,"news_item_3_body": "Based on Article 52 paragraph 1 of the Administrative Officers Act..."
+        ,"news_item_4_title": "INTERNAL ANNOUNCEMENT for filling positions through promotion of administrative officers"
+        ,"news_item_4_body": "Based on Article 30 paragraph 1 item 2, paragraphs 3 and 5..."
+        ,"news_item_5_title": "INTERNAL ANNOUNCEMENT for filling positions through promotion of prison police officers"
+        ,"news_item_5_body": "Based on Article 67 paragraph 1 item 2..."
+        ,"news_item_6_title": "Deadline for submitting applications for the public employment notice..."
+        ,"news_item_6_body": "Applications together with the documents..."
+        ,"handmade_card_1_title": "Handmade Item"
+        ,"handmade_card_1_body": "Handcrafted items created with care and skill."
+        ,"handmade_card_2_title": "Craft Work"
+        ,"handmade_card_2_body": "Creative work that supports the development of new skills."
+        ,"handmade_card_3_title": "Resocialization"
+        ,"handmade_card_3_body": "Products that carry story, discipline and hope."
+        ,"activity_chess_title": "Chess Tournament"
+        ,"activity_chess_description": "A chess tournament that encourages focus, strategic thinking and positive interaction."
+        ,"activity_welding_title": "Welding"
+        ,"activity_welding_description": "Welding activities where participants learn to join metal safely."
+        ,"activity_carving_title": "Carving"
+        ,"activity_carving_description": "Hand-crafted carvings created with care and skill."
+        ,"activity_carpentry_title": "Carpentry"
+        ,"activity_carpentry_description": "Woodworking craft for creating and building."
+        ,"activity_electrical_title": "Electrical Work"
+        ,"activity_electrical_description": "Training and performing electrical tasks."
+        ,"activity_embroidery_title": "Embroidery"
+        ,"activity_embroidery_description": "Embroidery that builds patience, precision and creativity."
+        ,"activity_drawing_title": "Drawing"
+        ,"activity_drawing_description": "Drawing that opens imagination and inner calm."
+        ,"activity_sewing_title": "Sewing"
+        ,"activity_sewing_description": "Sewing and practical crafting with focus and discipline."
+        ,"activity_painting_title": "Painting"
+        ,"activity_painting_description": "Painting as a way of expression and creative freedom."
+        ,"activity_sports_title": "Sports"
+        ,"activity_sports_description": "Physical activities for health, teamwork and well-being."
+        ,"about_history_p1": "The Idrizovo Correctional Institution is the largest prison facility in the Republic of North Macedonia. It is located about 10 kilometers southeast of Skopje and serves as the central institution for serving prison sentences."
+        ,"about_history_p2": "The history of KPD Idrizovo begins during the Second World War, when a military camp was built by the Bulgarian occupying army. Immediately after the end of the war, it continued to operate as a prison-work colony, where inmates were engaged in agricultural and construction work. Over time, the institution expanded and became the largest prison in the country."
+        ,"about_history_p3": "This regulation governs the organization and work of the Correctional Institution - KPD Idrizovo - with the open unit in Veles (hereinafter: the Institution), and defines the internal organization, the types of organizational units and their scope of work, management within the Institution and organizational units, and the planning and execution of tasks and duties in the institution."
+        ,"about_regulation_text": "This regulation governs the organization and work of the Correctional Institution - KPD Idrizovo - with the open unit in Veles (hereinafter: the Institution), and defines the internal organization, the types of organizational units and their scope of work, management within the Institution and organizational units, and the planning and execution of tasks and duties in the institution."
+      }
